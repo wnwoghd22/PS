@@ -21,7 +21,7 @@ int compare(int x, int y) {
 
 #include "biggest.cpp"
 int main() {
-    /* int k, i, type;
+    int k, i, type;
     cin >> n_ >> k >> type;
 
     if (type == 0)
@@ -50,9 +50,9 @@ int main() {
     }
     cout << endl;
     cout << "count: " << countq_ << endl;
-    return 0; */
+    return 0;
 
-    int k, i;
+    /* int k, i;
     cin >> n_ >> k;
 
     for (int seed = 0; seed < 200; ++seed) {
@@ -63,12 +63,12 @@ int main() {
 
         countq_ = 0;
         vector <int> ans = biggest(n_, k);
-        /* for (i = 0; i < ans.size(); i++) {
-            cout << ans[i] << " ";
-        } */
+        // for (i = 0; i < ans.size(); i++) {
+        //     cout << ans[i] << " ";
+        // }
         // cout << endl;
-        cout << "count: " << countq_ << endl;
+        cout << "count: " << countq_ - n_ + 1 << endl;
     }
 
-    return 0;
+    return 0; */
 }

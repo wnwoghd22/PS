@@ -1,17 +1,21 @@
 #include "biggest.h"
 #include <vector>
 #include <queue>
+#include <cstring>
 
-static std::vector<int> children[100'001];
+// static std::vector<int> children[100'001];
+static int children[100'001][20];
+static int _size[100'001];
 
 struct Comp {
 	bool operator()(int a, int b) {
-		return children[a].size() > children[b].size();
+		return _size[a] > _size[b];
 	}
 };
 
 static std::vector<int> biggest(int N, int K) {
-	for (std::vector<int>& v : children) v.clear();
+	memset(children, 0, sizeof children);
+	memset(_size, 0, sizeof _size);
 
 	std::vector<int> result;
 	std::priority_queue<int, std::vector<int>, Comp> pq;
@@ -24,18 +28,18 @@ static std::vector<int> biggest(int N, int K) {
 			int b = pq.top(); pq.pop();
 
 			if (compare(a, b) == a) {
-				children[a].push_back(b);
+				children[a][_size[a]++] = b;
 				pq.push(a);
 			}
 			else {
-				children[b].push_back(a);
+				children[b][_size[b]++] = a;
 				pq.push(b);
 			}
 		}
 		int max = pq.top(); pq.pop();
 		result.push_back(max);
 
-		for (const int& child : children[max]) pq.push(child);
+		for (int i = 0; i < _size[max]; ++i) pq.push(children[max][i]);
 	}
 
 	return result;

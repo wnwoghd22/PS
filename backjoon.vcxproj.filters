@@ -21,22 +21,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="backjoon.cpp">
+    <ClCompile Include="q1987.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="alphabet.cpp">
+    <ClCompile Include="q14216.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Hungarian.cpp">
+    <ClCompile Include="q1019.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="page.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="park.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="pointers.cpp">
+    <ClCompile Include="q1086.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="q1005.cpp">
@@ -65,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="Lgrader.cpp">
       <Filter>소스 파일\q24324</Filter>
+    </ClCompile>
+    <ClCompile Include="q2193.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

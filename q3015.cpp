@@ -8,17 +8,14 @@ int main() {
     while (N--) {
         std::cin >> a;
         while (!S.empty() && S.top().first < a) {
-            pair += S.top().second;
+            pair += S.top().second + (S.size() == 1);
             S.pop();
         }
         if (!S.empty()) {
-            if (S.top().first == a) {
-                if (S.size() == 1) pair += S.top().second, S.top().second++;
-                else S.top().second++, pair += S.top().second;
-            }
-            else pair++, S.push({ a, 1 });
+            if (S.top().first == a) S.top().second++, pair += S.top().second;
+            else S.push({ a, 1 }), ++pair;
         }
-        else S.push({ a, 1 });
+        else S.push({ a, 0 });
     }
     std::cout << pair;
 }

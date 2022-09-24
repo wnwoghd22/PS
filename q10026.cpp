@@ -55,7 +55,6 @@ int bfs_color_blind(int x, int y) {
 
 int main() {
     int i, j, areas = 0, areas_blind = 0;
-    std::vector<std::pair<int, int>> virus;
 
     std::cin >> N;
     for (i = 0; i < N; ++i) std::cin >> map[i];

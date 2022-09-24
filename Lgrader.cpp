@@ -45,10 +45,10 @@ int main() {
     // cout << '\n';
 
     vector <int> ans = biggest(n_, k);
-    for (i = 0; i < ans.size(); i++) {
+    /*for (i = 0; i < ans.size(); i++) {
         cout << ans[i] << " ";
     }
-    cout << endl;
+    cout << endl;*/
     cout << "count: " << countq_ << endl;
     return 0;
 

@@ -9,7 +9,7 @@ static int _size[100'001];
 
 struct Comp {
 	bool operator()(int a, int b) {
-		return _size[a] > _size[b];
+		return _size[a] >= _size[b];
 	}
 };
 

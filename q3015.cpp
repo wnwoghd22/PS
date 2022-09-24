@@ -1,9 +1,11 @@
 #include <iostream>
 #include <stack>
 
+typedef long long int ll;
+
 int main() {
-    std::stack<std::pair<int, int>> S;
-    int N, a, pair = 0;
+    std::stack<std::pair<ll, ll>> S;
+    ll N, a, pair = 0;
     std::cin >> N;
     while (N--) {
         std::cin >> a;

@@ -1,7 +1,6 @@
 #include "biggest.h"
 #include <vector>
 #include <queue>
-#include <cstring>
 
 static std::vector<int> children[100'001];
 

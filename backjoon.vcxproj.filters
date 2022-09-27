@@ -30,16 +30,7 @@
     <ClCompile Include="q1019.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="q1086.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="q1005.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="q1026.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="q1766.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="q3584.cpp">
@@ -72,9 +63,6 @@
     <ClCompile Include="q10026.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="q2642.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="q16435.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -87,16 +75,37 @@
     <ClCompile Include="q2343.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="q2150.cpp">
+    <ClCompile Include="q4196.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="q4196.cpp">
+    <ClCompile Include="q14442.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="q1006.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="q14442.cpp">
+    <ClCompile Include="q2206.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q1086.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q2642.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q2150.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q1005.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q1766.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q3977.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q4013.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

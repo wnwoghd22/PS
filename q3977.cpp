@@ -64,7 +64,7 @@ int main() {
 			graph[a].push_back(b);
 		}
 
-		for (int i = 1; i <= V; ++i)
+		for (int i = 0; i < V; ++i)
 			if (!checked[i]) dfs(i);
 
 		for (int i = 0; i < SCC.size(); ++i) {
@@ -75,9 +75,9 @@ int main() {
 			}
 		}
 
-		for (int i = 1; i <= V; ++i) std::cout << group[i] << ' ';
+		for (int i = 0; i < V; ++i) std::cout << group[i] << ' ';
 
-		for (int i = 1; i <= V; ++i) {
+		for (int i = 0; i < V; ++i) {
 			for (const int& e : graph[i]) {
 				int from = group[i], to = group[e];
 				if (from == to) continue;
@@ -90,12 +90,23 @@ int main() {
 		}
 		int result = 0;
 
+		int startGroup = 0;
 		std::cout << "\nincoming: ";
 		for (int i = 0; i < SCC.size(); ++i) {
 			std::cout << incoming[i] << ' ';
-			if (!incoming[i]) ++result;
+			if (!incoming[i]) {
+				++result;
+				startGroup = i;
+			}
 		}
-
-		std::cout << result << '\n';
+		if (result > 1) {
+			std::cout << "Confused\n";
+		}
+		else {
+			std::sort(SCC[startGroup].begin(), SCC[startGroup].end());
+			for (const int& e : SCC[startGroup])
+				std::cout << e << '\n';
+			std::cout << '\n';
+		}
 	}
 }

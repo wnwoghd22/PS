@@ -23,7 +23,7 @@ void bfs(int x, int y) {
 		y = q.front().second.second;
 		q.pop();
 
-		cout << depth << '\n';
+		cout << x << ' ' << y << ' ' << depth << '\n';
 
 		for (int i = 0; i < 4; ++i) {
 			int nx = x + dx[i], ny = y + dy[i];
@@ -38,7 +38,7 @@ void bfs(int x, int y) {
 
 int main()
 {
-	string filePath = "path5.txt";
+	string filePath = "path8copy.txt";
 
 	ifstream openFile(filePath.data());
 

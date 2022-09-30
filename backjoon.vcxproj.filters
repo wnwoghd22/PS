@@ -144,6 +144,12 @@
     <ClCompile Include="q22308_path_checker.cpp">
       <Filter>소스 파일\q22308</Filter>
     </ClCompile>
+    <ClCompile Include="q1007.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q1915.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

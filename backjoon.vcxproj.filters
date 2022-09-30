@@ -126,6 +126,15 @@
     <ClCompile Include="q22308_converter.cpp">
       <Filter>소스 파일\q22308</Filter>
     </ClCompile>
+    <ClCompile Include="q11280.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q11281.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q22308_path_finder.cpp">
+      <Filter>소스 파일\q22308</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

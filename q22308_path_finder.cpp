@@ -42,7 +42,7 @@ void dfs(int x, int y, const int depth = 1) {
 
 int main()
 {
-	string rawFilePath = "map_100_100.txt";
+	string rawFilePath = "path5.txt";
 	string filePath = "path.txt";
 
 	ifstream openFile(rawFilePath.data());
@@ -66,7 +66,7 @@ int main()
 	cin >> pathLen;
 	cout << "\nfind path " << pathLen << ":\n";
 
-	dfs(1, 1);
+	dfs(19, 59);
 
 	if (writeFile.is_open()) {
 		for (int i = 0; i < 100; ++i) {

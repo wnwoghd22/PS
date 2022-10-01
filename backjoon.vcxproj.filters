@@ -150,7 +150,13 @@
     <ClCompile Include="q1915.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="16367.cpp">
+    <ClCompile Include="q16367.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q2221.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q2247.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -103,11 +103,19 @@ int main() {
             ++incoming[a];
         }
     }
+    if (N == 1) {
+        std::cout << 1 << '\n' << 0;
+        return 0;
+    }
+
     make_tree();
-    int height = *std::max_element(level, level + N);
-    int width = *std::max_element(tree_width, tree_width + N);
+
+    int height = *std::max_element(level, level + N + 1);
+    int width = *std::max_element(tree_width, tree_width + N + 1);
 
     int result = binary_search(width, height);
+
+    // std::cout << height << ' ' << width << ' ' << result << '\n';
 
     std::cout << height << '\n' << N - result;
 }

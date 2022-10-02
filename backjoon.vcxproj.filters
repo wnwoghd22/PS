@@ -198,6 +198,12 @@
     <ClCompile Include="IGRUS\q11.cpp">
       <Filter>소스 파일\IGRUS2022</Filter>
     </ClCompile>
+    <ClCompile Include="q17219.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q5525.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

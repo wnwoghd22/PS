@@ -7,6 +7,7 @@
 
 const int MAX = 100'001;
 std::vector<int> tree[MAX];
+int parent[MAX];
 int level[MAX];
 int tree_width[MAX];
 
@@ -14,7 +15,13 @@ int incoming[MAX];
 std::vector<int> graph[MAX];
 int N;
 struct Comp {
-    bool operator()(int a, int b) { return level[a] < level[b]; }
+    bool operator()(int a, int b) { 
+        return level[a] < level[b] ? true :
+            (level[a] == level[b] &&
+            (tree[parent[a]].size() > tree[parent[b]].size() ? true :
+            (tree[parent[a]].size() == tree[parent[b]].size() &&
+            parent[a] < parent[b])));
+    }
 };
 
 void make_tree(int v = 0, int height = 0) {
@@ -95,9 +102,11 @@ int main() {
     for (int a, i = 1; i <= N; ++i) {
         std::cin >> a;
         if (a == -1) {
+            parent[i] = 0;
             tree[0].push_back(i);
         }
         else {
+            parent[i] = a;
             tree[a].push_back(i);
             graph[i].push_back(a);
             ++incoming[a];

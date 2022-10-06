@@ -11,7 +11,10 @@ int main() {
         int depth = (i + 2) / 3, mod = i % 3;
         for (j = 0; j < (n / 3) - depth; ++j)
             std::cout << "   ";
-        std::cout << print(depth, mod) << '\n';
+        std::cout << print(depth, mod);
+        for (j = 0; j < (n / 3) - depth; ++j)
+            std::cout << "   ";
+        std::cout << '\n';
     }
     return 0;
 }

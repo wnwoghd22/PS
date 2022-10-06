@@ -1,27 +1,27 @@
 #include <iostream>
 
-#define LL long long int
+#define ll long long int
 
 class Matrix {
 private:
     int row, col;
-    LL** arr;
+    ll** arr;
 public:
     Matrix(int r, int c) : row(r), col(c) {
-        arr = new LL * [row];
+        arr = new ll * [row];
         for (int i = 0; i < row; ++i) {
-            arr[i] = new LL[col];
+            arr[i] = new ll[col];
             for (int j = 0; j < col; ++j) arr[i][j] = 0;
         }
     }
     Matrix(const Matrix& m) : row(m.row), col(m.col) {
-        arr = new LL * [row];
+        arr = new ll * [row];
         for (int i = 0; i < row; ++i) {
-            arr[i] = new LL[col];
+            arr[i] = new ll[col];
             for (int j = 0; j < col; ++j) arr[i][j] = m.arr[i][j];
         }
     }
-    LL* const operator[](const size_t i) { return arr[i]; }
+    ll* const operator[](const size_t i) { return arr[i]; }
 
     Matrix operator*(const Matrix& m) {
         Matrix result(row, m.col);
@@ -31,7 +31,7 @@ public:
                     result.arr[i][j] += arr[i][k] * m.arr[k][j];
         return result;
     }
-    Matrix operator%(const LL scalar) {
+    Matrix operator%(const ll scalar) {
         Matrix result(row, col);
         for (int i = 0; i < row; ++i)
             for (int j = 0; j < col; ++j)
@@ -41,7 +41,7 @@ public:
     ~Matrix() { for (int i = 0; i < row; ++i) delete[] arr[i]; delete[] arr; }
 };
 
-Matrix power(Matrix A, const LL B, const LL mod) {
+Matrix power(Matrix A, const ll B, const ll mod) {
     if (B == 1) return A % mod;
     else {
         Matrix pw = power(A, B / 2, mod);
@@ -50,7 +50,7 @@ Matrix power(Matrix A, const LL B, const LL mod) {
 }
 
 int main() {
-    LL N;
+    ll N;
     std::cin >> N;
     Matrix A(2, 2);
     A[0][0] = 1, A[0][1] = 2, A[1][0] = 1, A[1][1] = 0;

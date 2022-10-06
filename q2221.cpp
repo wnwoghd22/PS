@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <vector>
 #include <queue>
 #include <algorithm>
@@ -7,7 +7,6 @@
 
 const int MAX = 100'001;
 std::vector<int> tree[MAX];
-int parent[MAX];
 int level[MAX];
 int tree_width[MAX];
 
@@ -15,13 +14,7 @@ int incoming[MAX];
 std::vector<int> graph[MAX];
 int N;
 struct Comp {
-    bool operator()(int a, int b) { 
-        return level[a] < level[b] ? true :
-            (level[a] == level[b] &&
-            (tree[parent[a]].size() > tree[parent[b]].size() ? true :
-            (tree[parent[a]].size() == tree[parent[b]].size() &&
-            parent[a] < parent[b])));
-    }
+    bool operator()(int a, int b) { return level[a] < level[b]; }
 };
 
 void make_tree(int v = 0, int height = 0) {
@@ -33,17 +26,17 @@ void make_tree(int v = 0, int height = 0) {
 }
 
 /// <summary>
-/// Á¶°ÇºÎ À§»óÁ¤·Ä
+/// ì¡°ê±´ë¶€ ìœ„ìƒì •ë ¬ (Hu's algorithm)
 /// <para>O(N log N)</para>
 /// 
-/// µ¿½Ã°£ Ã³¸® °¡´ÉÇÑ ÀÏÀÇ ¼ö¸¸Å­¸¸ Á¤·ÄÇÔ.
-/// ¶ÇÇÑ, Æ®¸®¿¡¼­ÀÇ ³ëµå ±íÀÌ ¼ø ¿ì¼±¼øÀ§¿¡ µû¶ó Á¤·ÄÇÔ.
+/// ë™ì‹œê°„ ì²˜ë¦¬ ê°€ëŠ¥í•œ ì¼ì˜ ìˆ˜ë§Œí¼ë§Œ ì •ë ¬í•¨.
+/// ë˜í•œ, íŠ¸ë¦¬ì—ì„œì˜ ë…¸ë“œ ê¹Šì´ ìˆœ ìš°ì„ ìˆœìœ„ì— ë”°ë¼ ì •ë ¬í•¨.
 /// </summary>
-/// <param name="capacity">µ¿½Ã°£ ÇØ°áÇÒ ¼ö ÀÖ´Â ¾÷¹«ÀÇ ¼ö(Á÷¿øÀÇ ¼ö)</param>
-/// <returns>°æ°ú ½Ã°£</returns>
+/// <param name="capacity">ë™ì‹œê°„ í•´ê²°í•  ìˆ˜ ìˆëŠ” ì—…ë¬´ì˜ ìˆ˜(ì§ì›ì˜ ìˆ˜)</param>
+/// <returns>ê²½ê³¼ ì‹œê°„</returns>
 int conditional_topological_sort(int capacity) {
-    static std::priority_queue<int, std::vector<int>, Comp> delayed;
-    static std::queue<int> Q;
+    std::priority_queue<int, std::vector<int>, Comp> delayed;
+    std::queue<int> Q;
     static int currentIncoming[MAX];
     int time = 0;
 
@@ -73,16 +66,16 @@ int conditional_topological_sort(int capacity) {
 }
 
 /// <summary>
-/// ÀÌºĞÅ½»ö
+/// ì´ë¶„íƒìƒ‰
 /// <para>O(log N) * O(N log N)</para>
 /// 
-/// ÃÑ °æ°ú ½Ã°£Àº Æ®¸®ÀÇ ³ôÀÌ ÀÌÇÏ¿©¾ß ÇÑ´Ù.
+/// ì´ ê²½ê³¼ ì‹œê°„ì€ íŠ¸ë¦¬ì˜ ë†’ì´ ì´í•˜ì—¬ì•¼ í•œë‹¤.
 /// </summary>
-/// <param name="width">Æ®¸®ÀÇ Æø</param>
-/// <param name="height">Æ®¸®ÀÇ ³ôÀÌ</param>
-/// <returns>Á÷¿øÀÇ ÃÖ¼Ò ¼ö</returns>
+/// <param name="width">íŠ¸ë¦¬ì˜ í­</param>
+/// <param name="height">íŠ¸ë¦¬ì˜ ë†’ì´</param>
+/// <returns>ì§ì›ì˜ ìµœì†Œ ìˆ˜</returns>
 int binary_search(const int width, const int height) {
-    int l = ceil(double(N) / height), r = width, result = width;
+    int l = ceil(double(N) / height), r = width + 1, result = width + 1;
 
     while (l <= r) {
         int mid = (l + r) / 2;
@@ -102,29 +95,19 @@ int main() {
     for (int a, i = 1; i <= N; ++i) {
         std::cin >> a;
         if (a == -1) {
-            parent[i] = 0;
             tree[0].push_back(i);
         }
         else {
-            parent[i] = a;
             tree[a].push_back(i);
             graph[i].push_back(a);
             ++incoming[a];
         }
     }
-    if (N == 1) {
-        std::cout << 1 << '\n' << 0;
-        return 0;
-    }
-
     make_tree();
-
     int height = *std::max_element(level, level + N + 1);
     int width = *std::max_element(tree_width, tree_width + N + 1);
 
     int result = binary_search(width, height);
-
-    // std::cout << height << ' ' << width << ' ' << result << '\n';
 
     std::cout << height << '\n' << N - result;
 }

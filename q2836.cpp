@@ -2,13 +2,14 @@
 #include <vector>
 #include <algorithm>
 
-std::vector<std::pair<int, int>> v;
+typedef long long int ll;
+std::vector<std::pair<ll, ll>> v;
 
 int main() {
-	int N, M, x, y, len = 0;
+	ll N, M, x, y, len = 0;
 	std::cin >> N >> M;
 	while (N--) {
-		int x, y;
+		ll x, y;
 		std::cin >> x >> y;
 		if (x > y)
 			v.push_back({ y, x });

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstring>
 
+typedef long long int ll;
 typedef std::pair<std::pair<int, int>, int> pos;
 const int MAX = 75'000;
 int segTree[MAX * 4];
@@ -35,7 +36,7 @@ int main() {
 	int T;
 	std::cin >> T;
 	while (T--) {
-		int count = 0;
+		ll count = 0;
 		std::cin >> N;
 		memset(segTree, 0, sizeof segTree);
 

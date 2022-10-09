@@ -29,12 +29,16 @@ int get_sum(int left, int right, int index = 1, int start = 1, int end = MAX) {
 
 }
 
-bool CompX(Pos& a, Pos& b) { return a.x < b.x ? true : (a.y == b.y) && a.y < b.y; }
+bool CompX(Pos& a, Pos& b) { return a.x < b.x ? true : (a.x == b.x) && a.y < b.y; }
 bool CompX_r(Pos& a, Pos& b) { return a.x < b.x ? true : (a.x == b.x) && a.y > b.y; }
 bool CompY(Pos& a, Pos& b) { return a.y < b.y; }
 
 int main() {
 	ll count = 0;
+
+	std::ios_base::sync_with_stdio(0);
+	std::cin.tie(0); std::cout.tie(0);
+
 	std::cin >> N;
 
 	std::vector<Pos> v;
@@ -51,17 +55,8 @@ int main() {
 		if (v[i].y != v[i - 1].y) ++rank;
 		v[i].rank = rank;
 	}
-	std::cout << "sorted Y:\n";
-	for (const Pos& p : v) {
-		std::cout << p.x << ' ' << p.y << ' ' << p.rank << '\n';
-	}
 
 	std::sort(v.begin(), v.end(), CompX);
-	std::cout << "sorted X:\n";
-	for (const Pos& p : v) {
-		std::cout << p.x << ' ' << p.y << ' ' << p.rank << '\n';
-	}
-
 	for (int i = 0; i < N; ++i) {
 		left[v[i].idx] = get_sum(v[i].rank + 1, rank);
 		push(v[i].rank);
@@ -70,19 +65,12 @@ int main() {
 	memset(segTree, 0, sizeof segTree);
 
 	std::sort(v.begin(), v.end(), CompX_r);
-	std::cout << "sorted X_r:\n";
-	for (const Pos& p : v) {
-		std::cout << p.x << ' ' << p.y << ' ' << p.rank << '\n';
-	}
-
 	for (int i = N - 1; i >= 0; --i) {
 		right[v[i].idx] = get_sum(v[i].rank + 1, rank);
 		push(v[i].rank);
 	}
 
-	std::cout << "calc:\n";
 	for (int i = 0; i < N; ++i) {
-		std::cout << left[i] << ' ' << right[i] << '\n';
 		count += left[i] * right[i];
 		count %= MOD;
 	}

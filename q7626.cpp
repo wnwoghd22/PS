@@ -19,7 +19,7 @@ ll segHeight[MAX + 1];
 
 void update_diff(int left, int right, ll diff, int index = 1, int start = 1, int end = MAX) {
 	if (left > end || right < start) return;
-	if (start == end || left <= start && end <= right) {
+	if (left <= start && end <= right) {
 		segTree[index] += diff;
 	}
 	else {
@@ -29,6 +29,7 @@ void update_diff(int left, int right, ll diff, int index = 1, int start = 1, int
 	}
 
 	if (segTree[index]) {
+		std::cout << "update segWidth: " << start << ' ' << end << '\n';
 		segWidth[index] = rankX[end] - rankX[start - 1];
 	}
 	else {
@@ -53,8 +54,11 @@ int main() {
 	std::sort(rankX.begin(), rankX.end());
 	rankX.erase(std::unique(rankX.begin(), rankX.end()), rankX.end());
 	for (ll i = 0; i < rankX.size(); ++i) {
-		mapX[rankX[i]] = i + 1;
+		mapX[rankX[i]] = i;
 	}
+	std::cout << "rank X: ";
+	for (const ll& x : rankX) std::cout << x << ' ';
+	std::cout << '\n';
 
 	std::sort(v.begin(), v.end(), CompY);
 	int rank = 0;
@@ -70,7 +74,7 @@ int main() {
 		int current_y = segHeight[i];
 		ll current_height = segHeight[i + 1] - segHeight[i];
 		while (v[j].y == current_y) {
-			update_diff(mapX[v[j].x1] + 1, mapX[v[j].x2], v[j].diff);
+			update_diff(mapX[v[j].x1] + 1, mapX[v[j].x2], v[j].diff, 1, 1, rankX.size());
 			++j;
 		}
 		ll current_width = get_width();

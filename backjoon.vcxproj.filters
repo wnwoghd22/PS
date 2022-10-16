@@ -25,6 +25,9 @@
     <Filter Include="소스 파일\IGRUS2022">
       <UniqueIdentifier>{49ddcd60-dcc2-4b12-b2c6-c070a41baf98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\ChocolateCup2022">
+      <UniqueIdentifier>{e60c1169-18fc-4a79-a5ca-dad065a54daf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -355,6 +358,21 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="q12865.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q1.cpp">
+      <Filter>소스 파일\ChocolateCup2022</Filter>
+    </ClCompile>
+    <ClCompile Include="q3.cpp">
+      <Filter>소스 파일\ChocolateCup2022</Filter>
+    </ClCompile>
+    <ClCompile Include="q10610.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q13392.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q2494.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

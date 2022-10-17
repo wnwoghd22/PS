@@ -360,12 +360,6 @@
     <ClCompile Include="q12865.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="q1.cpp">
-      <Filter>소스 파일\ChocolateCup2022</Filter>
-    </ClCompile>
-    <ClCompile Include="q3.cpp">
-      <Filter>소스 파일\ChocolateCup2022</Filter>
-    </ClCompile>
     <ClCompile Include="q10610.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -377,6 +371,15 @@
     </ClCompile>
     <ClCompile Include="q13976.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ChocolateCup2022\q1.cpp">
+      <Filter>소스 파일\ChocolateCup2022</Filter>
+    </ClCompile>
+    <ClCompile Include="ChocolateCup2022\q3.cpp">
+      <Filter>소스 파일\ChocolateCup2022</Filter>
+    </ClCompile>
+    <ClCompile Include="ChocolateCup2022\q4.cpp">
+      <Filter>소스 파일\ChocolateCup2022</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -15,8 +15,8 @@ bool join(int a, int b) {
     a = find(a), b = find(b);
     if (a == b) return false;
 
-    if (p[a] < p[b]) p[b] = a, p[a] -= p[b];
-    else p[a] = b, p[b] -= p[a];
+    if (p[a] < p[b]) p[a] += p[b], p[b] = a;
+    else p[b] += p[a], p[a] = b;
 
     return true;
 }

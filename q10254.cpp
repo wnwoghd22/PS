@@ -3,7 +3,7 @@
 #include <algorithm>
 
 typedef long long int ll;
-const int LEN = 100'001;
+const int LEN = 200'001;
 
 struct pos {
     ll x, y;
@@ -64,6 +64,7 @@ int main() {
             std::cin >> x >> y;
             P[i] = pos(x, y);
         }
+
         std::sort(P, P + N, comp);
         for (int i = 1; i < N; ++i) {
             P[i].rx = P[i].x - P[0].x;

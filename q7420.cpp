@@ -17,10 +17,6 @@ bool comp(const pos& p1, const pos& p2) {
     return p1.y < p2.y ? true : (p1.y == p2.y && p1.x < p2.x);
 }
 bool ccw(pos& p1, pos& p2, pos& p3) { return p1.x * p2.y + p2.x * p3.y + p3.x * p1.y - p3.x * p2.y - p2.x * p1.y - p1.x * p3.y > 0; }
-ll ccw(pos& p1, pos& p2, pos& p3, pos& p4) {
-    ll lx = p2.x - p1.x, ly = p2.y - p1.y, rx = p4.x - p3.x, ry = p4.y - p3.y;
-    return lx * ry - rx * ly;
-}
 ll distance(pos& p1, pos& p2) { return (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y); }
 
 pos P[LEN];

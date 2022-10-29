@@ -12,13 +12,7 @@ int main() {
 	for (int i = 0; i < len; ++i) dp[i][i] = 1;
 	for (int l = 1; l < len; ++l)
 		for (int i = 0, j = l; j < len; ++i, ++j)
-			dp[i][j] = (dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1] + (s[i] == s[j]) * (dp[i + 1][j - 1] + 1)) % MOD;
-
-	/*for (int i = 0; i < len; ++i) {
-		for (int j = 0; j < len; ++j)
-			std::cout << dp[i][j] << ' ';
-		std::cout << '\n';
-	} */
+			dp[i][j] = (dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1] + MOD + (s[i] == s[j]) * (dp[i + 1][j - 1] + 1)) % MOD;
 
 	std::cout << dp[0][len - 1];
 }

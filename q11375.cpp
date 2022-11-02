@@ -22,7 +22,7 @@ bool dfs(int x) {
 
 int main() {
 	std::cin >> N >> M;
-	for (int n, k, i = 0; i < N; ++i) {
+	for (int n, k, i = 1; i <= N; ++i) {
 		std::cin >> n;
 		while (n--) {
 			std::cin >> k;
@@ -30,7 +30,7 @@ int main() {
 		}
 	}
 	int count = 0;
-	for (int i = 0; i < N; ++i) {
+	for (int i = 1; i <= N; ++i) {
 		std::fill(c, c + M + 1, false);
 		if (dfs(i)) ++count;
 	}

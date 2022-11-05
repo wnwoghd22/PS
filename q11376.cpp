@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-const int LEN = 2001;
+const int LEN = 1001;
 
 std::vector<int> a[LEN];
 int d[LEN];
@@ -27,13 +27,12 @@ int main() {
 		while (n--) {
 			std::cin >> k;
 			a[i].push_back(k);
-			a[i + N].push_back(k);
 		}
 	}
 	int count = 0;
-	for (int i = 1; i <= N * 2; ++i) {
+	for (int i = 0; i < N * 2; ++i) {
 		std::fill(c, c + M + 1, false);
-		if (dfs(i)) ++count;
+		if (dfs(i / 2 + 1)) ++count;
 	}
 	std::cout << count;
 }

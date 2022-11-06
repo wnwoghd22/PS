@@ -28,6 +28,9 @@
     <Filter Include="소스 파일\ChocolateCup2022">
       <UniqueIdentifier>{e60c1169-18fc-4a79-a5ca-dad065a54daf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\YONSEI2022">
+      <UniqueIdentifier>{0f8c8bbf-c3b3-4450-a06a-d377db194050}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -458,6 +461,21 @@
     </ClCompile>
     <ClCompile Include="q1671.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="yonsei2022\C.cpp">
+      <Filter>소스 파일\YONSEI2022</Filter>
+    </ClCompile>
+    <ClCompile Include="yonsei2022\D.cpp">
+      <Filter>소스 파일\YONSEI2022</Filter>
+    </ClCompile>
+    <ClCompile Include="yonsei2022\E.cpp">
+      <Filter>소스 파일\YONSEI2022</Filter>
+    </ClCompile>
+    <ClCompile Include="yonsei2022\B.cpp">
+      <Filter>소스 파일\YONSEI2022</Filter>
+    </ClCompile>
+    <ClCompile Include="yonsei2022\F.cpp">
+      <Filter>소스 파일\YONSEI2022</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

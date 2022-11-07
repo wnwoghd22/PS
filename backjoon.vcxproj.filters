@@ -477,6 +477,12 @@
     <ClCompile Include="yonsei2022\F.cpp">
       <Filter>소스 파일\YONSEI2022</Filter>
     </ClCompile>
+    <ClCompile Include="q1867.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q11014.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

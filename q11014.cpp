@@ -60,7 +60,6 @@ int main() {
 			for (int j = 0; j < M; j += 2) {
 				std::fill(c, c + LEN, false);
 				if (dfs(i * M + j)) ++count;
-
 			}
 		}
 		std::cout << total - count << '\n';

@@ -1,11 +1,11 @@
 #include <iostream>
 #include <vector>
 
-const int LEN = 2001;
+const int LEN = 1001;
 
 std::vector<int> a[LEN];
 int d[LEN];
-bool c[LEN], v[LEN];
+bool c[LEN];
 int N, M, K;
 
 bool dfs(int x) {
@@ -27,32 +27,17 @@ int main() {
 		while (n--) {
 			std::cin >> k;
 			a[i].push_back(k);
-			v[k] = true;
 		}
 	}
-	/*for (int m = 1; m <= M; ++m) {
-		if (v[m]) {
-			for (int i = 1; i <= K; ++i) {
-				a[N + i].push_back(m);
-			}
-		}
-	}*/
 
 	int count = 0;
-	/*for (int i = 1; i <= N + K; ++i) {
-		std::fill(c, c + M + 1, false);
-		if (dfs(i)) ++count;
-	}*/
 	for (int i = 1; i <= N; ++i) {
 		std::fill(c, c + M + 1, false);
 		if (dfs(i)) ++count;
 	}
-	for (int i = 1; i <= N && K; ++i) {
-		while (true) {
-			std::fill(c, c + M + 1, false);
-			if (K && dfs(i)) ++count, --K;
-			else break;
-		}
+	for (int i = 1; i <= N && K; ++i, --K) {
+		std::fill(c, c + M + 1, false);
+		if (dfs(i)) ++count;
 	}
 
 	std::cout << count;

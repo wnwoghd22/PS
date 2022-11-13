@@ -35,9 +35,9 @@ int main() {
 		std::fill(c, c + M + 1, false);
 		if (dfs(i)) ++count;
 	}
-	for (int i = 1; i <= N && K; ++i, --K) {
+	for (int i = 1; i <= N && K; ++i) {
 		std::fill(c, c + M + 1, false);
-		if (dfs(i)) ++count;
+		if (dfs(i)) ++count, --K;
 	}
 
 	std::cout << count;

@@ -31,6 +31,12 @@
     <Filter Include="소스 파일\YONSEI2022">
       <UniqueIdentifier>{0f8c8bbf-c3b3-4450-a06a-d377db194050}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Goricon2022">
+      <UniqueIdentifier>{52e11458-2d82-41e0-9430-30e874468d7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\APC2022">
+      <UniqueIdentifier>{08cdb07e-b3eb-47bd-ab4e-649371be7fa0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -494,6 +500,24 @@
     </ClCompile>
     <ClCompile Include="q11377.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Goricon2022\A.cpp">
+      <Filter>소스 파일\Goricon2022</Filter>
+    </ClCompile>
+    <ClCompile Include="Goricon2022\B.cpp">
+      <Filter>소스 파일\Goricon2022</Filter>
+    </ClCompile>
+    <ClCompile Include="C.cpp">
+      <Filter>소스 파일\Goricon2022</Filter>
+    </ClCompile>
+    <ClCompile Include="D.cpp">
+      <Filter>소스 파일\Goricon2022</Filter>
+    </ClCompile>
+    <ClCompile Include="E.cpp">
+      <Filter>소스 파일\Goricon2022</Filter>
+    </ClCompile>
+    <ClCompile Include="APC2022\A.cpp">
+      <Filter>소스 파일\APC2022</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

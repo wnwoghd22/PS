@@ -522,6 +522,9 @@
     <ClCompile Include="q14750.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="q2316.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

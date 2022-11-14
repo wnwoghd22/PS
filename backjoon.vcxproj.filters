@@ -507,17 +507,20 @@
     <ClCompile Include="Goricon2022\B.cpp">
       <Filter>소스 파일\Goricon2022</Filter>
     </ClCompile>
-    <ClCompile Include="C.cpp">
-      <Filter>소스 파일\Goricon2022</Filter>
-    </ClCompile>
-    <ClCompile Include="D.cpp">
-      <Filter>소스 파일\Goricon2022</Filter>
-    </ClCompile>
-    <ClCompile Include="E.cpp">
-      <Filter>소스 파일\Goricon2022</Filter>
-    </ClCompile>
     <ClCompile Include="APC2022\A.cpp">
       <Filter>소스 파일\APC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="Goricon2022\C.cpp">
+      <Filter>소스 파일\Goricon2022</Filter>
+    </ClCompile>
+    <ClCompile Include="Goricon2022\D.cpp">
+      <Filter>소스 파일\Goricon2022</Filter>
+    </ClCompile>
+    <ClCompile Include="Goricon2022\E.cpp">
+      <Filter>소스 파일\Goricon2022</Filter>
+    </ClCompile>
+    <ClCompile Include="q14750.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

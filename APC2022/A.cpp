@@ -38,7 +38,7 @@ int main() {
 		int min = v[0];
 		int max = v.back();
 		std::cout << min << ' ' << max << '\n';
-		std::cout << get_tier(min / 10000) << min % 10000 << ' ';
-		std::cout << get_tier(max / 10000) << max % 10000;
+		std::cout << get_tier(min / 10000) << 2000 - min % 10000 << ' ';
+		std::cout << get_tier(max / 10000) << 2000 - max % 10000;
 	}
 }

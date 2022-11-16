@@ -5,7 +5,7 @@
 const int MAX = 503;
 const int INF = 1e9;
 
-int N, P;
+int N;
 int c[MAX][MAX], f[MAX][MAX];
 int work[MAX], level[MAX], visited[MAX];
 std::vector<int> A[MAX];

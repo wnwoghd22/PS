@@ -32,7 +32,7 @@ bool bfs(int S, int T) {
 int dfs(int here, int target, int flow) {
     if (here == target) return flow;
 
-    for (int& i = work[here]; i < A[here].size(); i++) {
+    for (int& i = work[here]; i < A[here].size(); ++i) {
         int next = A[here][i];
 
         if (level[next] == level[here] + 1 && c[here][next] - f[here][next] > 0) {

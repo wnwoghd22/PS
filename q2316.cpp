@@ -13,7 +13,7 @@ std::vector<int> A[MAX];
 int max_flow(const int start, const int end) {
 	int result = 0;
 	while (1) {
-		std::fill(d, d + N * 2 - 1, -1);
+		std::fill(d, d + MAX, -1);
 		std::queue<int> q;
 		q.push(start);
 
@@ -45,20 +45,24 @@ int max_flow(const int start, const int end) {
 int main() {
 	std::cin >> N >> P;
 
-	for (int i = 3; i <= N; ++i) {
-		A[i].push_back(i + N - 2);
-		A[i + N - 2].push_back(i);
-		c[i][i + N - 2] = 1;
+	for (int i = 1; i <= N; ++i) {
+		A[i].push_back(i + 400);
+		A[i + 400].push_back(i);
+		c[i][i + 400] = 1;
 	}
 
 	int u, v;
 	while (P--) {
 		std::cin >> u >> v;
-		if (u != 1) u = u + N - 2;
-		A[u].push_back(v);
-		A[v].push_back(u);
-		c[u][v] = 1;
+
+		A[u + 400].push_back(v);
+		A[v].push_back(u + 400);
+		c[u + 400][v] = 1;
+
+		A[v + 400].push_back(u);
+		A[u].push_back(v + 400);
+		c[v + 400][u] = 1;
 	}
 
-	std::cout << max_flow(1, 2);
+	std::cout << max_flow(401, 2);
 }

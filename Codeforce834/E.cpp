@@ -16,25 +16,26 @@ ll f(int i, ll h, int g, int b) {
 	if (~ref) return ref;
 
 	ref = 0;
+	ll a = v[i], ab = v[i] >> 1;
 
-	if (v[i] < h) ref = f(i + 1, h + v[i] / 2, g, b) + 1;
-	else if (v[i] < h * 2) {
-		if (g) ref = f(i + 1, h * 2 + v[i] / 2, g - 1, b) + 1;
-		if (b) ref = std::max(ref, f(i + 1, h * 3 + v[1] / 2, g, b - 1) + 1);
+	if (a < h) ref = f(i + 1, h + ab, g, b) + 1;
+	else if (a < h * 2) {
+		if (g) ref = f(i + 1, h * 2 + ab, g - 1, b) + 1;
+		if (b) ref = std::max(ref, f(i + 1, h * 3 + ab, g, b - 1) + 1);
 	}
-	else if (v[i] < h * 3) {
-		if (b) ref = f(i + 1, h * 3 + v[i] / 2, g, b - 1) + 1;
-		if (g == 2) ref = std::max(ref, f(i + 1, h * 4 + v[i] / 2, g - 2, b) + 1);
+	else if (a < h * 3) {
+		if (b) ref = f(i + 1, h * 3 + ab, g, b - 1) + 1;
+		if (g == 2) ref = std::max(ref, f(i + 1, h * 4 + ab, g - 2, b) + 1);
 	}
-	else if (v[i] < h * 4) {
-		if (g == 2) ref = f(i + 1, h * 4 + v[i] / 2, g - 2, b) + 1;
-		if (g && b) ref = std::max(ref, f(i + 1, h * 6 + v[i] / 2, g - 1, b - 1) + 1);
+	else if (a < h * 4) {
+		if (g == 2) ref = f(i + 1, h * 4 + ab, g - 2, b) + 1;
+		if (g && b) ref = std::max(ref, f(i + 1, h * 6 + ab, g - 1, b - 1) + 1);
 	}
-	else if (v[i] < h * 6) {
-		if (g && b) ref = f(i + 1, h * 6 + v[i] / 2, g - 1, b - 1) + 1;
+	else if (a < h * 6) {
+		if (g && b) ref = f(i + 1, h * 6 + ab, g - 1, b - 1) + 1;
 	}
-	else if (v[i] < h * 12) {
-		if (g == 2 && b) ref = f(i + 1, h * 12 + v[i] / 2, g - 2, b - 1) + 1;
+	else if (a < h * 12) {
+		if (g == 2 && b) ref = f(i + 1, h * 12 + ab, g - 2, b - 1) + 1;
 	}
 
 	return ref;
@@ -42,6 +43,7 @@ ll f(int i, ll h, int g, int b) {
 
 int main() {
 	int T;
+
 	std::cin >> T;
 	while (T--) {
 		memset(dp, -1, sizeof dp);

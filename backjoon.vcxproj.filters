@@ -570,6 +570,18 @@
     <ClCompile Include="Codeforce834\E.cpp">
       <Filter>소스 파일\Codeforce834</Filter>
     </ClCompile>
+    <ClCompile Include="q2467.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q2473.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q1799.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q2143.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

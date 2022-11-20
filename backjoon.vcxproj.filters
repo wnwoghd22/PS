@@ -612,6 +612,9 @@
     <ClCompile Include="hiarc2022\F.cpp">
       <Filter>소스 파일\HIARC2022</Filter>
     </ClCompile>
+    <ClCompile Include="hiarc2022\G.cpp">
+      <Filter>소스 파일\HIARC2022</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

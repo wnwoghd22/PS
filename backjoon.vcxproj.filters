@@ -40,6 +40,9 @@
     <Filter Include="소스 파일\Codeforce834">
       <UniqueIdentifier>{573f7fae-153a-46ee-990c-9c70eff73252}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\HIARC2022">
+      <UniqueIdentifier>{0925dac9-347d-471d-a54c-28627003605b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -590,6 +593,24 @@
     </ClCompile>
     <ClCompile Include="q11111.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="hiarc2022\A.cpp">
+      <Filter>소스 파일\HIARC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="hiarc2022\B.cpp">
+      <Filter>소스 파일\HIARC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="hiarc2022\C.cpp">
+      <Filter>소스 파일\HIARC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="hiarc2022\E.cpp">
+      <Filter>소스 파일\HIARC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="hiarc2022\D.cpp">
+      <Filter>소스 파일\HIARC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="hiarc2022\F.cpp">
+      <Filter>소스 파일\HIARC2022</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

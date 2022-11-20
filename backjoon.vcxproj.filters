@@ -43,6 +43,9 @@
     <Filter Include="소스 파일\HIARC2022">
       <UniqueIdentifier>{0925dac9-347d-471d-a54c-28627003605b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\PinelyRound1">
+      <UniqueIdentifier>{ed3f03bb-1a77-4b79-8811-785a228c8377}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -614,6 +617,12 @@
     </ClCompile>
     <ClCompile Include="hiarc2022\G.cpp">
       <Filter>소스 파일\HIARC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="PinelyRound1\A.cpp">
+      <Filter>소스 파일\PinelyRound1</Filter>
+    </ClCompile>
+    <ClCompile Include="PinelyRound1\C.cpp">
+      <Filter>소스 파일\PinelyRound1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -651,6 +651,9 @@
     <ClCompile Include="codeforce835\F.cpp">
       <Filter>소스 파일\Codeforce835</Filter>
     </ClCompile>
+    <ClCompile Include="q11402.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

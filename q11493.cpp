@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <cstring>
 
 const int MAX = 1003;
 const int INF = 1e9;
@@ -11,6 +12,7 @@ int const source = 1001, sink = 1002;
 int T, N, M, x, y;
 bool inQ[MAX];
 int p[MAX], dist[MAX];
+bool coin[MAX], pos[MAX];
 
 std::pair<int, int> MCMF(int source, int sink) {
 	int mc = 0, mf = 0;
@@ -78,17 +80,15 @@ int main() {
 			d[x][y + 500] = d[y][x + 500] = -1;
 			c[x + 500][y] = c[y + 500][x] = INF;
 		}
+		for (int i = 1; i <= N; ++i) std::cin >> pos[i];
+		for (int i = 1; i <= N; ++i) std::cin >> coin[i];
 		for (int i = 1; i <= N; ++i) {
-			std::cin >> x;
-			if (x) {
+			if (!pos[i] && coin[i]) {
 				a[source].push_back(i);
 				a[i].push_back(source);
 				c[source][i] = 1;
 			}
-		}
-		for (int i = 1; i <= N; ++i) {
-			std::cin >> x;
-			if (x) {
+			if (pos[i] && !coin[i]) {
 				a[sink].push_back(i + 500);
 				a[i + 500].push_back(sink);
 				c[i + 500][sink] = 1;

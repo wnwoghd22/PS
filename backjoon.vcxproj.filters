@@ -49,6 +49,9 @@
     <Filter Include="소스 파일\Codeforce835">
       <UniqueIdentifier>{75605eb6-c41a-4254-89ef-6f2104af72dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Codeforce836">
+      <UniqueIdentifier>{3c48167d-8a18-4b70-a3d3-84de295a0716}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -662,6 +665,18 @@
     </ClCompile>
     <ClCompile Include="q1044.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Codeforces836\A.cpp">
+      <Filter>소스 파일\Codeforce836</Filter>
+    </ClCompile>
+    <ClCompile Include="Codeforces836\B.cpp">
+      <Filter>소스 파일\Codeforce836</Filter>
+    </ClCompile>
+    <ClCompile Include="Codeforces836\C.cpp">
+      <Filter>소스 파일\Codeforce836</Filter>
+    </ClCompile>
+    <ClCompile Include="Codeforces836\D.cpp">
+      <Filter>소스 파일\Codeforce836</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

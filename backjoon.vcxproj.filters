@@ -52,6 +52,18 @@
     <Filter Include="소스 파일\Codeforce836">
       <UniqueIdentifier>{3c48167d-8a18-4b70-a3d3-84de295a0716}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\UniCODE2022">
+      <UniqueIdentifier>{5ab27990-ba2d-4e7f-8044-5e63ee8ae81c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GomGom2022">
+      <UniqueIdentifier>{b993be28-a6b8-466a-b0a5-c5738bf92042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Toyota2022">
+      <UniqueIdentifier>{d470c7b8-9e34-4ad1-87d6-d5169d028269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\CodeforcesGlobal24">
+      <UniqueIdentifier>{d9e0865c-93b9-4d54-8650-d0733224781d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -677,6 +689,48 @@
     </ClCompile>
     <ClCompile Include="Codeforces836\D.cpp">
       <Filter>소스 파일\Codeforce836</Filter>
+    </ClCompile>
+    <ClCompile Include="q3955.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UniCODE2022\A.cpp">
+      <Filter>소스 파일\UniCODE2022</Filter>
+    </ClCompile>
+    <ClCompile Include="UniCODE2022\B.cpp">
+      <Filter>소스 파일\UniCODE2022</Filter>
+    </ClCompile>
+    <ClCompile Include="UniCODE2022\C.cpp">
+      <Filter>소스 파일\UniCODE2022</Filter>
+    </ClCompile>
+    <ClCompile Include="UniCODE2022\D.cpp">
+      <Filter>소스 파일\UniCODE2022</Filter>
+    </ClCompile>
+    <ClCompile Include="GomGom2022\A.cpp">
+      <Filter>소스 파일\GomGom2022</Filter>
+    </ClCompile>
+    <ClCompile Include="GomGom2022\B.cpp">
+      <Filter>소스 파일\GomGom2022</Filter>
+    </ClCompile>
+    <ClCompile Include="GomGom2022\D.cpp">
+      <Filter>소스 파일\GomGom2022</Filter>
+    </ClCompile>
+    <ClCompile Include="GomGom2022\E.cpp">
+      <Filter>소스 파일\GomGom2022</Filter>
+    </ClCompile>
+    <ClCompile Include="GomGom2022\F.cpp">
+      <Filter>소스 파일\GomGom2022</Filter>
+    </ClCompile>
+    <ClCompile Include="GomGom2022\H.cpp">
+      <Filter>소스 파일\GomGom2022</Filter>
+    </ClCompile>
+    <ClCompile Include="Toyota2022\C.cpp">
+      <Filter>소스 파일\Toyota2022</Filter>
+    </ClCompile>
+    <ClCompile Include="Toyota2022\D.cpp">
+      <Filter>소스 파일\Toyota2022</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeforcesGlobal24\B.cpp">
+      <Filter>소스 파일\CodeforcesGlobal24</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

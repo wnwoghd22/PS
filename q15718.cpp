@@ -7,8 +7,7 @@ int T, N, M;
 
 int solve(int N, int M) {
 	if (!N && M == 1) return 1;
-	if (!N) return 0;
-	if (M == 1) return 1;
+	if (!N || M == 1) return 0;
 
 	int result1 = 1, n = N - 1, m = M - 2;
 	while (n || m) {

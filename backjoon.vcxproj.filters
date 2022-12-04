@@ -67,6 +67,12 @@
     <Filter Include="소스 파일\AtCoder280">
       <UniqueIdentifier>{2c9997a4-148d-4e37-9055-61e02128a2bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\HCPC2022">
+      <UniqueIdentifier>{f8a586b0-ddc5-4834-9b86-da82399ba129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\HCPC2022\Advanced">
+      <UniqueIdentifier>{dd7382d0-0fa1-468f-be6f-afb38c3c56bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -776,6 +782,24 @@
     </ClCompile>
     <ClCompile Include="AtCoder280\C.cpp">
       <Filter>소스 파일\AtCoder280</Filter>
+    </ClCompile>
+    <ClCompile Include="HCPC2022\A.cpp">
+      <Filter>소스 파일\HCPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="HCPC2022\B.cpp">
+      <Filter>소스 파일\HCPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="HCPC2022\C.cpp">
+      <Filter>소스 파일\HCPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="HCPC2022\Advanced\D.cpp">
+      <Filter>소스 파일\HCPC2022\Advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="HCPC2022\F.cpp">
+      <Filter>소스 파일\HCPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="HCPC2022\H.cpp">
+      <Filter>소스 파일\HCPC2022</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

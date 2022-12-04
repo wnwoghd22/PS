@@ -9,71 +9,50 @@ typedef long long int ll;
 typedef std::complex<double> cd;
 const int LEN = 1'000'001;
 
-void fft(std::vector<cd>& v) {
-    int size = v.size();
-    if (size == 1) return;
-
-    std::vector<cd> v1(size / 2), v2(size / 2);
-    for (int i = 0; i * 2 < size; ++i) {
-        v1[i] = v[i * 2];
-        v2[i] = v[i * 2 + 1];
+void fft(std::vector<cd>& a, bool inv = false) {
+    int n = a.size(), j = 0;
+    std::vector<cd> roots(n / 2);
+    for (int i = 1; i < n; i++) {
+        int bit = (n >> 1);
+        while (j >= bit) {
+            j -= bit;
+            bit >>= 1;
+        }
+        j += bit;
+        if (i < j) swap(a[i], a[j]);
     }
-    fft(v1);
-    fft(v2);
-
-    double x = 2 * M_PI / size;
-    cd W(1), Wn(cos(x), sin(x));
-
-    for (int i = 0; i * 2 < size; ++i, W *= Wn) {
-        v[i] = v1[i] + W * v2[i];
-        v[i + size / 2] = v1[i] - W * v2[i];
+    double ang = 2 * acos(-1) / n * (inv ? -1 : 1);
+    for (int i = 0; i < n / 2; i++) {
+        roots[i] = cd(cos(ang * i), sin(ang * i));
     }
-}
-void ifft(std::vector<cd>& v) {
-    int size = v.size();
-    if (size == 1) return;
-
-    std::vector<cd> v1(size / 2), v2(size / 2);
-    for (int i = 0; i * 2 < size; ++i) {
-        v1[i] = v[i * 2];
-        v2[i] = v[i * 2 + 1];
+    for (int i = 2; i <= n; i <<= 1) {
+        int step = n / i;
+        for (int j = 0; j < n; j += i) {
+            for (int k = 0; k < i / 2; k++) {
+                cd u = a[j + k], v = a[j + k + i / 2] * roots[step * k];
+                a[j + k] = u + v;
+                a[j + k + i / 2] = u - v;
+            }
+        }
     }
-    ifft(v1);
-    ifft(v2);
-
-    double x = -2 * M_PI / size;
-    cd W(1), Wn(cos(x), sin(x));
-
-    for (int i = 0; i * 2 < size; ++i, W *= Wn) {
-        v[i] = v1[i] + W * v2[i];
-        v[i + size / 2] = v1[i] - W * v2[i];
-    }
-    for (cd& e : v) e /= 2;
+    if (inv) for (int i = 0; i < n; i++) a[i] /= n;
 }
 
-std::vector<int> multiply(std::vector<int>& a, std::vector<int>& b) {
-    std::vector<cd> fa(a.begin(), a.end()), fb(b.begin(), b.end());
-    int n = 1;
-    while (n < a.size() + b.size()) n <<= 1;
-    fa.resize(n);
-    fb.resize(n);
-
-    fft(fa); fft(fb);
-
-    for (int i = 0; i < n; ++i) fa[i] *= fb[i];
-
-    ifft(fa);
-
-    std::vector<int> result(n);
-    for (int i = 0; i < n; ++i) {
-        result[i] = round(fa[i].real());
-    }
-    return result;
+std::vector<ll> multiply(std::vector<ll>& v, std::vector<ll>& w) {
+    std::vector<cd> fv(v.begin(), v.end()), fw(w.begin(), w.end());
+    // n이 무조건 2^n 이여야 하기 때문에 변환!
+    int n = 2; while (n < v.size() + w.size()) n <<= 1;
+    fv.resize(n); fw.resize(n);
+    fft(fv, 0); fft(fw, 0);
+    for (int i = 0; i < n; i++) fv[i] *= fw[i];
+    fft(fv, 1);
+    std::vector<ll> ret(n);
+    for (int i = 0; i < n; i++) ret[i] = (ll)round(fv[i].real());
+    return ret;
 }
-
 int main() {
     int N, T;
-    std::vector<int> A(LEN, 1), B(LEN, 0);
+    std::vector<ll> A(LEN, 1), B(LEN, 0);
     A[0] = A[1] = 0;
     for (int i = 2; i < LEN; ++i) {
         if (!A[i]) continue;
@@ -84,7 +63,7 @@ int main() {
         if (A[i]) B[i * 2] = 1;
     }
 
-    std::vector<int> R = multiply(A, B);
+    std::vector<ll> R = multiply(A, B);
 
     std::cin >> T;
     while (T--) {

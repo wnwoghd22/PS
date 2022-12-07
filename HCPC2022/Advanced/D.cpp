@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
+#include <set>
 #include <algorithm>
 
 const int MAX = 200'001;
@@ -9,10 +11,12 @@ std::vector<int> graph[MAX];
 int checked[MAX];
 
 std::vector<std::vector<int>> SCC;
-std::vector<int> graph_SCC[MAX];
+std::set<int> graph_SCC[MAX];
 int group[MAX];
 int incoming[MAX];
-int outgoing[MAX];
+int depth[MAX];
+int start_point;
+int V, E;
 
 int dfs(int v) {
 	static int idx = 1, order[MAX];
@@ -38,8 +42,45 @@ int dfs(int v) {
 	return parent;
 }
 
+int topological_sort() {
+	int max_count = 1;
+	for (int i = 0; i < SCC.size(); ++i) { // preporcess
+		for (const int& e : SCC[i]) {
+			group[e] = i;
+		}
+	}
+	for (int i = 1; i <= V; ++i) {
+		for (const int& e : graph[i]) {
+			int from = group[i], to = group[e];
+			if (from == to) continue;
+			if (graph_SCC[from].find(to) == graph_SCC[from].end()) {
+				graph_SCC[from].insert(to);
+				incoming[to]++;
+			}
+		}
+	}
+	std::queue<int> Q;
+	for (int i = 0; i < SCC.size(); ++i) {
+		if (!incoming[i]) {
+			start_point = i;
+			depth[i] = 1;
+			Q.push(i);
+		}
+	}
+	while (!Q.empty()) {
+		int u = Q.front(); Q.pop();
+		for (const int& v : graph_SCC[u]) {
+			if (!--incoming[v]) {
+				depth[v] = depth[u] + 1;
+				max_count = std::max(depth[v], max_count);
+				Q.push(v);
+			}
+		}
+	}
+	return max_count;
+}
+
 int main() {
-	int V, E;
 	std::cin >> V >> E;
 
 	while (E--) {
@@ -52,36 +93,10 @@ int main() {
 		if (!checked[i]) dfs(i);
 	}
 
-	if (SCC.size() == 1) {
-		std::cout << SCC[0].size() << '\n';
-		std::sort(SCC[0].begin(), SCC[0].end());
-		for (const int& e : SCC[0]) std::cout << e << ' ';
+	if (topological_sort() == SCC.size()) {
+		std::cout << SCC[start_point].size() << '\n';
+		std::sort(SCC[start_point].begin(), SCC[start_point].end());
+		for (const int& e : SCC[start_point]) std::cout << e << ' ';
 	}
-	else {
-		for (int i = 0; i < SCC.size(); ++i) { // preporcess
-			for (const int& e : SCC[i]) {
-				group[e] = i;
-			}
-		}
-		for (int i = 1; i <= V; ++i) {
-			for (const int& e : graph[i]) {
-				int from = group[i], to = group[e];
-				if (from == to) continue;
-				graph_SCC[from].push_back(to);
-				incoming[to]++;
-				outgoing[from]++;
-			}
-		}
-		int start_point = -1, start_count = 0, end_count = 0;
-		for (int i = 0; i < SCC.size(); ++i) {
-			if (!incoming[i]) start_point = i, start_count++;
-			if (!outgoing[i]) end_count++;
-		}
-		if (start_count > 1 || end_count > 1) std::cout << 0;
-		else {
-			std::cout << SCC[start_point].size() << '\n';
-			std::sort(SCC[start_point].begin(), SCC[start_point].end());
-			for (const int& e : SCC[start_point]) std::cout << e << ' ';
-		}
-	}
+	else std::cout << 0;
 }

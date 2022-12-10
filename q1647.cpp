@@ -33,8 +33,7 @@ int kruskal(int V) {
 
 int main() {
     int V, E, a, b, c;
-    std::ios_base::sync_with_stdio(0);
-    std::cin.tie(0);
+    std::cin.tie(0)->sync_with_stdio(0);
 
     std::cin >> V >> E;
     while (E--) {

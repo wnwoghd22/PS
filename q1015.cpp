@@ -4,8 +4,8 @@
 struct E { int i, v, o; }; // index, value, order
 int N, A;
 E a[50];
-bool V(const E& l, const E& r) { return l.v < r.v; }
 bool I(const E& l, const E& r) { return l.i < r.i; }
+bool V(const E& l, const E& r) { if (l.v != r.v) return l.v < r.v; return I(l, r); }
 
 int main() {
 	std::cin >> N;

@@ -34,8 +34,8 @@ void solve() {
 	std::cin >> C >> D >> V;
 	for (int i = 1; i <= V; ++i) {
 		std::cin >> pros >> prosI >> cons >> consI;
-		if (pros == 'C') cat.emplace_back(i, prosI, consI);
-		if (pros == 'D') dog.emplace_back(i, consI, prosI);
+		if (pros == 'C') cat.push_back({ i, prosI, consI });
+		if (pros == 'D') dog.push_back({ i, consI, prosI });
 	}
 	for (const Vote& cv : cat) {
 		for (const Vote& dv : dog) {

@@ -82,6 +82,9 @@
     <Filter Include="소스 파일\2022\SCUPC2022">
       <UniqueIdentifier>{d66d0dec-8d55-4667-b59c-277c177e98e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2022\AtCoder282">
+      <UniqueIdentifier>{13f9b359-fad4-4500-940b-b182d24f84e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -857,6 +860,21 @@
     </ClCompile>
     <ClCompile Include="SCUPC2022\C.cpp">
       <Filter>소스 파일\2022\SCUPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder282\A.cpp">
+      <Filter>소스 파일\2022\AtCoder282</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder282\B.cpp">
+      <Filter>소스 파일\2022\AtCoder282</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder282\C.cpp">
+      <Filter>소스 파일\2022\AtCoder282</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder282\D.cpp">
+      <Filter>소스 파일\2022\AtCoder282</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder282\E.cpp">
+      <Filter>소스 파일\2022\AtCoder282</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

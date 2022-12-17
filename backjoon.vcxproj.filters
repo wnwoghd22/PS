@@ -79,6 +79,9 @@
     <Filter Include="소스 파일\2022\겨울 숲의 초대">
       <UniqueIdentifier>{f85c3b70-dbd1-48a6-b65e-b9f3b2e42eb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2022\SCUPC2022">
+      <UniqueIdentifier>{d66d0dec-8d55-4667-b59c-277c177e98e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -839,6 +842,21 @@
     </ClCompile>
     <ClCompile Include="q11407.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SCUPC2022\A.cpp">
+      <Filter>소스 파일\2022\SCUPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="SCUPC2022\B.cpp">
+      <Filter>소스 파일\2022\SCUPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="SCUPC2022\D.cpp">
+      <Filter>소스 파일\2022\SCUPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="SCUPC2022\E.cpp">
+      <Filter>소스 파일\2022\SCUPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="SCUPC2022\C.cpp">
+      <Filter>소스 파일\2022\SCUPC2022</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

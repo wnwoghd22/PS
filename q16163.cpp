@@ -1,7 +1,7 @@
 #include <iostream>
 
 typedef long long int ll;
-const int LEN = 200'002;
+const int LEN = 4'000'002;
 int A[LEN];
 
 int manachers(std::string s) {

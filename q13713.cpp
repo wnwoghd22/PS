@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 const int LEN = 1'000'001;
 int M, I, Z[LEN];
@@ -24,6 +25,9 @@ void z(std::string s) {
 }
 
 int main() {
+	std::ios_base::sync_with_stdio(0);
+	std::cin.tie(0); std::cout.tie(0);
+
 	std::string S;
 	std::cin >> S;
 	std::reverse(S.begin(), S.end());

@@ -954,6 +954,9 @@
     <ClCompile Include="ZOAC2022\F.cpp">
       <Filter>소스 파일\2022\ZOAC2022</Filter>
     </ClCompile>
+    <ClCompile Include="ZOAC2022\q26601.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

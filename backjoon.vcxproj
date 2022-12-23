@@ -999,7 +999,10 @@
     <ClCompile Include="ZOAC2022\E.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="ZOAC2022\F.cpp" />
+    <ClCompile Include="ZOAC2022\F.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="ZOAC2022\q26601.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h" />

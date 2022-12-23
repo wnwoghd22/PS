@@ -27,16 +27,17 @@ int main() {
 	std::string S;
 	std::cin >> N >> K >> S;
 	z(S);
-	int max = (K >= N) * N;
-	for (int i = 1; i < N; ++i) {
-		if (i + Z[i] == N) {
-			if (i >= Z[i]) {
-				if (N - 2 * Z[i] <= K) max = std::max(max, i);
-			}
-			else {
-				if (i - Z[i] % i <= K) max = std::max(max, i);
+	if (K >= N) {
+		std::cout << N;
+	}
+	else {
+		int max = 0;
+		for (int i = 1; i < N; ++i) {
+			if (i + Z[i] == N) {
+				int t = (N + K) / i;
+				if (t >= 2 && t * i >= N) max = std::max(max, i);
 			}
 		}
+		std::cout << max;
 	}
-	std::cout << max;
 }

@@ -25,7 +25,7 @@ void manber_myers(const std::string& s) {
 		t <<= 1;
 	}
 }
-void get_lcp(std::string s) {
+void get_lcp(const std::string& s) {
 	for (int i = 0; i < N; ++i) RANK[SA[i]] = i;
 	int len = 0;
 	for (int i = 0, j; i < N; ++i) {

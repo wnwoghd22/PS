@@ -79,6 +79,6 @@ int main() {
 	std::cin >> Q;
 	while (Q--) {
 		std::cin >> s;
-		std::cout << (t.aho_corasick(s) ? "YES\n" : "NO");
+		std::cout << (t.aho_corasick(s) ? "YES\n" : "NO\n");
 	}
 }

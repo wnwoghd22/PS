@@ -3,7 +3,7 @@
 #include <queue>
 
 char marker[101];
-char s[10001];
+char s[1'000'001];
 
 class Trie {
 private:

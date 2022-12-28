@@ -11,7 +11,7 @@ std::vector<std::pair<int, ll>> graph[LEN];
 std::priority_queue<ll> r; // radius of tree
 bool checked[LEN];
 int N, M, L, prior[LEN], _u, _v, t;
-ll dist[LEN], max_dist;
+ll dist[LEN], max_dist, max_diameter;
 
 void dfs(int v) {
 	for (const auto& [u, d] : graph[v]) {
@@ -42,6 +42,7 @@ ll get_radius(int u) {
 	dist[_u] = max_dist = 0; _v = _u;
 	prior[_u] = true;
 	dfs_diameter(_u);
+	max_diameter = std::max(max_diameter, max_dist);
 	if (_u == _v) return 0;
 	ll _r = INF, _d = max_dist;
 	for (int i = _v; i != _u; i = prior[i]) {
@@ -66,5 +67,5 @@ int main() { // dfs 3 times ... O(3*|V|)
 	max_dist = r1 = r.top(); r.pop();
 	if (!r.empty()) r2 = r.top(), r.pop(), max_dist += r2 + L;
 	if (!r.empty()) r3 = r.top(), max_dist = std::max(max_dist, r2 + r3 + L * 2);
-	std::cout << max_dist;
+	std::cout << std::max(max_dist, max_diameter);
 }

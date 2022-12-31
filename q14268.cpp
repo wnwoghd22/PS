@@ -8,9 +8,9 @@ int N;
 std::vector<int> graph[MAX];
 ll s[MAX], e[MAX];
 ll segTree[MAX * 4];
-int order = 1;
+int order = 0;
 void dfs(int v) {
-	s[v] = order++;
+	s[v] = ++order;
 	for (const int& u : graph[v]) {
 		if (!s[u]) dfs(u);
 	}
@@ -43,13 +43,11 @@ int main() {
 	dfs(1);
 
 	while (M--) {
-		ll q, a, b, c;
+		ll q, a, b;
 		std::cin >> q;
 		if (q == 1) {
-			std::cin >> a >> c;
-			a = s[a]; b = e[a];
-			std::cout << "update: " << a << ' ' << b << '\n';
-			update_diff(a, b, c);
+			std::cin >> a >> b;
+			update_diff(s[a], e[a], b);
 		}
 		if (q == 2) {
 			std::cin >> a;

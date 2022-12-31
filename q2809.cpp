@@ -1,29 +1,34 @@
 #include <iostream>
 #include <algorithm>
+#include <vector>
 #include <queue>
-#include <map>
+#include <cstring>
 
 char tile[5'001];
-char street[3'00'001];
+char street[300'001];
+int mark[300'001], chk[300'001];
+int N, M;
 
 class Trie {
 private:
 	struct Node {
 	public:
-		std::map<char, Node*> go;
+		std::vector<std::pair<char, Node*>> go;
 		Node* fail;
-		int output, len;
-		Node() : fail(0), output(0), len(0) { }
+		int len;
+		Node() : fail(0), len(0) { }
 		~Node() { for (auto [k, n] : go) delete n; }
 		void insert(const char* key, const int& len) {
 			if (*key == '\0') {
-				output = 1;
-				this->len = len;
+				this->len = std::max(this->len, len);
 				return;
 			}
 			int next = *key;
-			if (go.find(next) == go.end()) go[next] = new Node;
-			go[next]->insert(key + 1, len);
+			for (auto [c, n] : go) {
+				if (c == next) return n->insert(key + 1, len);
+			}
+			go.push_back({ next, new Node });
+			go.back().second->insert(key + 1, len);
 		}
 	};
 	Node* root;
@@ -44,12 +49,26 @@ public:
 				if (current == root) next->fail = root;
 				else {
 					Node* dest = current->fail;
-					while (dest != root && !dest->go[i]) dest = dest->fail;
-					if (dest->go[i]) dest = dest->go[i];
+					while (dest != root) {
+						bool flag = true;
+						for (auto [j, n] : dest->go) {
+							if (i == j) {
+								flag = false;
+								break;
+							}
+						}
+						if (!flag) break;
+						dest = dest->fail;
+					}
+					for (auto [j, n] : dest->go) {
+						if (j == i) {
+							dest = n;
+							break;
+						}
+					}
 					next->fail = dest;
 				}
-				if (next->fail->output) {
-					next->output += next->fail->output;
+				if (next->fail->len) {
 					next->len = std::max(next->len, next->fail->len);
 				}
 
@@ -58,20 +77,43 @@ public:
 		}
 	}
 	int aho_corasick_masking(const char* s) {
-		int result = strlen(s);
 		Node* current = root;
 		for (int i = 0, j = -1; s[i]; ++i) {
 			int next = s[i];
-			while (current != root && !current->go[next]) current = current->fail;
-			if (current->go[next]) current = current->go[next];
-			if (current->output) {
-				std::cout << i << ' ' << current->len << ' ' << j << '\n';
-				int masking = std::min(i - j, current->len);
-				std::cout << masking << '\n';
-				result -= masking;
-				j = i;
+			while (current != root) {
+				bool flag = true;
+				for (auto [k, n] : current->go) {
+					if (k == next) {
+						flag = false;
+						break;
+					}
+				}
+				if (!flag) break;
+				current = current->fail;
+			}
+			for (auto [k, n] : current->go) {
+				if (k == next) {
+					current = n;
+					break;
+				}
+			}
+			if (current->len) {
+				// int masking = std::min(i - j, current->len);
+				// result -= masking;
+				// j = i;
+				mark[i] = std::max(mark[i], current->len);
 			}
 		}
+		int result = 0;
+		for (int i = N - 1; i >= 0; --i) {
+			int check = mark[i];
+			if (check == 0 && chk[i] == 0) result++;
+			while (chk[i - check + 1] == 0 && i - check + 1 <= i) {
+				chk[i - check + 1] = 1;
+				check--;
+			}
+		}
+
 		return result;
 	}
 };
@@ -80,7 +122,6 @@ int main() {
 	std::cin.tie(0)->sync_with_stdio(0);
 
 	Trie t;
-	int N, M;
 	std::cin >> N;
 	std::cin >> street;
 	std::cin >> M;

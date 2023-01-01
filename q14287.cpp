@@ -8,9 +8,9 @@ int N;
 std::vector<int> graph[MAX];
 ll s[MAX], e[MAX];
 ll segTree[MAX * 4];
-int order = 1;
+int order = 0;
 void dfs(int v) {
-	s[v] = order++;
+	s[v] = ++order;
 	for (const int& u : graph[v]) {
 		if (!s[u]) dfs(u);
 	}
@@ -34,6 +34,8 @@ ll get_sum(int left, int right, int index = 1, int start = 1, int end = N) {
 }
 
 int main() {
+	std::cin.tie(0)->sync_with_stdio(0);
+
 	int M, A;
 	std::cin >> N >> M;
 	for (int i = 1; i <= N; ++i) {
@@ -52,7 +54,7 @@ int main() {
 		}
 		if (q == 2) {
 			std::cin >> a;
-			std::cout << get_sum(s[a], N) << '\n';
+			std::cout << get_sum(s[a], e[a]) << '\n';
 		}
 	}
 }

@@ -12,7 +12,7 @@ int main() {
 		ll l = k + 1, r = N - 1, s;
 		while (l < r) {
 			s = A[k] + A[l] + A[r];
-			if (abs(s) < S) S = abs(s), K = k, L = l, R = r;
+			if (std::abs(s) < S) S = std::abs(s), K = k, L = l, R = r;
 			if (!s) break;
 			else if (s > 0) --r;
 			else ++l;

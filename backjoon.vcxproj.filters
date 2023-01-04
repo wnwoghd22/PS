@@ -999,6 +999,15 @@
     <ClCompile Include="q6497.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="q2623.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q9466.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q10775.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

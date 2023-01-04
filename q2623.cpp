@@ -63,7 +63,7 @@ int main() {
 
     std::vector<int> result = topological_sort();
 
-    if (result.size()) for (const int& e : result) std::cout << e << '\n';
+    if (result.size() == N) for (const int& e : result) std::cout << e << '\n';
     else std::cout << 0;
 
     return 0;

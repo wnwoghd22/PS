@@ -94,6 +94,12 @@
     <Filter Include="소스 파일\2022\GoodBye2022">
       <UniqueIdentifier>{b4bb6ba7-9b91-45cb-8014-7e981aa27ce6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023">
+      <UniqueIdentifier>{ea5d6799-a6ef-4c66-b7e0-1323be99dd1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\2023\Codeforce842">
+      <UniqueIdentifier>{04853ca9-801f-4ecb-933f-3d0ffc4a89f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1007,6 +1013,21 @@
     </ClCompile>
     <ClCompile Include="q10775.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q14288.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q12844.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q1395.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Codeforce842\A.cpp">
+      <Filter>소스 파일\2023\Codeforce842</Filter>
+    </ClCompile>
+    <ClCompile Include="Codeforce842\C.cpp">
+      <Filter>소스 파일\2023\Codeforce842</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

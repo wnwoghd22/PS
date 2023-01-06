@@ -1029,6 +1029,9 @@
     <ClCompile Include="Codeforce842\C.cpp">
       <Filter>소스 파일\2023\Codeforce842</Filter>
     </ClCompile>
+    <ClCompile Include="q1029.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

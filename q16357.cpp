@@ -24,7 +24,7 @@ void propagate(int index, int start, int end) {
 	}
 }
 
-void update_diff(int left, int right, ll diff, int index = 1, int start = 0, int end = N) {
+void update_diff(int left, int right, ll diff, int index = 1, int start = 0, int end = posY.size() - 1) {
 	propagate(index, start, end);
 
 	if (left > end || right < start) return;
@@ -43,7 +43,7 @@ void update_diff(int left, int right, ll diff, int index = 1, int start = 0, int
 	segTree[index] = std::max(segTree[index * 2], segTree[index * 2 + 1]);
 }
 
-ll get_max(int left, int right, int start = 0, int end = N, int index = 1) {
+ll get_max(int left, int right, int start = 0, int end = posY.size() - 1, int index = 1) {
 	propagate(index, start, end);
 
 	if (left > end || right < start) return 0;

@@ -8,7 +8,7 @@ int lazy[MAX * 4];
 
 void propagate(int index, int start, int end) {
 	if (lazy[index]) {
-		segTree[index] = start - end + 1 - segTree[index];
+		segTree[index] = end - start + 1 - segTree[index];
 		if (start != end) {
 			lazy[index * 2] ^= 1;
 			lazy[index * 2 + 1] ^= 1;
@@ -22,7 +22,7 @@ void flip(int left, int right, int index = 1, int start = 1, int end = N) {
 
 	if (left > end || right < start) return;
 	if (left <= start && end <= right) {
-		segTree[index] = start - end + 1 - segTree[index];
+		segTree[index] = end - start + 1 - segTree[index];
 		if (start != end) {
 			lazy[index * 2] ^= 1;
 			lazy[index * 2 + 1] ^= 1;

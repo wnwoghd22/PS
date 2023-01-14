@@ -1002,7 +1002,7 @@
     <ClCompile Include="GoodBye2022\B.cpp">
       <Filter>소스 파일\2022\GoodBye2022</Filter>
     </ClCompile>
-    <ClCompile Include="GoodBye2022\D.cpp">
+    <ClCompile Include="GoodBye2022\E.cpp">
       <Filter>소스 파일\2022\GoodBye2022</Filter>
     </ClCompile>
     <ClCompile Include="q6497.cpp">
@@ -1064,6 +1064,9 @@
     </ClCompile>
     <ClCompile Include="swea5363.cpp">
       <Filter>소스 파일\swea</Filter>
+    </ClCompile>
+    <ClCompile Include="q2243.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

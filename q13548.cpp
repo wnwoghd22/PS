@@ -4,14 +4,16 @@
 
 const int LEN = 100'001;
 
-int N, M, sqrtN, A[LEN], answer[LEN], count[LEN], seg_tree[LEN * 4];
+int N, M, sqrtN, A[LEN], answer[LEN], count[LEN], num[LEN] = { LEN, }, max = 0;
 
-int get_max() { return seg_tree[1]; }
-int update_max(int n, int start = 1, int end = LEN - 1, int index = 1) {
-	if (n > end || n < start) return seg_tree[index];
-	if (start == end) return seg_tree[index] = count[n];
-	int mid = (start + end) / 2;
-	return seg_tree[index] = std::max(update_max(n, start, mid, index * 2), update_max(n, mid + 1, end, index * 2 + 1));
+void add_count(int n) {
+	if (count[n] == max) ++max;
+	--num[count[n]++], ++num[count[n]];
+}
+
+void pop_count(int n) {
+	if (count[n] == max && num[count[n]] == 1) --max;
+	--num[count[n]--], ++num[count[n]];
 }
 
 struct Query {
@@ -30,17 +32,14 @@ int main() {
 	}
 	std::sort(q, q + M);
 	int s = q[0].s, e = q[0].e;
-	for (int i = s; i <= e; ++i) {
-		count[A[i]]++;
-		update_max(A[i]);
-	}
-	answer[q[0].index] = get_max();
+	for (int i = s; i <= e; ++i) add_count(A[i]);
+	answer[q[0].index] = max;
 	for (int i = 1; i < M; ++i) {
-		while (s < q[i].s) --count[A[s]], update_max(A[s++]);
-		while (s > q[i].s) ++count[A[--s]], update_max(A[s]);
-		while (e < q[i].e) ++count[A[++e]], update_max(A[e]);
-		while (e > q[i].e) --count[A[e]], update_max(A[e--]);
-		answer[q[i].index] = get_max();
+		while (s < q[i].s) pop_count(A[s++]);
+		while (s > q[i].s) add_count(A[--s]);
+		while (e < q[i].e) add_count(A[++e]);
+		while (e > q[i].e) pop_count(A[e--]);
+		answer[q[i].index] = max;
 	}
 	for (int i = 0; i < M; ++i) std::cout << answer[i] << '\n';
 }

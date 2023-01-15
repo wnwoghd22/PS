@@ -106,6 +106,9 @@
     <Filter Include="소스 파일\2023\AtcoderRegular153">
       <UniqueIdentifier>{4bb0c0da-1dbd-467c-9a52-4c3d586d4d46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\AtCoder285">
+      <UniqueIdentifier>{4b359617-54e1-46b3-94b3-315c3ea4c166}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1082,6 +1085,21 @@
     </ClCompile>
     <ClCompile Include="q9328.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q17143.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder285\A.cpp">
+      <Filter>소스 파일\2023\AtCoder285</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder285\B.cpp">
+      <Filter>소스 파일\2023\AtCoder285</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder285\C.cpp">
+      <Filter>소스 파일\2023\AtCoder285</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder285\D.cpp">
+      <Filter>소스 파일\2023\AtCoder285</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

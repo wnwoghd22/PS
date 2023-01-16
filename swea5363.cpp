@@ -23,7 +23,25 @@ void pop(int n) { sum -= count[n] * count[n] * n; --count[n]; sum += count[n] * 
 struct Query {
 	int index, s, e;
 	bool operator<(const Query& r) { return s / sqrtN ^ r.s / sqrtN ? s / sqrtN < r.s / sqrtN : e < r.e; }
-} q[LEN];
+} q[LEN], temp[LEN];
+
+void merge(int l, int r, int mid) {
+	int i = l, j = mid + 1, k = 0;
+	while (i <= mid && j <= r) temp[k++] = q[i] < q[j] ? q[i++] : q[j++];
+	while (i <= mid) temp[k++] = q[i++];
+	while (j <= r) temp[k++] = q[j++];
+	for (i = l; i <= r; i++) q[i] = temp[i - l];
+}
+
+void merge_sort(int l, int r) {
+	int mid;
+	if (l < r) {
+		mid = (l + r) / 2;
+		merge_sort(l, mid);
+		merge_sort(mid + 1, r);
+		merge(l, r, mid);
+	}
+}
 
 ll solve() {
 	sum = 0, total = 0;
@@ -35,7 +53,7 @@ ll solve() {
 		q[i].index = i + 1;
 		q[i].s = get_num(); q[i].e = get_num();
 	}
-	std::sort(q, q + Q);
+	merge_sort(0, Q - 1);
 	int s = q[0].s, e = q[0].e;
 	for (int i = s; i <= e; ++i) push(A[i]);
 	total += sum * q[0].index % MOD;

@@ -13,25 +13,25 @@ public:
 		int _s = s;
 		switch (d) {
 		case 1:
-			if (i + _s < R - 1) result = { i + _s, j };
-			else {
-				_s -= R - i - 1;
-				if (R - _s - 1 > 0) {
-					result = { R - _s - 1, j };
-					d = 2;
-				}
-				else result = { _s - (R - 1), j };
-			}
-			break;
-		case 2:
 			if (i - _s > 0) result = { i - _s, j };
 			else {
 				_s -= i;
 				if (_s < R - 1) {
 					result = { _s, j };
-					d = 1;
+					d = 2;
 				}
 				else result = { 2 * (R - 1) - _s, j };
+			}
+			break;
+		case 2:
+			if (i + _s < R - 1) result = { i + _s, j };
+			else {
+				_s -= R - i - 1;
+				if (R - _s - 1 > 0) {
+					result = { R - _s - 1, j };
+					d = 1;
+				}
+				else result = { _s - (R - 1), j };
 			}
 			break;
 		case 3:

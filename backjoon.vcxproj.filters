@@ -1104,6 +1104,9 @@
     <ClCompile Include="q17353.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="swea15942.cpp">
+      <Filter>소스 파일\swea</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

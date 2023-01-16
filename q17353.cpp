@@ -1,7 +1,7 @@
 #include <iostream>
 
 typedef long long int ll;
-const int MAX = 100'000;
+const int MAX = 100'001;
 
 int N, Q;
 ll arr[MAX];
@@ -23,7 +23,7 @@ ll get(int n, int start = 1, int end = N, int index = 1) {
 	if (start == end) return seg_range[index] + arr[n];
 	int mid = (start + end) / 2;
 	ll interval = n - start;
-	int count = seg_range[index] + seg_count[index] * interval;
+	ll count = seg_range[index] + seg_count[index] * interval;
 	return count + get(n, start, mid, index * 2) + get(n, mid + 1, end, index * 2 + 1);
 }
 

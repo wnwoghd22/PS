@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
 
-const int LEN = 10'001;
+const int LEN = 100'001;
 int p[LEN];
 
 int find(int i) { return p[i] < 0 ? i : p[i] = find(p[i]); }

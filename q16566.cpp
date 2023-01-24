@@ -17,7 +17,7 @@ bool join(int a, int b) {
 }
 
 int binary_search(int k) {
-	int l = 0, r = M - 1, result = N - 1, mid;
+	int l = 0, r = M - 1, result = M - 1, mid;
 
 	while (l <= r) {
 		mid = (l + r) / 2;

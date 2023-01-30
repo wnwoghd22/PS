@@ -8,67 +8,64 @@ typedef long double ld;
 const ld ERR = 1e-7;
 const ld INF = 1e19;
 const int LEN = 100'001;
-ll dp[201][LEN], S[LEN];
-inline ll fa(int k, int x) { return dp[k][x]; }
-inline ll fb(int k, int x) { return -S[x] * dp[k][x]; }
 
-int N, K, a, hull[201][LEN], _size[201], ptr[201];
-ld xpos[201][LEN];
-ld intersect(int k, int r, int l) {
-	ld a1 = fa(k, r), b1 = fb(k, r);
-	ld a2 = fa(k, l), b2 = fb(k, l);
-	return (b1 - b2) / (a2 - a1);
-}
-std::vector<std::pair<int, int>> _stack;
-void add_line(int k, int n) {
-	if (!_size) {
-		hull[k][++_size[k]] = n;
-		xpos[k][_size[k]] = -INF;
+struct Line {
+	ld a, b, x, y;
+	Line() {}
+	Line(ld a, ld b, ld x, ld y) : a(a), b(b), x(x), y(y) {}
+	ld operator&(const Line& r) { return (r.b - b) / (a - r.a); } // get pos X of intersect of l and r
+};
+
+std::vector<Line> hull;
+ll N, K, a, S[LEN], dp[201][LEN];
+int ptr, track[201][LEN];
+
+void add_line(Line l) {
+	if (hull.size() && abs(hull.back().a - l.a) < ERR) {
+		hull.back().y = l.y;
+	}
+	if (hull.empty()) {
+		hull.push_back(l);
+		ptr = 0;
 		return;
 	}
-	while (_size[k] > 1 && xpos[k][_size[k]] > intersect(k, hull[k][_size[k]], n)) --_size[k];
-	hull[k][++_size[k]] = n;
-	xpos[k][_size[k]] = intersect(k, hull[k][_size[k] - 1], n);
-	if (ptr[k] > _size[k]) ptr[k] = _size[k];
-}
-int binary_search(int k, int x) {
-	int l = 1, r = _size[k];
-	int result = 0, mid;
-	while (l <= r) {
-		mid = (l + r) / 2;
-		if (xpos[k][mid] <= S[x]) {
-			result = std::max(result, mid);
-			l = mid + 1;
-		}
-		else r = mid - 1;
-	}
-	return result;
-}
-ll f(int k, ll x) {
-	int ptr = binary_search(k - 1, x);
-	return fa(k - 1, hull[k - 1][ptr]) * S[x] + fb(k - 1, hull[k - 1][ptr]);
+	while (hull.size() > 1 && hull.back().x > (hull.back() & l)) hull.pop_back();
+	l.x = hull.back() & l;
+	hull.push_back(l);
+	if (ptr >= hull.size()) ptr = hull.size() - 1;
 }
 
-// TODO: need to fix
 int main() {
 	std::cin >> N >> K;
 	for (ll i = 1, p = 1; i <= N; ++i) {
 		std::cin >> a;
-		dp[0][i] = S[i] = S[i - 1] + a;
-		if (i <= K + 1) {
-			p *= a;
-			dp[i - 1][i] = p;
-			add_line(i - 1, i);
-		}
+		S[i] = S[i - 1] + a;
 	}
-	for (int n = 3; n <= N; ++n) {
-		add_line(0, n - 1);
-		for (int k = 1; k <= std::min(n - 2, K); ++k) {
-			dp[k][n] = f(k, n);
-			_stack.push_back({ k, n });
+	for (int k = 1; k <= K; ++k) {
+		hull.clear();
+		add_line(Line(0, 0, 0, 0));
+		for (int n = 1; n <= N; ++n) {
+			while (ptr < hull.size() - 1 && hull[ptr + 1].x < S[n]) ++ptr;
+			Line l = hull[ptr];
+			dp[k][n] = l.a * S[n] + l.b;
+			track[k][n] = l.y;
+			add_line(Line(S[n], dp[k - 1][n] - S[n] * S[n], -INF, n));
 		}
-		while (_stack.size()) add_line(_stack.back().first, _stack.back().second), _stack.pop_back();
 	}
 
-	std::cout << dp[K][N];
+	std::cout << dp[K][N] << '\n';
+	std::vector<int> result;
+	int now = N;
+	result.push_back(-1);
+	for (int i = K; i >= 1; --i) {
+		result.push_back(track[i][now]);
+		now = track[i][now];
+	}
+	std::sort(result.begin(), result.end());
+	for (int i = 1; i <= K; ++i) {
+		if (!result[i]) result[i] = 1;
+		if (result[i] <= result[i - 1]) result[i] = result[i - 1] + 1;
+	}
+	for (int i = 1; i <= K; i++) std::cout << result[i] << ' ';
+
 }

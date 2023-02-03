@@ -84,6 +84,8 @@ void sweep_r(int t) {
 		}
 	}
 }
+void (*sweep[4])(int) = { sweep_u, sweep_d, sweep_l, sweep_r };
+
 int get_max(int t) {
 	int max = 0;
 	for (int i = 0; i < N; ++i)
@@ -95,14 +97,10 @@ int get_max(int t) {
 int dfs(int t) {
 	if (t == 5) return get_max(5);
 	int result = 0;
-	sweep_u(t);
-	result = std::max(result, dfs(t + 1));
-	sweep_d(t);
-	result = std::max(result, dfs(t + 1));
-	sweep_l(t);
-	result = std::max(result, dfs(t + 1));
-	sweep_r(t);
-	result = std::max(result, dfs(t + 1));
+	for (int i = 0; i < 4; ++i) {
+		sweep[i](t);
+		result = std::max(result, dfs(t + 1));
+	}
 	return result;
 }
 

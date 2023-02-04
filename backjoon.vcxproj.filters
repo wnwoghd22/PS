@@ -112,6 +112,12 @@
     <Filter Include="소스 파일\2023\Codeforce847">
       <UniqueIdentifier>{c59f0086-703d-4b3e-b65b-1d6cf6c92c5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\KCKPC2022">
+      <UniqueIdentifier>{fc92f519-1e38-4054-bfd9-de105bf977c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\2023\AtCoder288">
+      <UniqueIdentifier>{c66f4618-b825-44a9-8d77-bd3784203a23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1196,6 +1202,21 @@
     </ClCompile>
     <ClCompile Include="q12100.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KCPC2022\A.cpp">
+      <Filter>소스 파일\2023\KCKPC2022</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder288\A.cpp">
+      <Filter>소스 파일\2023\AtCoder288</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder288\B.cpp">
+      <Filter>소스 파일\2023\AtCoder288</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder288\C.cpp">
+      <Filter>소스 파일\2023\AtCoder288</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder288\D.cpp">
+      <Filter>소스 파일\2023\AtCoder288</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

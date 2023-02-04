@@ -1218,6 +1218,9 @@
     <ClCompile Include="AtCoder288\D.cpp">
       <Filter>소스 파일\2023\AtCoder288</Filter>
     </ClCompile>
+    <ClCompile Include="q3830.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

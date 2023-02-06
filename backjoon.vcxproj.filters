@@ -1224,10 +1224,18 @@
     <ClCompile Include="q7578.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="q6171.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">
       <Filter>헤더 파일\q24324</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt">
+      <Filter>소스 파일</Filter>
+    </Text>
   </ItemGroup>
 </Project>

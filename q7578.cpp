@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 
 typedef long long int ll;
@@ -21,6 +22,8 @@ ll get_sum(int l, int r, int s = 0, int e = N - 1, int i = 1) {
 }
 
 int main() {
+	freopen("input.txt", "r", stdin);
+
 	ll result = 0;
 	std::cin >> N;
 	for (int i = 0, a; i < N; ++i) std::cin >> a, order[a] = i;

@@ -5,8 +5,9 @@
 
 typedef long long int ll;
 typedef long double ld;
+inline ld _abs(ld x) { return x > 0 ? x : -x; }
 
-const ld ERR = 1e-15;
+const ld ERR = 1e-10;
 
 struct Line {
 	ld a, b, x;
@@ -14,7 +15,7 @@ struct Line {
 	Line() {}
 	Line(ld a, ld b, ld x, int i) : a(a), b(b), x(x), i(i) {}
 	bool operator<(const Line& r) {
-		if (abs(a - r.a) < ERR) return b < r.b;
+		if (_abs(a - r.a) < ERR) return b < r.b;
 		return a > r.a;
 	}
 	ld operator&(const Line& r) { return (r.b - b) / (a - r.a); } // get pos X of intersect of l and r
@@ -24,41 +25,38 @@ ld minX, maxX;
 int N, M;
 
 std::vector<Line> lines;
-std::vector<std::pair<ld, int>> queries;
 std::vector<Line> hull;
-int ptr;
 
 void add_line(Line& l) {
 	if (hull.empty()) {
 		hull.push_back(l);
 		return;
 	}
-	while (!hull.empty()) {
-		Line top = hull.back();
-		if (abs(top.a - l.a) < ERR && top.b < l.b) return;
-		if (abs(top.a - l.a) < ERR) hull.pop_back();
-		else {
-			ld x = top & l;
-			if (x <= top.x) hull.pop_back();
-			else break;
-		}
+	if (_abs(hull.back().a - l.a) < ERR && l.b > hull.back().b) return;
+	while (hull.size() > 1) {
+		if (hull.back().x > (hull.back() & l)) hull.pop_back();
+		else break;
 	}
-	if (hull.empty()) hull.push_back(l);
-	else {
-		l.x = hull.back() & l;
-		hull.push_back(l);
-	}
-	// if (ptr >= hull.size()) ptr = hull.size() - 1;
-	return;
+	l.x = hull.back() & l;
+	hull.push_back(l);
 }
-
-int query(ld x) {
-	while (ptr < hull.size() - 1 && hull[ptr + 1].x < x) ++ptr;
-	return hull[ptr].i;
+int binary_search(ld x) {
+	int l = 0, r = hull.size() - 1;
+	int result = 0, mid;
+	while (l <= r) {
+		mid = (l + r) / 2;
+		if (hull[mid].x < x + ERR) {
+			result = std::max(result, mid);
+			l = mid + 1;
+		}
+		else r = mid - 1;
+	}
+	return hull[result].i;
 }
 
 int main() {
 	freopen("input.txt", "r", stdin);
+	// std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> maxX >> minX >> N;
 	ld dx = maxX - minX;
 	for (int i = 1; i <= N; ++i) {
@@ -69,16 +67,11 @@ int main() {
 		ld b = lowY - a * minX;
 		lines.push_back(Line(a, b, minX, i));
 	}
-	std::cin >> M;
-	for (int i = 0; i < M; ++i) {
-		ld x;
-		std::cin >> x;
-		queries.push_back({ x, i });
-	}
 	std::sort(lines.begin(), lines.end());
-	std::sort(queries.begin(), queries.end());
-	std::vector<int> ans(M);
 	for (Line& l : lines) add_line(l);
-	for (const auto& q : queries) ans[q.second] = query(q.first);
-	for (const int& i : ans) std::cout << i << '\n';
+	std::cin >> M;
+	while (M--) {
+		std::cin >> dx;
+		std::cout << binary_search(dx) << '\n';
+	}
 }

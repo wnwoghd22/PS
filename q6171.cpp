@@ -44,7 +44,10 @@ int binary_search(int x) {
 	while (l <= r) {
 		mid = (l + r) / 2;
 		if (hull[mid].x <= x) {
-			result = std::max(result, mid);
+			if (abs(hull[mid].x - hull[result].x) < ERR) {
+				result = std::min(result, mid);
+			}
+			else result = std::max(result, mid);
 			l = mid + 1;
 		}
 		else r = mid - 1;

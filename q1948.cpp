@@ -5,35 +5,48 @@
 
 typedef std::pair<int, int> pii;
 const int LEN = 10'001;
-int dist[LEN], cnt[LEN];
-int incoming[LEN], flag[LEN];
-std::vector<pii> graph[LEN];
+int dist[LEN];
+int incoming[LEN];
+bool visited[LEN];
+int distance[LEN][LEN];
+std::vector<int> graph[LEN];
+std::vector<int> inv[LEN];
 int N, M, S, E, U, V, D;
 
-pii topological_sort(const int target) {
+int topological_sort(const int from, const int target) {
 	std::queue<int> q;
-	for (int i = 0; i <= N; ++i)
-		if (!incoming[i]) q.push(i);
+	q.push(from);
 	while (q.size()) {
 		int u = q.front(); q.pop();
 		if (u == target) break;
-		for (const pii& e : graph[u]) {
-			int v = e.first, d = e.second;
+		for (const int& v : graph[u]) {
+			int d = distance[u][v];
 			if (!--incoming[v]) q.push(v);
-			if (flag[u]) {
-				flag[v] = true;
-				if (dist[u] + d > dist[v]) {
-					dist[v] = dist[u] + d;
-					cnt[v] = cnt[u] + 1;
-				}
-				else if (dist[u] + d == dist[v]) {
-					dist[v] = dist[u] + d;
-					cnt[v] += cnt[u] + 1;
+			if (dist[u] + d > dist[v])
+				dist[v] = dist[u] + d;
+		}
+	}
+	return dist[target];
+}
+int back_track(const int target) {
+	std::queue<int> q;
+	q.push(target);
+	visited[target] = true;
+	int result = 0;
+	while (q.size()) {
+		int v = q.front(); q.pop();
+		for (const int& u : inv[v]) {
+			int d = distance[u][v];
+			if (dist[u] + d == dist[v]) {
+				++result;
+				if (!visited[u]) {
+					visited[u] = true;
+					q.push(u);
 				}
 			}
 		}
 	}
-	return { dist[target], cnt[target] };
+	return result;
 }
 
 int main() {
@@ -41,11 +54,13 @@ int main() {
 	std::cin >> N >> M;
 	while (M--) {
 		std::cin >> U >> V >> D;
-		graph[U].push_back({ V, D });
+		graph[U].push_back(V);
+		inv[V].push_back(U);
 		incoming[V]++;
+		distance[U][V] = D;
 	}
 	std::cin >> S >> E;
-	flag[S] = true;
-	pii result = topological_sort(E);
-	std::cout << result.first << '\n' << result.second;
+	int max_dist = topological_sort(S, E);
+	int count = back_track(E);
+	std::cout << max_dist << '\n' << count;
 }

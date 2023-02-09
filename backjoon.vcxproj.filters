@@ -118,6 +118,9 @@
     <Filter Include="소스 파일\2023\AtCoder288">
       <UniqueIdentifier>{c66f4618-b825-44a9-8d77-bd3784203a23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\Codeforce851">
+      <UniqueIdentifier>{5c842192-20a6-466c-accf-dc34bfab1db7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1250,6 +1253,21 @@
     </ClCompile>
     <ClCompile Include="q11689_2.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q1787.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q13334.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Codeforce851\A.cpp">
+      <Filter>소스 파일\2023\Codeforce851</Filter>
+    </ClCompile>
+    <ClCompile Include="Codeforce851\B.cpp">
+      <Filter>소스 파일\2023\Codeforce851</Filter>
+    </ClCompile>
+    <ClCompile Include="Codeforce851\C.cpp">
+      <Filter>소스 파일\2023\Codeforce851</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

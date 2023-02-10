@@ -1269,6 +1269,15 @@
     <ClCompile Include="Codeforce851\C.cpp">
       <Filter>소스 파일\2023\Codeforce851</Filter>
     </ClCompile>
+    <ClCompile Include="q17371.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q11266.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q11400.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

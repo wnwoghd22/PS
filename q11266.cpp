@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <vector>
 
@@ -13,7 +14,7 @@ int dfs(int u, int order = 1, bool root = true) {
 		else {
 			++child;
 			int next = dfs(v, order + 1, false);
-			if (!root) is_cut[u] = next >= order; // if all visited order of next nodes are bigger
+			if (!root && next >= order) is_cut[u] = true; // if all visited order of next nodes are bigger
 			min = std::min(min, next);
 		}
 	}
@@ -22,6 +23,7 @@ int dfs(int u, int order = 1, bool root = true) {
 }
 
 int main() {
+	freopen("input.txt", "r", stdin);
 	std::cin >> V >> E;
 	while (E--) {
 		std::cin >> A >> B;

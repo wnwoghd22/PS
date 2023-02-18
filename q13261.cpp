@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 
 typedef long long int ll;
@@ -21,23 +20,13 @@ void f(int g, int s, int e, int l, int r) {
 }
 
 int main() {
-	freopen("input.txt", "r", stdin);
 	std::cin >> L >> G;
 	for (int i = 1; i <= L; ++i) {
 		std::cin >> C;
 		S[i] = S[i - 1] + C;
 	}
 
-	// init
 	for (int i = 1; i <= L; ++i) dp[0][i] = S[i] * i;
-	
-	for (int i = 1; i < G; ++i) f(i, i + 1, L, i + 1, L);
-
-	for (int i = 0; i < G; ++i) {
-		for (int j = 1; j <= L; ++j)
-			std::cout << dp[i][j] << ' ';
-		std::cout << '\n';
-	}
-
+	for (int i = 1; i < G; ++i) f(i, 1, L, 1, L); // ???
 	std::cout << dp[G - 1][L];
 }

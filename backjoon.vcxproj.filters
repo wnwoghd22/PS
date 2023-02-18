@@ -1365,6 +1365,30 @@
     <ClCompile Include="swea5653.cpp">
       <Filter>소스 파일\swea</Filter>
     </ClCompile>
+    <ClCompile Include="swea5658.cpp">
+      <Filter>소스 파일\swea</Filter>
+    </ClCompile>
+    <ClCompile Include="q2336.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="swea11718.cpp">
+      <Filter>소스 파일\swea</Filter>
+    </ClCompile>
+    <ClCompile Include="swea1258.cpp">
+      <Filter>소스 파일\swea</Filter>
+    </ClCompile>
+    <ClCompile Include="swea1220.cpp">
+      <Filter>소스 파일\swea</Filter>
+    </ClCompile>
+    <ClCompile Include="swea1860.cpp">
+      <Filter>소스 파일\swea</Filter>
+    </ClCompile>
+    <ClCompile Include="swea11673.cpp">
+      <Filter>소스 파일\swea</Filter>
+    </ClCompile>
+    <ClCompile Include="q13261.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

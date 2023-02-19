@@ -7,7 +7,7 @@ struct Company {
 	int t, p;
 	bool operator<(const Company& r) const { return t == r.t ? p > r.p : t < r.t; }
 } seller[LEN], buyer[LEN];
-int N, M;
+int N, M, bound[LEN];
 
 int binary_search(int e) { // get upper bound
 	int l = 0, r = M, m;
@@ -25,10 +25,10 @@ int f(int s, int e, int l, int r) {
 	if (s > e) return 0;
 	int opt = l, benefit = 0;
 	int m = s + e >> 1;
-	int bound = binary_search(buyer[m].t) - 1;
+	// int bound = binary_search(buyer[m].t) - 1;
 
-	if (l <= bound) {
-		for (int i = opt; i <= std::min(r, bound); ++i) {
+	if (l <= bound[m]) {
+		for (int i = opt; i <= std::min(r, bound[m]); ++i) {
 			if (c(i, m) > c(opt, m)) opt = i;
 		}
 		benefit = c(opt, m);
@@ -44,5 +44,9 @@ int main() {
 	for (int i = 0; i < N; ++i) std::cin >> buyer[i].p >> buyer[i].t;
 	std::sort(seller, seller + M);
 	std::sort(buyer, buyer + N);
+	for (int i = 0, j = 0; i < N; ++i) {
+		while (j < M && seller[j].t <= buyer[i].t) ++j;
+		bound[i] = j - 1;
+	}
 	std::cout << f(0, N - 1, 0, M - 1);
 }

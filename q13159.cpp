@@ -137,6 +137,12 @@ public:
 		x->flip ^= 1;
 	}
 
+	void flip_query(int s, int e) {
+		Node* x = gather(s, e);
+		x->flip ^= 1;
+		std::cout << x->min << ' ' << x->max << ' ' << x->sum << '\n';
+	}
+
 	void shift(int s, int e, int k) {
 		Node* x = gather(s, e);
 		std::cout << x->min << ' ' << x->max << ' ' << x->sum << '\n';
@@ -152,24 +158,50 @@ public:
 			flip(s, e); flip(s, e - k); flip(e - k + 1, e);
 		}
 	}
-	void get_index(int i) {
-		splay(ptr[i]);
-
+	void get_index(int x) {
+		splay(ptr[x]);
+		std::cout << root->l->size << '\n';
 	}
-};
+	void find(int i) {
+		get(i);
+		std::cout << root->val << '\n';
+	}
+	void print(Node* x) {
+		propagate(x);
+		if (x->l) print(x->l);
+		if (!x->dummy) std::cout << x->val << ' ';
+		if (x->r) print(x->r);
+	}
+	void print() { print(root); }
+} sp;
 
-int N, M, K, Q;
-ll A, B, C, D;
+int N, Q, q;
+ll l, r, i, x;
 
 int main() {
 	freopen("input.txt", "r", stdin);
 
-	SplayTree sp;
-	std::cin >> N >> M >> K;
+	std::cin >> N >> Q;
 	sp.init(N);
 
-	Q = M + K;
 	while (Q--) {
-		std::cin >> A >> B >> C;
+		std::cin >> q;
+		if (q == 1) {
+			std::cin >> l >> r;
+			sp.flip_query(l, r);
+		}
+		if (q == 2) {
+			std::cin >> l >> r >> x;
+			sp.shift(l, r, x);
+		}
+		if (q == 3) {
+			std::cin >> i;
+			sp.find(i);
+		}
+		if (q == 4) {
+			std::cin >> x;
+			sp.get_index(x);
+		}
 	}
+	sp.print();
 }

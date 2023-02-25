@@ -56,6 +56,7 @@ void dfs_euler(int u, int p = 0, int w = 0) {
 }
 
 int query(int u, int v) {
+	if (u == v) return 0;
 	int result = 0;
 	while (chain[u] ^ chain[v]) {
 		if (level[chain_top[chain[u]]] > level[chain_top[chain[v]]]) std::swap(u, v);

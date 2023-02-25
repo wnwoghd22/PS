@@ -112,7 +112,7 @@ public:
 		cur->r = new Node(INF); // right dummy
 		cur->r->p = cur;
 		root->dummy = cur->r->dummy = 1;
-		for (int i = 1; i <= n; ++i) update(ptr[i]);
+		for (int i = n; i >= 1; --i) update(ptr[i]);
 		splay(ptr[n / 2 + 1]);
 	}
 

@@ -3,7 +3,6 @@
 #include <set>
 #include <algorithm>
 #include <cstring>
-#include <cmath>
 
 typedef long long int ll;
 const ll INF = 1e18;
@@ -11,8 +10,14 @@ const ll INF = 1e18;
 int N;
 ll V[61];
 ll d[61];
-ll g[61] = { 1, };
+ll g[61] = { 2, };
 int c[61];
+
+int log(int base, int n) {
+	int result = 0, k = 1;
+	while ((k *= base) <= n) ++result;
+	return result;
+}
 
 int solve() {
 	memset(c, 0, sizeof c);
@@ -20,7 +25,7 @@ int solve() {
 	std::cin >> V[0];
 	for (int i = 1; i < N; ++i) {
 		std::cin >> V[i];
-		d[i - 1] = V[i] / V[i - 1] - 1;
+		d[i - 1] = V[i] / V[i - 1];
 	}
 	std::sort(d, d + N - 1);
 	for (int i = 0; i < N - 1; ++i) std::cout << d[i] << ' ';
@@ -36,21 +41,10 @@ int solve() {
 	for (int i = 0; i <= pivot; ++i) std::cout << c[i] << ' ';
 	std::cout << '\n';
 
-	// flatten
-	int max;
-	for (max = 1; max <= N; ++max) {
-		ll remain = 0;
-		for (int i = pivot; i > 0; --i) {
-			remain += c[i];
-			ll spl = max * (g[i] - g[i - 1]);
-			remain = std::max(0ll, remain - spl);
-		}
-		std::cout << "remain: " << remain + c[0] << '\n';
-		if (remain + c[0] <= max) break;
-	}
-
-	// identify
-	return log2(max) + 1;
+	int max = 0;
+	for (int i = 0; i <= pivot; ++i) max = std::max(max, log(g[i], c[i]) + 1);
+	
+	return max;
 }
 
 int main() {

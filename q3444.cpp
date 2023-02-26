@@ -122,7 +122,7 @@ public:
 	}
 
 	void robotic_sort() {
-		std::sort(ptr + 1, ptr + N + 1, comp);
+		std::stable_sort(ptr + 1, ptr + N + 1, comp);
 		for (int i = 1; i <= N; ++i) {
 			splay(ptr[i]);
 			int pi = root->l->size;

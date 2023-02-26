@@ -121,6 +121,9 @@
     <Filter Include="소스 파일\2023\Codeforce851">
       <UniqueIdentifier>{5c842192-20a6-466c-accf-dc34bfab1db7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\SUAPC2023winter">
+      <UniqueIdentifier>{abc1b604-71dd-4c4c-be73-0858a2cd58c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1448,6 +1451,9 @@
     </ClCompile>
     <ClCompile Include="q19089_hu_tucker.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SUAPC2023winter\A.cpp">
+      <Filter>소스 파일\2023\SUAPC2023winter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

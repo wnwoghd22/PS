@@ -1467,6 +1467,12 @@
     <ClCompile Include="hjroh2023\B2.cpp">
       <Filter>소스 파일\2023\hjroh</Filter>
     </ClCompile>
+    <ClCompile Include="q14252.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q14942.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

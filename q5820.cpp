@@ -58,7 +58,7 @@ int f(int u) {
 	visited[cent] = true;
 	for (const Edge& e : graph[cent]) {
 		if (!visited[e.v])
-			result = std::min(result, get_path(e.v, u, 1, e.w));
+			result = std::min(result, get_path(e.v, cent, 1, e.w));
 		merge();
 	}
 	for (const Edge& e : graph[cent]) {

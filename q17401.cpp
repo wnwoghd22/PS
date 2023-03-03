@@ -46,7 +46,7 @@ public:
 } *mt[101], *mm[101];
 
 Matrix power(Matrix A, const ll B) {
-    if (B == 0) return *mt[0];
+    if (B == 0) return *mm[0];
     if (B == 1) return A % MOD;
     else {
         Matrix pw = power(A, B / 2);

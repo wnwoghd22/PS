@@ -1533,6 +1533,9 @@
     <ClCompile Include="SKK2023\G.cpp">
       <Filter>소스 파일\2023\SKK</Filter>
     </ClCompile>
+    <ClCompile Include="SKK2023\q19970.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

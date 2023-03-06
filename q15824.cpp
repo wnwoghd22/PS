@@ -5,6 +5,7 @@ typedef long long int ll;
 const ll MOD = 1e9 + 7;
 const int LEN = 3e5;
 ll pow(ll x, ll n) {
+	if (n == 0) return 1;
 	if (n == 1) return x % MOD;
 	ll p = pow(x, n >> 1);
 	return p * p % MOD * (n & 1 ? x : 1) % MOD;

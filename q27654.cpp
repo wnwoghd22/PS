@@ -5,7 +5,7 @@
 typedef long long ll;
 typedef long double ld;
 const int LEN = 100'000;
-const ld ERR = 1e-7;
+const ld ERR = 1e-6;
 ld x;
 struct Score {
 	ll p, q;
@@ -18,29 +18,28 @@ ld f(ld m) {
 	x = m;
 	std::sort(S, S + N);
 	ll P = 0, Q = 0;
-	for (int i = 0; i < K; ++i) {
-		P += S[i].p;
-		Q += S[i].q;
-	}
-	return (ld)P / Q;
+	ld result = 0;
+	for (int i = 0; i < K; ++i) result += S[i].f(x);
+	return result;
 }
 
 ld binary_search() {
-	ld l = 0, r = 1, m, result = 0;
-	while (l < r + ERR) {
-		m = (l + r) / 2;
-		ld cur = f(m);
+	ll l = 0, r = 1000000, m;
+	ld result = 0;
+	while (l <= r) {
+		m = l + r >> 1;
+		ld cur = f(ld(m) / 1000000);
 		if (cur > 0) {
-			result = std::max(result, cur);
-			l = m + ERR;
+			result = std::max(result, ld(m) / 1000000);
+			l = m + 1;
 		}
-		else r = m - ERR;
+		else r = m - 1;
 	}
 	return result;
 }
 
 int main() {
-	freopen("input.txt", "r", stdin);
+	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N >> K;
 	for (int i = 0; i < N; ++i) {
 		std::cin >> S[i].p >> S[i].q;

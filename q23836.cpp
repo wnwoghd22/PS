@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <vector>
 
@@ -26,7 +25,7 @@ ll get(int x, int s = 1, int e = N, int i = 1) {
 }
 
 std::vector<int> graph[LEN];
-int parent[LEN][16], level[LEN];
+int parent[LEN][20], level[LEN];
 int ord, order[LEN], tree_size[LEN], heavy[LEN];
 int ch_ord, chain[LEN], chain_size[LEN], chain_top[LEN];
 
@@ -61,13 +60,13 @@ void dfs_euler(int u, int p = 0) {
 int lca(int u, int v) {
 	if (level[u] ^ level[v]) {
 		if (level[u] > level[v]) std::swap(u, v);
-		for (int i = 15; i >= 0; --i)
+		for (int i = 19; i >= 0; --i)
 			if (level[parent[v][i]] >= level[u])
 				v = parent[v][i];
 	}
 	int l = u;
 	if (u ^ v) {
-		for (int i = 15; i >= 0; --i) {
+		for (int i = 19; i >= 0; --i) {
 			if (parent[u][i] ^ parent[v][i]) {
 				u = parent[u][i];
 				v = parent[v][i];
@@ -99,7 +98,9 @@ void q1(int u, int v) {
 ll q2(int x) { return get(order[x]); }
 
 int main() {
-	freopen("input.txt", "r", stdin);
+	std::ios_base::sync_with_stdio(0);
+	std::cin.tie(0); std::cout.tie(0);
+
 	std::cin >> N;
 	for (int i = 1, a, b; i < N; ++i) {
 		std::cin >> a >> b;

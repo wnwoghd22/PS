@@ -130,6 +130,9 @@
     <Filter Include="소스 파일\2023\SKK">
       <UniqueIdentifier>{603df001-d58e-457e-9a4d-cfd650190b30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\swea\swea1768">
+      <UniqueIdentifier>{a37fe89d-d840-48e9-9e28-de32ebe175ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1571,6 +1574,12 @@
     </ClCompile>
     <ClCompile Include="swea18601.cpp">
       <Filter>소스 파일\swea</Filter>
+    </ClCompile>
+    <ClCompile Include="swea1768.cpp">
+      <Filter>소스 파일\swea\swea1768</Filter>
+    </ClCompile>
+    <ClCompile Include="swea1768_solution.cpp">
+      <Filter>소스 파일\swea\swea1768</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

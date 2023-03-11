@@ -136,6 +136,9 @@
     <Filter Include="소스 파일\2023\CHAC2023">
       <UniqueIdentifier>{55054c02-adef-4fe6-a731-cbb177ccca1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\shake2022">
+      <UniqueIdentifier>{d349dc1f-f923-4e46-b726-a9a5a1e7b75f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1586,6 +1589,9 @@
     </ClCompile>
     <ClCompile Include="CHAC2023\A.cpp">
       <Filter>소스 파일\2023\CHAC2023</Filter>
+    </ClCompile>
+    <ClCompile Include="shake2022\A.cpp">
+      <Filter>소스 파일\2023\shake2022</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,6 @@
-3 6
-antarctica
-antahellotica
-antacartica
+5
+6
+8
+10
+12
+100

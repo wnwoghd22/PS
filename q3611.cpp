@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <cstring>
 
 const int MAX = 102;
 const double INF = 2e9;

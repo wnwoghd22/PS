@@ -1623,6 +1623,9 @@
     <ClCompile Include="swea1770_solution.cpp">
       <Filter>소스 파일\swea\swea1770</Filter>
     </ClCompile>
+    <ClCompile Include="q1184.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

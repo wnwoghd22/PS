@@ -21,7 +21,7 @@ void merge_sort(int l, int r) {
 	merge(l, m, r);
 }
 int check_vps(int* s, int len) {
-	int i, c;
+	int i;
 	sp = 0;
 	for (i = 0; i < len; ++i) {
 		if (s[i] & 1) {
@@ -33,26 +33,20 @@ int check_vps(int* s, int len) {
 	return 1;
 }
 int solve() {
-	int i, l, r, k, t;
+	int d, i, l, r, k, t;
 	scanf("%d", &N);
 	for (i = 0; i < N; ++i) scanf("%d", A + i);
-	for (i = 0; i < N; ++i) vps[i] = i;
-	for (i = 1, k = 0; i < N; i += 2, k += 2) {
-		l = A[i - 1], r = A[i];
-		if (l > r) t = l, l = r, r = t;
-		seq[i - 1] = l, seq[i] = r;
+	for (d = 0; d < 2; ++d) {
+		for (i = 0; i < N; ++i) vps[i] = i;
+		for (i = d, k = 0; i < N - 1; i += 2, k += 2) {
+			l = A[i], r = A[i + 1];
+			if (l > r) t = l, l = r, r = t;
+			seq[k] = l, seq[k + 1] = r;
+		}
+		merge_sort(0, k - 1);
+		if (!check_vps(vps, k)) return 0;
 	}
-	merge_sort(0, k - 1);
-	if (!check_vps(vps, k - 1)) return 0;
-
-	for (i = 0; i < N; ++i) vps[i] = i;
-	for (i = 1, k = 0; i < N - 1 + (N & 1); i += 2, k += 2) {
-		l = A[i], r = A[i + 1];
-		if (l > r) t = l, l = r, r = t;
-		seq[i - 1] = l, seq[i] = r;
-	}
-	merge_sort(0, k - 1);
-	return check_vps(vps, k - 1);
+	return 1;
 }
 
 int main() {

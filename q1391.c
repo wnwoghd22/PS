@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #define LEN 2000
 
@@ -34,26 +33,26 @@ int check_vps(int* s, int len) {
 	return 1;
 }
 int solve() {
-	int i, l, r, t;
+	int i, l, r, k, t;
 	scanf("%d", &N);
 	for (i = 0; i < N; ++i) scanf("%d", A + i);
 	for (i = 0; i < N; ++i) vps[i] = i;
-	for (i = 1; i < N; i += 2) {
+	for (i = 1, k = 0; i < N; i += 2, k += 2) {
 		l = A[i - 1], r = A[i];
 		if (l > r) t = l, l = r, r = t;
 		seq[i - 1] = l, seq[i] = r;
 	}
-	merge_sort(0, N - 1 - (N & 1));
-	if (!check_vps(vps, N - 1 - (N & 1))) return 0;
+	merge_sort(0, k - 1);
+	if (!check_vps(vps, k - 1)) return 0;
 
 	for (i = 0; i < N; ++i) vps[i] = i;
-	for (i = 1; i < N - 1; i += 2) {
+	for (i = 1, k = 0; i < N - 1 + (N & 1); i += 2, k += 2) {
 		l = A[i], r = A[i + 1];
 		if (l > r) t = l, l = r, r = t;
 		seq[i - 1] = l, seq[i] = r;
 	}
-	merge_sort(0, N - 2 + (N & 1));
-	return check_vps(vps, N - 2 + (N & 1));
+	merge_sort(0, k - 1);
+	return check_vps(vps, k - 1);
 }
 
 int main() {

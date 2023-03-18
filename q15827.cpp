@@ -20,7 +20,8 @@ struct Fraction {
 		std::cout << "gcd: " << num << ' ' << den << ' ' << g << '\n';
 		ll n = num / g, d = den / g;
 		std::cout << "irr: " << n << ' ' << d << '\n';
-		return Fraction(n, d);
+		// return Fraction(n, d);
+		return Fraction(num / g, den / g);
 	}
 	const Fraction& inv() const { return Fraction(den, num); }
 	const Fraction& operator+(const Fraction& r) const {

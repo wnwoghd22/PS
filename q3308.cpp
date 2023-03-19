@@ -14,16 +14,22 @@ struct Order {
 } order[LEN];
 
 int N, M, seg_tree[LEN * 4];
-void update(int x, int d, int s = 1, int e = M, int i = 1) {
-	if (x < s || e < x) return;
-	if (s == e) {
-		seg_tree[i] += d;
-		return;
-	}
+//void update(int x, int d, int s = 1, int e = M, int i = 1) {
+//	if (x < s || e < x) return;
+//	if (s == e) {
+//		seg_tree[i] += d;
+//		return;
+//	}
+//	int m = s + e >> 1;
+//	update(x, d, s, m, i << 1);
+//	update(x, d, m + 1, e, i << 1 | 1);
+//	seg_tree[i] = seg_tree[i << 1] + seg_tree[i << 1 | 1];
+//}
+int update(int x, int d, int s = 1, int e = M, int i = 1) {
+	if (x < s || e < x) return seg_tree[i];
+	if (s == e) return seg_tree[i] += d;
 	int m = s + e >> 1;
-	update(x, d, s, m, i << 1);
-	update(x, d, m + 1, e, i << 1 | 1);
-	seg_tree[i] = seg_tree[i << 1] + seg_tree[i << 1 | 1];
+	return seg_tree[i] = update(x, d, s, m, i << 1) + update(x, d, m + 1, e, i << 1 | 1);
 }
 int get(int l, int r, int s = 1, int e = M, int i = 1) {
 	if (r < s || e < l) return 0;
@@ -65,7 +71,7 @@ int kmp(int* p, int* t) {
 		if (order[j] == get_order(t[i])) {
 			if (j == N - 1) {
 				stack[sp++] = i - j + 1;
-				for (int k = i - j; k < i - fail[j] + 1; ++k) update(t[k], -1);
+				for (int k = i - j; k <= i - fail[j]; ++k) update(t[k], -1);
 				j = fail[j];
 			}
 			else ++j;
@@ -80,16 +86,19 @@ int main() {
 	freopen("input.txt", "r", stdin);
 	std::cin >> N >> M;
 	for (int i = 1, j; i <= N; P[j - 1] = i++) std::cin >> j;
-	for (int i = 0; i < M; order[i].r = i++) std::cin >> order[i].l;
+	for (int i = 0; i < M; order[i].r = i, ++i) std::cin >> order[i].l;
 	std::sort(order, order + M);
 	for (int i = 0; i < M; ++i) T[order[i].r] = i + 1;
 
-	/*for (int i = 0; i < N; ++i)
+	for (int i = 0; i < N; ++i)
 		std::cout << P[i] << ' ';
 	std::cout << '\n';
 	for (int i = 0; i < M; ++i)
+		std::cout << order[i].l << ' ' << order[i].r << '\n';
+
+	for (int i = 0; i < M; ++i)
 		std::cout << T[i] << ' ';
-	std::cout << '\n';*/
+	std::cout << '\n';
 	
 	std::cout << kmp(P, T) << '\n';
 	for (int i = 0; i < sp; ++i)

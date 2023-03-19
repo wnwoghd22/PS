@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <cstring>
 
-const int LEN = 1'000'000;
-struct Order { 
+const int LEN = 1'000'001;
+struct Order {
 	int l, r;
 	Order() : l(0), r(0) {}
 	Order(int l, int r) : l(l), r(r) {}
@@ -13,41 +13,31 @@ struct Order {
 	bool operator<(const Order& rhs) const { return l < rhs.l; }
 } order[LEN];
 
-int N, M, seg_tree[LEN * 4];
-//void update(int x, int d, int s = 1, int e = M, int i = 1) {
-//	if (x < s || e < x) return;
-//	if (s == e) {
-//		seg_tree[i] += d;
-//		return;
-//	}
-//	int m = s + e >> 1;
-//	update(x, d, s, m, i << 1);
-//	update(x, d, m + 1, e, i << 1 | 1);
-//	seg_tree[i] = seg_tree[i << 1] + seg_tree[i << 1 | 1];
-//}
-int update(int x, int d, int s = 1, int e = M, int i = 1) {
-	if (x < s || e < x) return seg_tree[i];
-	if (s == e) return seg_tree[i] += d;
-	int m = s + e >> 1;
-	return seg_tree[i] = update(x, d, s, m, i << 1) + update(x, d, m + 1, e, i << 1 | 1);
+int N, M, seg_tree[LEN * 2];
+int get(int l, int r) {
+	int ans = 0;
+	for (l += M, r += M; l < r; l >>= 1, r >>= 1) {
+		if (l & 1) ans += seg_tree[l++];
+		if (r & 1) ans += seg_tree[--r];
+	}
+	return ans;
 }
-int get(int l, int r, int s = 1, int e = M, int i = 1) {
-	if (r < s || e < l) return 0;
-	if (l <= s && e <= r) return seg_tree[i];
-	int m = s + e >> 1;
-	return get(l, r, s, m, i << 1) + get(l, r, m + 1, e, i << 1 | 1);
+void update(int pos, int val) {
+	seg_tree[pos + M] += val;
+	for (pos += M; pos > 1; pos >>= 1)
+		seg_tree[pos >> 1] = seg_tree[pos] + seg_tree[pos ^ 1];
 }
-Order get_order(int x) { return { get(1, x - 1), get(x + 1, M) }; }
+Order get_order(int x) { return { get(0, x), get(x + 1, M) }; }
 
 int fail[LEN];
 void get_fail(int* p) {
 	memset(seg_tree, 0, sizeof seg_tree);
-	for (int i = 0; p[i]; ++i) {
+	for (int i = 0; i < N; ++i) {
 		update(p[i], 1);
 		order[i] = get_order(p[i]);
 	}
 	memset(seg_tree, 0, sizeof seg_tree);
-	for (int i = 1, j = 0; p[i]; ++i) {
+	for (int i = 1, j = 0; i < N; ++i) {
 		while (j && order[j] != get_order(p[i])) {
 			for (int k = i - j; k < i - fail[j - 1]; ++k) update(p[k], -1);
 			j = fail[j - 1];
@@ -63,7 +53,7 @@ int sp, stack[LEN];
 int kmp(int* p, int* t) {
 	get_fail(p);
 	memset(seg_tree, 0, sizeof seg_tree);
-	for (int i = 0, j = 0; t[i]; ++i) {
+	for (int i = 0, j = 0; i < M; ++i) {
 		while (j && order[j] != get_order(t[i])) {
 			for (int k = i - j; k < i - fail[j - 1]; ++k) update(t[k], -1);
 			j = fail[j - 1];
@@ -83,23 +73,16 @@ int kmp(int* p, int* t) {
 
 int P[LEN], T[LEN];
 int main() {
-	freopen("input.txt", "r", stdin);
+	// freopen("input.txt", "r", stdin);
+	std::ios_base::sync_with_stdio(0);
+	std::cin.tie(0); std::cout.tie(0);
+
 	std::cin >> N >> M;
-	for (int i = 1, j; i <= N; P[j - 1] = i++) std::cin >> j;
+	for (int i = 0, j; i < N; P[j - 1] = i++) std::cin >> j;
 	for (int i = 0; i < M; order[i].r = i, ++i) std::cin >> order[i].l;
 	std::sort(order, order + M);
-	for (int i = 0; i < M; ++i) T[order[i].r] = i + 1;
+	for (int i = 0; i < M; ++i) T[order[i].r] = i;
 
-	for (int i = 0; i < N; ++i)
-		std::cout << P[i] << ' ';
-	std::cout << '\n';
-	for (int i = 0; i < M; ++i)
-		std::cout << order[i].l << ' ' << order[i].r << '\n';
-
-	for (int i = 0; i < M; ++i)
-		std::cout << T[i] << ' ';
-	std::cout << '\n';
-	
 	std::cout << kmp(P, T) << '\n';
 	for (int i = 0; i < sp; ++i)
 		std::cout << stack[i] << ' ';

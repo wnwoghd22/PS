@@ -20,8 +20,10 @@ void propagate(int s, int e, int i) {
 		seg_tree[i].max += seg_tree[i].lazy;
 		seg_tree[i].min += seg_tree[i].lazy;
 
-		seg_tree[i << 1].lazy += seg_tree[i].lazy;
-		seg_tree[i << 1 | 1].lazy += seg_tree[i].lazy;
+		if (s ^ e) {
+			seg_tree[i << 1].lazy += seg_tree[i].lazy;
+			seg_tree[i << 1 | 1].lazy += seg_tree[i].lazy;
+		}
 
 		seg_tree[i].lazy = 0;
 	}

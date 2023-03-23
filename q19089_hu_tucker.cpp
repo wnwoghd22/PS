@@ -18,6 +18,7 @@ private:
 		Node* r;
 		int dist; // null path length
 		Node(const ll& e, Node* l = 0, Node* r = 0, const int& d = 0) : e(e), l(l), r(r), dist(d) {}
+		~Node() { if (l) delete l; if (r) delete r; }
 		void swap_children() { Node* t = l; l = r; r = t; }
 	} *root;
 	Node* merge_in(Node* h1, Node* h2) {
@@ -35,13 +36,6 @@ private:
 		if (h2 == 0) return h1;
 		return h1->e < h2->e ? merge_in(h1, h2) : merge_in(h2, h1);
 	}
-	void reclaim_memory(Node* n) {
-		if (n) {
-			reclaim_memory(n->l);
-			reclaim_memory(n->r);
-			delete n;
-		}
-	}
 	Node* clone(Node* n) {
 		if (!n) return 0;
 		else return new Node(n->e, clone(n->l), clone(n->r), n->dist);
@@ -58,10 +52,11 @@ public:
 		ll min = top();
 		Node* old = root;
 		root = merge(root->l, root->r);
+		old->l = old->r = 0;
 		delete old;
 		return min;
 	}
-	void clear() { reclaim_memory(root); root = 0; }
+	void clear() { if (root) delete root; root = 0; }
 	void merge(LeftistHeap& r) {
 		if (this == &r) return;
 		root = merge(root, r.root);
@@ -74,14 +69,14 @@ public:
 		}
 		return *this;
 	}
-} heaps[LEN];
-int N, l[LEN], r[LEN];
+} heaps[LEN]; // HPQ. Huffman priority queue
+int N, l[LEN], r[LEN]; // working sequence
 ll W[LEN], C[LEN];
 struct Info {
-	ll w; int i;
+	ll w; int i; // min_sum, position
 	bool operator<(const Info& r) const { return w == r.w ? i > r.i : w > r.w; }
 };
-std::priority_queue<Info> pq;
+std::priority_queue<Info> pq; // MPQ. master priority queue
 
 /// <summary>
 /// reference:
@@ -106,7 +101,7 @@ ll hu_tucker(ll* w, int n) {
 		do {
 			c = pq.top().w, i = pq.top().i;
 			pq.pop();
-		} while (!~r[i] || C[i] ^ c);
+		} while (!~r[i] || C[i] ^ c); // extract min
 
 		ml = mr = 0;
 		if (w[i] + w[r[i]] == c) ml = mr = 1; // l + r

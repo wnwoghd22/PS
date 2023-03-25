@@ -7,6 +7,7 @@ struct BigN {
 	int bit, log, shift;
 	BigN(int n) : bit(n), log(0), shift(0) {
 		// std::cout << "contruct: " << n << '\n';
+		if (!bit) return;
 		for (int i = 0; i < 32; ++i) if (1 << i & bit) log = i;
 		while (~bit & 1) bit >>= 1, --log, ++shift;
 	}
@@ -18,7 +19,7 @@ struct BigN {
 		}
 		return msb() < r.msb();
 	}
-	BigN operator<<(int i) const { BigN result(*this); result.shift += i; return result; }
+	BigN operator<<(int i) const { BigN result(*this); if (bit) result.shift += i; return result; }
 	BigN operator+(int k) const {
 		BigN result(*this);
 		int diff = k - shift;
@@ -55,8 +56,9 @@ public:
 		std::cout << "mass: " << ml << ' ' << mr << '\n';
 		std::cout << ln.bit << ' ' << ln.shift << '\n';
 		std::cout << rn.bit << ' ' << rn.shift << '\n';
-
 		std::cout << result.bit << ' ' << result.shift << '\n';
+		if (result.bit == 0) return result;
+
 		int lcm = shift - 1;
 		if (result.shift < lcm) result = result + lcm;
 		return result << 1;

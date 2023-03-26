@@ -15,18 +15,29 @@ ld light_x, light_y; // 실수 좌표 (x: x축-col, y: y축-row)
 
 struct Vector {
 	ld x, y;
+	Vector() : x(0), y(0) {}
+	Vector(ld x, ld y) : x(x), y(y) {}
+	Vector operator*(ld scalar) const {
+		Vector result(*this);
+		result.x *= scalar;
+		result.y *= scalar;
+		return result;
+	}
+	ld magnitude() const { return sqrt(x * x + y * y); }
+	Vector normalize() const {
+		Vector result(*this);
+		return result * (1 / magnitude());
+	}
+	Vector operator+(const Vector& r) const { return Vector(x + r.x, y + r.y); }
+	Vector operator-(const Vector& r) const { return Vector(x - r.x, y - r.y); }
+	ld radian() const { return atan2(y, x); }
+	bool operator<(const Vector& r) const { return radian() < r.radian(); }
 };
 
 struct Line {
 	Vector v1, v2;
 };
-
-struct Slope {
-	ld x, y;
-	ld radian() const { return atan2(y, x); }
-	bool operator<(const Slope& r) const { return radian() < r.radian(); }
-};
-std::vector<Slope> slopes;
+std::vector<Vector> slopes;
 int gcd(int a, int b) { return !b ? a : gcd(b, a % b); }
 void push_slopes() {
 	// 1 사분면
@@ -69,6 +80,8 @@ void push_slopes() {
 			}
 		}
 	}
+
+	std::sort(slopes.begin(), slopes.end());
 }
 
 std::vector<Line> edges;
@@ -95,17 +108,69 @@ void push_edges() {
 	}
 }
 
-ld ccw() {
+// cross product
+ld cross(const Vector& p1, const Vector& p2, const Vector& p3) { return p1.x * p2.y + p2.x * p3.y + p3.x * p1.y - p3.x * p2.y - p2.x * p1.y - p1.x * p3.y; }
+
+/// <summary>
+/// 직선 a는 광원으로부터 뻗어나오는 논리적 무한대 길이의 직선이므로 추가적인 판정 로직은 필요 없음
+/// 직선 a와 선분 b는 절대 평행하지 않음
+/// </summary>
+/// <param name="a">광원으로부터 뻗어나오는 반직선. 광원 위치는 v1</param>
+/// <param name="b"></param>
+/// <returns></returns>
+int intersect(const Line& a, const Line& b) {
+	Vector p1 = a.v1, p2 = a.v2, p3 = b.v1, p4 = b.v2;
+	ld ccw1 = cross(p1, p2, p3), ccw2 = cross(p1, p2, p4);
+	ld ccw3 = cross(p3, p4, p1), ccw4 = cross(p3, p4, p2);
+	if (ccw1 * ccw2 < 0 && ccw3 * ccw4 < 0) { // restrict intersect. 완전 교차
+		return 1;
+	}
+	if (std::abs(ccw1 * ccw2) < ERR && ccw3 * ccw4 < 0) { // p3 또는 p4가 직선 위에 있음
+		if (std::abs(ccw1) < ERR) { // p3이 직선 위에 있다면 p4가 왼쪽 또는 오른쪽에 있는지 판정
+			if (ccw2 > 0) { // 왼쪽 (반시계)
+				return 2;
+			}
+			else return 3; // 오른쪽 (시계)
+		}
+		if (std::abs(ccw2) < ERR) { // p4가 직선 위에 있다면 p3이 왼쪽 또는 오른쪽에 있는지 판정
+			if (ccw1 > 0) { // 왼쪽 (반시계)
+				return 2;
+			}
+			else return 3; // 오른쪽 (시계)
+		}
+	}
 	return 0;
 }
-
-ld intersect() {
-	return 0;
+Vector intersection_point(const Line& a, const Line& b) {
+	Vector p1 = a.v1, p2 = a.v2, p3 = b.v1, p4 = b.v2;
+	Vector ret;
+	ret.x = ((p1.x * p2.y - p1.y * p2.x) * (p3.x - p4.x) - (p1.x - p2.x) * (p3.x * p4.y - p3.y * p4.x)) / ((p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x));
+	ret.y = ((p1.x * p2.y - p1.y * p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x * p4.y - p3.y * p4.x)) / ((p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x));
+	return ret;
 }
 
 std::vector<Line> radial; // 방사형 선분 벡터
 void push_radial() { 
+	Vector p1 = { light_x, light_y };
+	for (const Vector& s : slopes) {
+		Vector p2 = p1 + s.normalize() * 100;
+		Line a = { p1, p2 }; // 광원 p1로부터 뻗어나가는 반직선
+		ld l_len = 100, r_len = 100;
+		for (const Line& b : edges) {
+			int cur = intersect(a, b);
+			bool l = 0, r = 0;
+			if (cur == 1) { // 왼쪽, 오른쪽 방사형 선분 길이 업데이트
+				l = r = 1;
+			}
+			else if (cur == 2) l = 1; // 왼쪽 방사형 선분 길이 업데이트
+			else if (cur == 3) r = 1; // 오른쪽 방사형 선분 길이 업데이트
 
+			if (l) l_len = std::min(l_len, (intersection_point(a, b) - p1).magnitude());
+			if (r) r_len = std::min(r_len, (intersection_point(a, b) - p1).magnitude());
+		}
+		radial.push_back({ p1, p1 + s.normalize() * r_len });
+		radial.push_back({ p1, p1 + s.normalize() * l_len });
+	}
 }
 
 /*
@@ -126,13 +191,13 @@ int main() {
 	N = 3, M = 2;
 	light_i = 2, light_j = 0;
 	push_slopes();
-	std::sort(slopes.begin(), slopes.end());
 
 	push_edges();
 
+	push_radial();
 
 
-	for (const Slope& s : slopes) {
+	for (const Vector& s : slopes) {
 		std::cout << s.x << ' ' << s.y << ' ' << s.radian() << '\n';
 	}
 }

@@ -6,7 +6,7 @@
 #include <cmath>
 
 typedef long double ld;
-const ld ERR = 1e-10;
+const ld ERR = 1e-7;
 
 char map[50][51];
 int N, M;
@@ -102,7 +102,7 @@ void push_edges() {
 				else if (i < light_i) edges.push_back({ dl, dr }); // bottom
 
 				if (j > light_j) edges.push_back({ ul, dl }); // left
-				else if (i < light_i) edges.push_back({ ur, dr }); // right
+				else if (j < light_j) edges.push_back({ ur, dr }); // right
 			} 
 		}
 	}
@@ -122,10 +122,10 @@ int intersect(const Line& a, const Line& b) {
 	Vector p1 = a.v1, p2 = a.v2, p3 = b.v1, p4 = b.v2;
 	ld ccw1 = cross(p1, p2, p3), ccw2 = cross(p1, p2, p4);
 	ld ccw3 = cross(p3, p4, p1), ccw4 = cross(p3, p4, p2);
-	if (ccw1 * ccw2 < 0 && ccw3 * ccw4 < 0) { // restrict intersect. 완전 교차
+	if (ccw1 * ccw2 < -ERR && ccw3 * ccw4 < -ERR) { // restrict intersect. 완전 교차
 		return 1;
 	}
-	if (std::abs(ccw1 * ccw2) < ERR && ccw3 * ccw4 < 0) { // p3 또는 p4가 직선 위에 있음
+	if (std::abs(ccw1 * ccw2) < ERR && ccw3 * ccw4 < -ERR) { // p3 또는 p4가 직선 위에 있음
 		if (std::abs(ccw1) < ERR) { // p3이 직선 위에 있다면 p4가 왼쪽 또는 오른쪽에 있는지 판정
 			if (ccw2 > 0) { // 왼쪽 (반시계)
 				return 2;
@@ -153,13 +153,15 @@ std::vector<Line> radial; // 방사형 선분 벡터
 void push_radial() { 
 	Vector p1 = { light_x, light_y };
 	for (const Vector& s : slopes) {
-		Vector p2 = p1 + s.normalize() * 100;
+		// std::cout << "Slope: " << s.x << ' ' << s.y;
+		Vector p2 = p1 + s.normalize() * 1000;
 		Line a = { p1, p2 }; // 광원 p1로부터 뻗어나가는 반직선
-		ld l_len = 100, r_len = 100;
+		ld l_len = 1000, r_len = 1000;
 		for (const Line& b : edges) {
 			int cur = intersect(a, b);
 			bool l = 0, r = 0;
 			if (cur == 1) { // 왼쪽, 오른쪽 방사형 선분 길이 업데이트
+				// std::cout << "case 1: " << b.v1.x << ' ' << b.v1.y << ' ' << b.v2.x << ' ' << b.v2.y << '\n';
 				l = r = 1;
 			}
 			else if (cur == 2) l = 1; // 왼쪽 방사형 선분 길이 업데이트
@@ -168,6 +170,9 @@ void push_radial() {
 			if (l) l_len = std::min(l_len, (intersection_point(a, b) - p1).magnitude());
 			if (r) r_len = std::min(r_len, (intersection_point(a, b) - p1).magnitude());
 		}
+		Vector vl = p1 + s.normalize() * l_len;
+		Vector vr = p1 + s.normalize() * r_len;
+		// std::cout << "Vector R: " << vr.x << ' ' << vr.y << " Vector L: " << vl.x << ' ' << vl.y << '\n';
 		radial.push_back({ p1, p1 + s.normalize() * r_len });
 		radial.push_back({ p1, p1 + s.normalize() * l_len });
 	}
@@ -175,8 +180,10 @@ void push_radial() {
 
 ld get_light_area() {
 	ld area = 0;
-	for (int i = 0; i < radial.size(); ++i)
-		area += cross(radial[i].v1, radial[i].v2, radial[(i + 1) % radial.size()].v2);
+	for (int i = 1; i < radial.size(); i += 2) {
+		// std::cout << "triangle: " << radial[i].v2.x << ' ' << radial[i].v2.y << " -> " << radial[(i + 1) % radial.size()].v2.x << ' ' << radial[(i + 1) % radial.size()].v2.y << '\n';
+		area += std::abs(cross(radial[i].v1, radial[i].v2, radial[(i + 1) % radial.size()].v2));
+	}
 	return area / 2;
 }
 
@@ -191,7 +198,10 @@ ld get_light_area() {
  */
 int main() {
 	freopen("input.txt", "r", stdin);
+	std::cout << std::fixed;
+	std::cout.precision(10);
 	
+	ld wall_area = 0;
 	std::cin >> N >> M;
 	for (int i = 0; i < N; ++i) {
 		std::cin >> map[i];
@@ -200,6 +210,7 @@ int main() {
 				light_i = i, light_j = j;
 				light_x = j + 0.5, light_y = N - i - 0.5;
 			}
+			if (map[i][j] == '#') wall_area += 1;
 		}
 	}
 
@@ -211,5 +222,15 @@ int main() {
 
 	ld light_area = get_light_area();
 
-	std::cout << N * M - light_area;
+	/*std::cout << "map:\n";
+	for (int i = 0; i < N; ++i)
+		std::cout << map[i] << '\n';
+
+	std::cout << "slope counts: " << slopes.size() << '\n';
+	std::cout << "edge counts: " << edges.size() << '\n';
+	std::cout << "light pos: (" << light_x << ", " << light_y << ")\n";
+	std::cout << "light area: " << light_area << '\n';
+	std::cout << "wall area: " << wall_area << '\n';*/
+
+	std::cout << N * M - light_area - wall_area;
 }

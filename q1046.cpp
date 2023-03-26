@@ -173,6 +173,13 @@ void push_radial() {
 	}
 }
 
+ld get_light_area() {
+	ld area = 0;
+	for (int i = 0; i < radial.size(); ++i)
+		area += cross(radial[i].v1, radial[i].v2, radial[(i + 1) % radial.size()].v2);
+	return area / 2;
+}
+
 /*
  * 알고리즘
  * 1. 격자형의 모든 꼭짓점을 향하는 기울기 별 직선을 찾는다.
@@ -183,21 +190,26 @@ void push_radial() {
  * 6. 빛이 닿는 면적을 구했으므로, 전체 넓이에서 빼준다.
  */
 int main() {
-	/*slopes.push_back({ 1, 1 });
-	slopes.push_back({ 1, -1 });
-	slopes.push_back({ -1, 1 });
-	slopes.push_back({ -1, -1 });
-	slopes.push_back({ -1, -0.5 });*/
-	N = 3, M = 2;
-	light_i = 2, light_j = 0;
+	freopen("input.txt", "r", stdin);
+	
+	std::cin >> N >> M;
+	for (int i = 0; i < N; ++i) {
+		std::cin >> map[i];
+		for (int j = 0; j < M; ++j) {
+			if (map[i][j] == '*') { // light point
+				light_i = i, light_j = j;
+				light_x = j + 0.5, light_y = N - i - 0.5;
+			}
+		}
+	}
+
 	push_slopes();
 
 	push_edges();
 
 	push_radial();
 
+	ld light_area = get_light_area();
 
-	for (const Vector& s : slopes) {
-		std::cout << s.x << ' ' << s.y << ' ' << s.radian() << '\n';
-	}
+	std::cout << N * M - light_area;
 }

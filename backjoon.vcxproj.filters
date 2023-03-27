@@ -142,6 +142,12 @@
     <Filter Include="소스 파일\swea\swea1770">
       <UniqueIdentifier>{23c20a89-84b2-44ef-9b82-a63e8e3ac71c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\swea\swea13469">
+      <UniqueIdentifier>{e4e31d2b-923d-4ed3-8e4c-32facf7d6499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\swea\swea11707">
+      <UniqueIdentifier>{95862d6f-c414-44b4-aebe-a86aca2e4237}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1680,6 +1686,18 @@
     <ClCompile Include="q1046.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="swea13469.cpp">
+      <Filter>소스 파일\swea\swea13469</Filter>
+    </ClCompile>
+    <ClCompile Include="swea13469_solution.cpp">
+      <Filter>소스 파일\swea\swea13469</Filter>
+    </ClCompile>
+    <ClCompile Include="swea11707.cpp">
+      <Filter>소스 파일\swea\swea11707</Filter>
+    </ClCompile>
+    <ClCompile Include="swea11707_solution.cpp">
+      <Filter>소스 파일\swea\swea11707</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">
@@ -1689,6 +1707,9 @@
   <ItemGroup>
     <Text Include="input.txt">
       <Filter>소스 파일</Filter>
+    </Text>
+    <Text Include="sample_input.txt">
+      <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>
 </Project>

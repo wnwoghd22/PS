@@ -154,9 +154,9 @@ void push_radial() {
 	Vector p1 = { light_x, light_y };
 	for (const Vector& s : slopes) {
 		// std::cout << "Slope: " << s.x << ' ' << s.y;
-		Vector p2 = p1 + s.normalize() * 1000;
+		Vector p2 = p1 + s.normalize() * 100;
 		Line a = { p1, p2 }; // 광원 p1로부터 뻗어나가는 반직선
-		ld l_len = 1000, r_len = 1000;
+		ld l_len = 100, r_len = 100;
 		for (const Line& b : edges) {
 			int cur = intersect(a, b);
 			bool l = 0, r = 0;

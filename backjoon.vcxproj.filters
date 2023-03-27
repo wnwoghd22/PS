@@ -1698,6 +1698,9 @@
     <ClCompile Include="swea11707_solution.cpp">
       <Filter>소스 파일\swea\swea11707</Filter>
     </ClCompile>
+    <ClCompile Include="q16978.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">
@@ -1705,10 +1708,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="input.txt">
-      <Filter>소스 파일</Filter>
-    </Text>
     <Text Include="sample_input.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="input.txt">
       <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>

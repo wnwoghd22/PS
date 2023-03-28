@@ -148,6 +148,12 @@
     <Filter Include="소스 파일\swea\swea11707">
       <UniqueIdentifier>{95862d6f-c414-44b4-aebe-a86aca2e4237}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\swea\swea13471">
+      <UniqueIdentifier>{6f0897a0-1949-4b33-9a2f-8c2598157a9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\swea\swea13475">
+      <UniqueIdentifier>{c813c88e-1e31-4ee6-98c4-581f9ac10cd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1700,6 +1706,18 @@
     </ClCompile>
     <ClCompile Include="q16978.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="swea13475.cpp">
+      <Filter>소스 파일\swea\swea13475</Filter>
+    </ClCompile>
+    <ClCompile Include="swea13475_solution.cpp">
+      <Filter>소스 파일\swea\swea13475</Filter>
+    </ClCompile>
+    <ClCompile Include="swea13471.cpp">
+      <Filter>소스 파일\swea\swea13471</Filter>
+    </ClCompile>
+    <ClCompile Include="swea13471_solution.cpp">
+      <Filter>소스 파일\swea\swea13471</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

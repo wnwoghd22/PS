@@ -2,60 +2,54 @@
 #include <iostream>
 
 typedef long long ll;
-const int BUCKET_LEN = 10'007;
+const int BUCKET_LEN = 2500;
 
 class HashMap {
 	struct Node {
-		Node* next;
-		Node(int v) : val(v), cnt(1), next(0) {};
+		int next;
 		int val;
 		ll cnt;
-	} *bucket[BUCKET_LEN];
-	int hash(int v) const { return (v + BUCKET_LEN * 250) % BUCKET_LEN; }
+		Node() : next(-1), val(0), cnt(1) {}
+	} nodes[BUCKET_LEN];
+	int size;
+	int bucket[BUCKET_LEN];
+	int hash(int v) const { return (5381 + v + BUCKET_LEN * BUCKET_LEN) % BUCKET_LEN; }
 public:
-	HashMap() { for (int i = 0; i < BUCKET_LEN; ++i) bucket[i] = 0; }
 	void clear() {
-		for (int i = 0; i < BUCKET_LEN; ++i) {
-			Node* cur = bucket[i], *next;
-			while (cur) {
-				next = cur->next;
-				delete cur;
-				cur = next;
-			}
-			bucket[i] = 0;
-		}
+		size = 0;
+		for (int i = 0; i < BUCKET_LEN; ++i)
+			nodes[i] = Node(), bucket[i] = -1;
 	}
+	HashMap() { clear(); }
 	void insert(int v) {
 		int key = hash(v);
-		if (!bucket[key]) bucket[key] = new Node(v);
+		if (!~bucket[key]) {
+			nodes[size].val = v;
+			bucket[key] = size++;
+		}
 		else {
-			Node* cur = bucket[key], * next;
+			int cur = bucket[key];
 			while (true) {
-				if (cur->val == v) {
-					cur->cnt++;
+				if (nodes[cur].val == v) {
+					nodes[cur].cnt++;
 					return;
 				}
-				if (!cur->next) break;
-				cur = cur->next;
+				if (!~nodes[cur].next) break;
+				cur = nodes[cur].next;
 			}
-			cur->next = new Node(v);
+			nodes[size].val = v;
+			nodes[cur].next = size++;
 		}
-	}
-	int find(int v) {
-		int key = hash(v);
-		Node* cur = bucket[key];
-		while (cur) {
-			if (cur->val == v) { return cur->cnt; }
-			cur = cur->next;
-		}
-		return 0;
 	}
 	ll operator[](int v) const {
 		int key = hash(v);
-		Node* cur = bucket[key];
-		while (cur) {
-			if (cur->val == v) { return cur->cnt; }
-			cur = cur->next;
+		if (~bucket[key]) {
+			int cur = bucket[key];
+			while (true) {
+				if (nodes[cur].val == v) return nodes[cur].cnt;
+				if (!~nodes[cur].next) break;
+				cur = nodes[cur].next;
+			}
 		}
 		return 0;
 	}
@@ -100,7 +94,7 @@ int main() {
 			for (int k = i + 1; k <= N; ++k) {
 				for (int l = 0; l < j; ++l) {
 					int s = S[k][j] - S[i][j] - S[k][l] + S[i][l];
-					result += map.find(s);
+					result += map[s];
 				}
 			}
 		}

@@ -1737,7 +1737,16 @@
     <ClCompile Include="swea14613_solution.cpp">
       <Filter>소스 파일\swea\swea14613</Filter>
     </ClCompile>
-    <ClCompile Include="q14897.cpp">
+    <ClCompile Include="q14897_mo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q14897_merge_tree.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q13537.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q26076.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

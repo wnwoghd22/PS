@@ -60,7 +60,7 @@ int main() {
 	merge_sort(0, N - 1);
 	for (int i = 0; i < N - 1; ++i)
 		A[O[i]] = A[O[i]] == A[O[i + 1]] ? O[i + 1] : INF;
-	A[N - 1] = INF;
+	A[O[N - 1]] = INF;
 	for (int i = 0; i < N; ++i)
 		std::cout << A[i] << ' ';
 	std::cout << '\n';

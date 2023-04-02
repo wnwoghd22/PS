@@ -160,6 +160,12 @@
     <Filter Include="소스 파일\swea\swea14613">
       <UniqueIdentifier>{75a791ca-823c-4708-88b1-0cade9778a40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\Gahui2023">
+      <UniqueIdentifier>{1f929942-48ba-4bc4-b5cb-5105c4740e06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\2023\KOYON2023">
+      <UniqueIdentifier>{82872559-e6aa-4840-be9b-cf6ba4d0c104}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="q1987.cpp">
@@ -1763,6 +1769,30 @@
     </ClCompile>
     <ClCompile Include="q10266.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Gahui2023\A.cpp">
+      <Filter>소스 파일\2023\Gahui2023</Filter>
+    </ClCompile>
+    <ClCompile Include="Gahui2023\B.cpp">
+      <Filter>소스 파일\2023\Gahui2023</Filter>
+    </ClCompile>
+    <ClCompile Include="Gahui2023\D.cpp">
+      <Filter>소스 파일\2023\Gahui2023</Filter>
+    </ClCompile>
+    <ClCompile Include="Gahui2023\E.cpp">
+      <Filter>소스 파일\2023\Gahui2023</Filter>
+    </ClCompile>
+    <ClCompile Include="Gahui2023\F.cpp">
+      <Filter>소스 파일\2023\Gahui2023</Filter>
+    </ClCompile>
+    <ClCompile Include="KOYON2023\A.cpp">
+      <Filter>소스 파일\2023\KOYON2023</Filter>
+    </ClCompile>
+    <ClCompile Include="KOYON2023\B.cpp">
+      <Filter>소스 파일\2023\KOYON2023</Filter>
+    </ClCompile>
+    <ClCompile Include="KOYON2023\C.cpp">
+      <Filter>소스 파일\2023\KOYON2023</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

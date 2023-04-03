@@ -8,7 +8,7 @@
 
 const int LEN = 100'001;
 struct Edge { int u, v; } edges[LEN];
-std::vector<std::vector<int>> SCC;
+std::vector<std::vector<int>> BCC;
 int p[LEN]; // union-find
 int find(int i) { return p[i] < 0 ? i : p[i] = find(p[i]); }
 bool join(int a, int b) {
@@ -33,17 +33,17 @@ int dfs(int u, int p = 0) {
 		if (order[u] > order[v]) stack.push(i); // new edge
 		if (!order[v]) { // tree edge
 			int next = dfs(v, u);
-			if (next >= min) { // min order of subtree is bigger -> BCC found
+			if (next >= order[u]) { // min order of subtree is bigger -> BCC found
 				int top = stack.top();
-				std::vector<int> scc;
+				std::vector<int> bcc;
 				while (stack.size()) {
 					int cur = stack.top(); stack.pop();
-					scc.push_back(cur);
+					bcc.push_back(cur);
 					join(top, cur);
 					if (cur == i) break;
 					top = cur;
 				}
-				SCC.push_back(scc);
+				BCC.push_back(bcc);
 			}
 			min = std::min(min, next);
 		}
@@ -56,10 +56,10 @@ int visited[LEN]; // visited array for bfs
 
 int bfs(int i) {
 	int result = 0;
-	const std::vector<int>& scc = SCC[i];
-	int group = find(scc[0]);
+	const std::vector<int>& bcc = BCC[i];
+	int group = find(bcc[0]);
 	std::queue<int> q;
-	int s = edges[scc[0]].u;
+	int s = edges[bcc[0]].u;
 	q.push(s);
 	visited[s] = 1;
 	while (q.size()) {
@@ -80,34 +80,13 @@ int bfs(int i) {
 		}
 		if (result) break;
 	}
-	for (const int& i : scc) visited[edges[i].u] = visited[edges[i].v] = 0;
+	for (const int& i : bcc) visited[edges[i].u] = visited[edges[i].v] = 0;
 
 	return result;
 }
 
-void bfs_mask(int i) {
-	const std::vector<int>& scc = SCC[i];
-	int group = find(scc[0]);
-	std::queue<int> q;
-	int s = edges[scc[0]].u;
-	q.push(s);
-	visited[s] = lucky[s] = 1;
-	while (q.size()) {
-		int u = q.front(); q.pop();
-		for (const Edge& e : graph[u]) {
-			int v = e.v, i = e.u;
-			if (find(i) != group) continue; // not in scc group
-			if (!visited[v]) {
-				visited[v] = lucky[v] = 1;
-				q.push(v);
-			}
-		}
-	}
-	for (const int& i : scc) visited[edges[i].u] = visited[edges[i].v] = 0;
-}
-
 int solve() {
-	SCC.clear();
+	BCC.clear();
 	memset(p, -1, sizeof p);
 	for (std::vector<Edge>& v : graph) v.clear();
 	memset(order, 0, sizeof order);
@@ -122,15 +101,21 @@ int solve() {
 		graph[a].push_back({ i, b });
 		graph[b].push_back({ i, a });
 	}
-	dfs(1);
+	for (int u = 1; u <= V; ++u) {
+		if (!order[u])
+			dfs(u);
+	}
 
-	for (int i = 0; i < SCC.size(); ++i) {
+	for (int i = 0; i < BCC.size(); ++i) {
 		std::cout << "SCC " << i << '\n';
-		for (const int& e : SCC[i]) {
+		for (const int& e : BCC[i]) {
 			std::cout << edges[e].u << ' ' << edges[e].v << '\n';
 		}
-		if (bfs(i))
-			bfs_mask(i);
+		if (bfs(i)) {
+			for (const int& e : BCC[i]) {
+				lucky[edges[e].u] = lucky[edges[e].v] = 1;
+			}
+		}
 	}
 	int count = 0;
 	for (int i = 1; i <= V; ++i)

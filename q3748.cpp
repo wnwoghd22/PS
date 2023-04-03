@@ -21,8 +21,7 @@ bool join(int a, int b) {
 int V, E;
 int ord, order[LEN]; // euler tour order
 
-struct
-	std::vector<Edge> graph[LEN];
+std::vector<Edge> graph[LEN];
 bool lucky[LEN];
 
 std::stack<int> stack;
@@ -126,6 +125,10 @@ int solve() {
 	dfs(1);
 
 	for (int i = 0; i < SCC.size(); ++i) {
+		std::cout << "SCC " << i << '\n';
+		for (const int& e : SCC[i]) {
+			std::cout << edges[e].u << ' ' << edges[e].v << '\n';
+		}
 		if (bfs(i))
 			bfs_mask(i);
 	}

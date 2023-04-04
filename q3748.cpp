@@ -8,7 +8,6 @@
 
 const int LEN = 100'001;
 struct Edge { int u, v; } edges[LEN];
-std::vector<std::vector<int>> BCC;
 int p[LEN]; // union-find
 int find(int i) { return p[i] < 0 ? i : p[i] = find(p[i]); }
 bool join(int a, int b) {
@@ -18,6 +17,8 @@ bool join(int a, int b) {
 	else p[b] += p[a], p[a] = b;
 	return true;
 }
+int bcc_count, bcc_index[LEN], bcc_stack[LEN + 1], bcc[LEN];
+
 int V, E;
 int ord, order[LEN]; // euler tour order
 
@@ -35,15 +36,16 @@ int dfs(int u, int p = 0) {
 			int next = dfs(v, u);
 			if (next >= order[u]) { // min order of subtree is bigger -> BCC found
 				int top = stack.top();
-				std::vector<int> bcc;
+				bcc_index[i] = bcc_count;
+				int bcc_i = bcc_stack[bcc_count++];
 				while (stack.size()) {
 					int cur = stack.top(); stack.pop();
-					bcc.push_back(cur);
+					bcc[bcc_i++] = cur;
 					join(top, cur);
 					if (cur == i) break;
 					top = cur;
 				}
-				BCC.push_back(bcc);
+				bcc_stack[bcc_count] = bcc_i;
 			}
 			min = std::min(min, next);
 		}
@@ -56,10 +58,9 @@ int visited[LEN]; // visited array for bfs
 
 int bfs(int i) {
 	int result = 0;
-	const std::vector<int>& bcc = BCC[i];
-	int group = find(bcc[0]);
+	int group = find(bcc[bcc_stack[i]]);
 	std::queue<int> q;
-	int s = edges[bcc[0]].u;
+	int s = edges[bcc[bcc_stack[i]]].u;
 	q.push(s);
 	visited[s] = 1;
 	while (q.size()) {
@@ -80,18 +81,19 @@ int bfs(int i) {
 		}
 		if (result) break;
 	}
-	for (const int& i : bcc) visited[edges[i].u] = visited[edges[i].v] = 0;
-
+	for (int k = bcc_stack[i]; k < bcc_stack[i + 1]; ++k) {
+		int e = bcc[k];
+		visited[edges[e].u] = visited[edges[e].v] = 0;
+	}
 	return result;
 }
 
 int solve() {
-	BCC.clear();
 	memset(p, -1, sizeof p);
 	for (std::vector<Edge>& v : graph) v.clear();
 	memset(order, 0, sizeof order);
 	memset(lucky, 0, sizeof lucky);
-	ord = 0;
+	ord = bcc_count = bcc_stack[0] = 0;
 
 	std::cin >> V >> E;
 	for (int i = 0, a, b; i < E; ++i) {
@@ -106,13 +108,10 @@ int solve() {
 			dfs(u);
 	}
 
-	for (int i = 0; i < BCC.size(); ++i) {
-		std::cout << "SCC " << i << '\n';
-		for (const int& e : BCC[i]) {
-			std::cout << edges[e].u << ' ' << edges[e].v << '\n';
-		}
+	for (int i = 0; i < bcc_count; ++i) {
 		if (bfs(i)) {
-			for (const int& e : BCC[i]) {
+			for (int k = bcc_stack[i]; k < bcc_stack[i + 1]; ++k) {
+				int e = bcc[k];
 				lucky[edges[e].u] = lucky[edges[e].v] = 1;
 			}
 		}
@@ -125,7 +124,7 @@ int solve() {
 }
 
 int main() {
-	freopen("input.txt", "r", stdin);
+	std::cin.tie(0)->sync_with_stdio(0);
 	int T;
 	std::cin >> T;
 	while (T--) std::cout << solve() << '\n';

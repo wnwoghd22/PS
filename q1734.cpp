@@ -18,8 +18,11 @@ void dfs(int u, int p = 0) { // dfs spanning tree
 	}
 	for (const int& v : graph[u]) {
 		if (v == p) continue;
-		if (!in[v]) dfs(v, u);
-		min[u] = std::min(min[u], min[v]);
+		if (!in[v]) {
+			dfs(v, u);
+			min[u] = std::min(min[u], min[v]);
+		}
+		else min[u] = std::min(min[u], in[v]);
 	}
 	out[u] = ord;
 }

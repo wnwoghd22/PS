@@ -24,14 +24,14 @@ bool join(int a, int b) {
 	return true;
 }
 int V, E;
-int order[LEN]; // euler tour order
+int ord, order[LEN]; // euler tour order
 
 std::vector<Edge> graph[LEN];
 std::vector<int> articulation_edge;
 
 std::stack<int> stack;
 int dfs(int u, int p = 0) {
-	int min = order[u] = order[p] + 1;
+	int min = order[u] = ++ord;
 	// std::cout << u << ' ' << p << ' ' << min << '\n';
 	stack.push(u);
 	for (const Edge& e : graph[u]) {
@@ -60,7 +60,7 @@ int dfs(int u, int p = 0) {
 int leaf[LEN];
 std::vector<int> leaf_set[LEN];
 int dfs_leaf(int u, int p = 0) {
-	if (graph[u].size() == 1 && graph[u][0].v == p) return leaf[u] = 1;
+	if (graph[u].size() == 1) leaf[u] = 1;
 	for (const Edge& e : graph[u]) {
 		int v = e.v;
 		if (v == p) continue;
@@ -79,9 +79,9 @@ int get_centroid(int u, int p, int s) { // leaf centroid
 std::priority_queue<Edge> pq;
 void push_leaves(int u, int p, int i) {
 	// std::cout << "check leaf " << u << ' ' << p << '\n';
-	if (graph[u].size() == 1 && graph[u][0].v == p) {
+	if (graph[u].size() == 1) {
 		// std::cout << "push leaf " << u << " at " << i << '\n';
-		return leaf_set[i].push_back(u);
+		leaf_set[i].push_back(u);
 	}
 	for (const Edge& e : graph[u]) {
 		int v = e.v;
@@ -91,7 +91,7 @@ void push_leaves(int u, int p, int i) {
 }
 
 int main() {
-	freopen("input.txt", "r", stdin);
+	// freopen("input.txt", "r", stdin);
 	std::cin.tie(0)->sync_with_stdio(0);
 	memset(p, -1, sizeof p);
 	std::cin >> V >> E;

@@ -1872,6 +1872,9 @@
     <ClCompile Include="splay_tree.cpp">
       <Filter>소스 파일\reference</Filter>
     </ClCompile>
+    <ClCompile Include="q16586.cpp">
+      <Filter>소스 파일\q16000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

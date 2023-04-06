@@ -1869,6 +1869,9 @@
     <ClCompile Include="seg_tree.cpp">
       <Filter>소스 파일\reference</Filter>
     </ClCompile>
+    <ClCompile Include="splay_tree.cpp">
+      <Filter>소스 파일\reference</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

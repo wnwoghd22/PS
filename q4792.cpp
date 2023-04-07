@@ -30,14 +30,12 @@ int solve() {
 	
 	cc = 0;
 	memset(p, -1, sizeof p);
-	for (int i = 0; i < sp_b; ++i) join(blue[i].u, blue[i].v);
-	for (int i = 1; i <= N; ++i) if (find(i) == i) ++cc;
-	max = N - cc;
+	for (int i = 0; i < sp_b; ++i) join(blue[i].u, blue[i].v) ? ++cc : 0;
+	max = cc;
 
-	cc = 0;
+	cc = N;
 	memset(p, -1, sizeof p);
-	for (int i = 0; i < sp_r; ++i) join(red[i].u, red[i].v);
-	for (int i = 1; i <= N; ++i) if (find(i) == i) ++cc;
+	for (int i = 0; i < sp_r; ++i) join(red[i].u, red[i].v) ? --cc : 0;
 	min = cc - 1;
 
 	std::cout << (min <= K && K <= max ? 1 : 0) << '\n';

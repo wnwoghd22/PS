@@ -220,6 +220,9 @@
     <Filter Include="소스 파일\reference">
       <UniqueIdentifier>{ff5fdba6-801e-4782-a59c-6b7dff006d43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\Gazi2023">
+      <UniqueIdentifier>{fad1afc0-94f6-4e31-bf17-4cceeafb00f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -1883,6 +1886,18 @@
     </ClCompile>
     <ClCompile Include="fenwick_tree.cpp">
       <Filter>소스 파일\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="Gazi2023\A.cpp">
+      <Filter>소스 파일\2023\Gazi2023</Filter>
+    </ClCompile>
+    <ClCompile Include="Gazi2023\B.cpp">
+      <Filter>소스 파일\2023\Gazi2023</Filter>
+    </ClCompile>
+    <ClCompile Include="Gazi2023\C.cpp">
+      <Filter>소스 파일\2023\Gazi2023</Filter>
+    </ClCompile>
+    <ClCompile Include="Gazi2023\F.cpp">
+      <Filter>소스 파일\2023\Gazi2023</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

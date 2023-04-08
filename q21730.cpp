@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 typedef long long ll;
 const int LEN = 100'001;
@@ -64,8 +65,8 @@ int dfs(int u, int p = 0) {
 void dfs_euler(int u, int p = 0) {
 	order[u] = ++ord;
 	chain[u] = ch_ord;
-	if (chain_size[chain[u]]) chain_top[chain[u]] = u;
-	++chain_size[u];
+	if (!chain_size[chain[u]]) chain_top[chain[u]] = u;
+	++chain_size[chain[u]];
 
 	if (heavy[u]) dfs_euler(heavy[u], u);
 	for (const int& v : graph[u]) {
@@ -78,31 +79,32 @@ void dfs_euler(int u, int p = 0) {
 void update(int u, int v) {
 	while (chain[u] ^ chain[v]) {
 		if (level[chain_top[chain[u]]] > level[chain_top[chain[v]]]) std::swap(u, v);
-		w_edge.update(order[chain_top[chain[v]]], order[v], 1);
 		w_vert.update(order[chain_top[chain[v]]], order[v], 1);
-		v = parent[v];
+		w_edge.update(order[chain_top[chain[v]]], order[v], 1);
+		v = parent[chain_top[chain[v]]];
 	}
 	if (level[u] > level[v]) std::swap(u, v);
-	w_edge.update(order[u] + 1, order[v], 1); // IMPORTANT!
+	if (u ^ v) w_edge.update(order[heavy[u]], order[v], 1);
 	w_vert.update(order[u], order[v], 1);
 }
 ll get(int u, int v) {
-	ll sum_edge = 0, sum_vert = 0;
+	ll sum = 0;
 	while (chain[u] ^ chain[v]) {
 		if (level[chain_top[chain[u]]] > level[chain_top[chain[v]]]) std::swap(u, v);
-		sum_edge += w_edge.get(order[chain_top[chain[v]]], order[v]);
-		sum_vert += w_vert.get(order[chain_top[chain[v]]], order[v]);
-		v = parent[v];
+		sum += w_vert.get(order[chain_top[chain[v]]], order[v]);
+		sum -= w_edge.get(order[chain_top[chain[v]]], order[v]);
+		v = parent[chain_top[chain[v]]];
 	}
 	if (level[u] > level[v]) std::swap(u, v);
-	sum_edge += w_edge.get(order[u] + 1, order[v]); // IMPORTANT!
-	sum_vert += w_vert.get(order[u], order[v]);
-	std::cout << sum_edge << ' ' << sum_vert << ' ';
-	return sum_vert - sum_edge;
+	sum += w_vert.get(order[u], order[v]);
+	if (u ^ v) sum -= w_edge.get(order[heavy[u]], order[v]); // IMPORTANT!
+	return sum;
 }
 
 int main() {
 	freopen("input.txt", "r", stdin);
+	std::ios_base::sync_with_stdio(0);
+	std::cin.tie(0); std::cout.tie(0);
 	std::cin >> N >> M >> Q;
 	for (int i = 1, u, v; i < N; ++i) {
 		std::cin >> u >> v;

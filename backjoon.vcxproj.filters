@@ -223,6 +223,9 @@
     <Filter Include="소스 파일\2023\Gazi2023">
       <UniqueIdentifier>{fad1afc0-94f6-4e31-bf17-4cceeafb00f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\AtCoder297">
+      <UniqueIdentifier>{cb6523a8-e326-4641-8b62-d05f9af662e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -1901,6 +1904,24 @@
     </ClCompile>
     <ClCompile Include="q21730.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder297\A.cpp">
+      <Filter>소스 파일\2023\AtCoder297</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder297\B.cpp">
+      <Filter>소스 파일\2023\AtCoder297</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder297\C.cpp">
+      <Filter>소스 파일\2023\AtCoder297</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder297\D.cpp">
+      <Filter>소스 파일\2023\AtCoder297</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder297\E.cpp">
+      <Filter>소스 파일\2023\AtCoder297</Filter>
+    </ClCompile>
+    <ClCompile Include="AtCoder297\G.cpp">
+      <Filter>소스 파일\2023\AtCoder297</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

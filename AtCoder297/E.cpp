@@ -99,7 +99,7 @@ public:
     void pop(ll val) {
         if (!find(val)) return;
         Node* p = root;
-
+        
         if (p->l && p->r) {
             root = p->l; root->p = 0;
             Node* l = root;
@@ -126,7 +126,6 @@ public:
         return p->val;
     }
 } sp;
-
 ll N, K, A[10], ans[LEN];
 
 int main() {

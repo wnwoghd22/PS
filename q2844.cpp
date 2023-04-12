@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 
 typedef long long ll;
@@ -13,18 +14,27 @@ class SplayTree {
 		ll x, a0, d; // eff, a0, diff
 		Node() : l(0), r(0), p(0), size(1), val(0), sum(0), x(1), a0(0), d(0) {}
 		~Node() { if (l) delete l; if (r) delete r; }
-		void push(ll x, ll a0, ll d) {
-			this->x = x; this->a0 *= x; this->d *= x;
-			this->a0 += a0; this->d += d;
+		void query(ll x, ll a0, ll d) {
 			int pivot = (l ? l->size : 0) + 1;
 			val = val * x + a0 + d * pivot;
 			sum = x * sum + a0 * size + d * size * (size + 1) / 2;
+			if (l) l->push(x, a0, d);
+			if (r) r->push(x, a0 + d * pivot, d);
+		}
+
+		void push(ll x, ll a0, ll d) {
+			this->x = x; this->a0 *= x; this->d *= x;
+			this->a0 += a0; this->d += d;
+			// int pivot = (l ? l->size : 0) + 1;
+			// val = val * x + a0 + d * pivot;
+			// sum = x * sum + this->a0 * size + this->d * size * (size + 1) / 2;
+			// sum = x * sum + a0 * size + d * size * (size + 1) / 2;
 		}
 		void propagate() {
 			if (!x || a0 || d) {
 				int pivot = (l ? l->size : 0) + 1;
-				/*val = val * x + a0 + d * pivot;
-				sum = x * sum + a0 * size + d * size * (size + 1) / 2;*/
+				val = val * x + a0 + d * pivot;
+				sum = x * sum + a0 * size + d * size * (size + 1) / 2;
 				if (l) l->push(x, a0, d);
 				if (r) r->push(x, a0 + d * pivot, d);
 				x = 1; a0 = 0; d = 0;
@@ -46,8 +56,8 @@ class SplayTree {
 	void rotate(Node* x) {
 		if (!x->p) return;
 		Node* p = x->p;
-		p->propagate();
-		x->propagate();
+		// p->propagate();
+		// x->propagate();
 		Node* b = 0;
 		if (x == p->l) {
 			p->l = b = x->r;
@@ -131,7 +141,10 @@ public:
 		l->update();
 	}
 	ll get_sum(int s, int e) { return gather(s, e)->sum; }
-	void push(int s, int e, ll x, ll a0, ll d) { gather(s, e)->push(x, a0, d); }
+	void push(int s, int e, ll x, ll a0, ll d) { 
+		// gather(s, e)->push(x, a0, d); 
+		gather(s, e)->query(x, a0, d);
+	}
 
 	ll debug(int i) {
 		get(i);
@@ -141,6 +154,8 @@ public:
 int N, Q;
 
 int main() {
+	freopen("input.txt", "r", stdin);
+	// freopen("output.txt", "w", stdout);
 	std::cin >> N >> Q;
 	sp.init(N);
 
@@ -165,10 +180,15 @@ int main() {
 		if (q == 3) {
 			std::cin >> c >> x;
 			sp.insert(c, x);
+			++N;
 		}
 		if (q == 4) {
 			std::cin >> a >> b;
 			std::cout << sp.get_sum(a, b) << '\n';
 		}
+
 	}
+	for (int i = 1; i <= N; ++i)
+		std::cout << sp.debug(i) << ' ';
+	std::cout << '\n';
 }

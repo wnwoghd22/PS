@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 
 typedef long long ll;
@@ -11,20 +10,20 @@ class SplayTree {
 		int size;
 		ll val, sum;
 		ll x, a0, d; // eff, a0, diff
-		Node() : l(0), r(0), p(0), size(1), val(0), sum(0), x(1), a0(0), d(0) {}
+		Node() : l(0), r(0), p(0), size(1), val(0), sum(0), x(-1), a0(0), d(0) {}
 		~Node() { if (l) delete l; if (r) delete r; }
 		void push(ll x, ll a0, ll d) {
-			this->x *= x; this->a0 *= x; this->d *= x;
+			this->x &= x; this->a0 &= x; this->d &= x;
 			this->a0 += a0; this->d += d;
 		}
 		void propagate() {
-			if (!x || a0 || d) {
+			if (~x || a0 || d) {
 				int pivot = (l ? l->size : 0) + 1;
-				val = val * x + a0 + d * pivot;
-				sum = x * sum + a0 * size + d * size * (size + 1) / 2;
+				val = (val & x) + a0 + d * pivot;
+				sum = (sum & x) + a0 * size + d * size * (size + 1) / 2;
 				if (l) l->push(x, a0, d);
 				if (r) r->push(x, a0 + d * pivot, d);
-				x = 1; a0 = 0; d = 0;
+				x = -1; a0 = 0; d = 0;
 			}
 		}
 		void update() {
@@ -118,15 +117,13 @@ public:
 	void insert(int c, ll x) {
 		get(c);
 		Node* r = root;
-		get(c - 1);
-		Node* l = root;
-		splay(r, l);
+		Node* l = root->l;
 		Node* m = new Node;
 		m->sum = m->val = x;
-		m->r = r; r->p = m;
-		m->p = l; l->r = m;
+		m->l = l; l->p = m;
+		m->p = r; r->l = m;
 		m->update();
-		l->update();
+		r->update();
 	}
 	ll get_sum(int s, int e) { return gather(s, e)->sum; }
 	void push(int s, int e, ll x, ll a0, ll d) { gather(s, e)->push(x, a0, d); }
@@ -139,8 +136,7 @@ public:
 int N, Q;
 
 int main() {
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N >> Q;
 	sp.init(N);
 
@@ -152,7 +148,7 @@ int main() {
 		}
 		if (q == 2) {
 			std::cin >> a >> b >> x;
-			sp.push(a, b, 1, 0, x);
+			sp.push(a, b, -1, 0, x);
 		}
 		if (q == 3) {
 			std::cin >> c >> x;

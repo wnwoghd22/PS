@@ -1947,6 +1947,12 @@
     <ClCompile Include="q13519.cpp">
       <Filter>소스 파일\q13000~</Filter>
     </ClCompile>
+    <ClCompile Include="q18236_hushing_leftistheap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="leftist_heap.cpp">
+      <Filter>소스 파일\reference</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

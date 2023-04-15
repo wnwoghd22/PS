@@ -5,7 +5,7 @@
 typedef long long ll;
 const int LEN = 100'001;
 
-int N;
+int N, M, A[LEN];
 
 struct Node {
 	ll lm, rm, sum, max;
@@ -124,20 +124,51 @@ ll query1(int u, int v) {
 	Node nv = { 0, 0, 0, 0 };
 	if (chain[u] ^ chain[v]) {
 		while (chain[u] ^ chain[l]) {
-			
-			update(order[chain_top[chain[u]]], order[u], pivot - level[chain_top[chain[u]]] + level[l], -1);
+			nu = get(order[chain_top[chain[u]]], order[u]) + nu;
 			u = parent[chain_top[chain[u]]][0];
 		}
 		while (chain[v] ^ chain[l]) {
-			update(order[chain_top[chain[v]]], order[v], pivot + level[chain_top[chain[v]]] - level[l], 1);
+			nv = get(order[chain_top[chain[v]]], order[v]) + nv; 
 			v = parent[chain_top[chain[v]]][0];
 		}
 	}
+	if (level[u] <= level[v]) total = ~nu + get(order[u], order[v]) + nv;
+	else total = ~nv + get(order[v], order[u]) + nu;
 
-	if (level[u] <= level[v]) update(order[u], order[v], pivot, 1);
-	else update(order[v], order[u], pivot, -1);
+	return total.max;
 }
 
-ll query2(int u, int v) {
+void query2(int u, int v, int w) {
+	while (chain[u] ^ chain[v]) {
+		if (level[chain_top[chain[u]]] > level[chain_top[chain[v]]]) std::swap(u, v);
+		update(order[chain_top[chain[v]]], order[v], w);
+		v = parent[chain_top[chain[v]]][0];
+	}
+	if (level[u] > level[v]) std::swap(u, v);
+	update(order[u], order[v], w);
+}
 
+int main() {
+	std::cin >> N;
+	for (int i = 1; i <= N; ++i) std::cin >> A[i];
+	for (int i = 1, u, v; i < N; ++i) {
+		std::cin >> u >> v;
+		graph[u].push_back(v);
+		graph[v].push_back(u);
+	}
+	dfs(1);
+	dfs_euler(1);
+	for (int i = 1; i <= N; ++i) update(order[i], order[i], A[i]);
+	std::cin >> M;
+	for (int i = 0, q, u, v, w; i < M; ++i) {
+		std::cin >> q;
+		if (q == 1) {
+			std::cin >> u >> v;
+			std::cout << query1(u, v) << '\n';
+		}
+		if (q == 2) {
+			std::cin >> u >> v >> w;
+			query2(u, v, w);
+		}
+	}
 }

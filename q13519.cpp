@@ -68,7 +68,9 @@ int ord, order[LEN], heavy[LEN];
 int ch_ord, chain[LEN], chain_size[LEN], chain_top[LEN];
 
 int dfs(int u, int p = 0) {
-
+	level[u] = level[p] + 1;
+	parent[u][0] = p;
+	
 }
 
 void dfs_euler(int u, int p = 0) {

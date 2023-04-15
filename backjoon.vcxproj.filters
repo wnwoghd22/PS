@@ -226,6 +226,9 @@
     <Filter Include="소스 파일\2023\AtCoder297">
       <UniqueIdentifier>{cb6523a8-e326-4641-8b62-d05f9af662e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\ABC298">
+      <UniqueIdentifier>{380f5bba-044e-4670-a111-a116d83b98a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -1958,6 +1961,21 @@
     </ClCompile>
     <ClCompile Include="2912.cpp">
       <Filter>소스 파일\q2500~</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC298\A.cpp">
+      <Filter>소스 파일\2023\ABC298</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC298\B.cpp">
+      <Filter>소스 파일\2023\ABC298</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC298\C.cpp">
+      <Filter>소스 파일\2023\ABC298</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC298\D.cpp">
+      <Filter>소스 파일\2023\ABC298</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC298\E.cpp">
+      <Filter>소스 파일\2023\ABC298</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

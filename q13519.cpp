@@ -13,7 +13,7 @@ struct Node {
 	ll val;	// for lazy
 	Node operator+(const Node& r) const {
 		return {
-			std::max(lm, sum + r.rm),
+			std::max(lm, sum + r.lm),
 			std::max(rm + r.sum, r.rm),
 			sum + r.sum,
 			std::max({ max, r.max, rm + r.lm })

@@ -3,21 +3,23 @@
 #include <vector>
 #include <algorithm>
 
+typedef long long ll;
 const int LEN = 100'001;
 
-int N, M, t[LEN << 1], result[LEN];
+int N, M;
+ll t[LEN << 1], result[LEN];
 
-void init() { 
+void init() {
 	for (int i = N - 1; i > 0; --i)
 		t[i] = t[i << 1] + t[i << 1 | 1];
 }
-void update(int p, int val) { 
-	for (t[p += N] = val; p > 1; p >>= 1) 
+void update(int p, ll val) {
+	for (t[p += N] = val; p > 1; p >>= 1)
 		t[p >> 1] = t[p] + t[p ^ 1];
 }
 // [l,r)
-int query(int l, int r) {
-	int res = 0;
+ll query(int l, int r) {
+	ll res = 0;
 	for (l += N, r += N; l < r; l >>= 1, r >>= 1) {
 		if (l & 1) res += t[l++];
 		if (r & 1) res += t[--r];
@@ -27,7 +29,7 @@ int query(int l, int r) {
 
 int Q, K, I, J, V, q2;
 struct Query1 { int i, v; };
-struct Query2 { 
+struct Query2 {
 	int k, i, j, o;
 	bool operator<(const Query2& r) const { return k < r.k; }
 };
@@ -35,7 +37,8 @@ std::vector<Query1> queries1;
 std::vector<Query2> queries2;
 
 int main() {
-	freopen("input.txt", "r", stdin);
+	// freopen("input.txt", "r", stdin);
+	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N;
 	for (int i = 0; i < N; ++i) std::cin >> t[i + N];
 	init();

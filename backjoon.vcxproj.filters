@@ -1959,7 +1959,7 @@
     <ClCompile Include="lca.cpp">
       <Filter>소스 파일\reference</Filter>
     </ClCompile>
-    <ClCompile Include="2912.cpp">
+    <ClCompile Include="q2912.cpp">
       <Filter>소스 파일\q2500~</Filter>
     </ClCompile>
     <ClCompile Include="ABC298\A.cpp">

@@ -229,6 +229,9 @@
     <Filter Include="소스 파일\2023\ABC298">
       <UniqueIdentifier>{380f5bba-044e-4670-a111-a116d83b98a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\AGCU2023">
+      <UniqueIdentifier>{650ff703-3ff3-418d-b3f6-da9bc0fd720c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -1976,6 +1979,18 @@
     </ClCompile>
     <ClCompile Include="ABC298\E.cpp">
       <Filter>소스 파일\2023\ABC298</Filter>
+    </ClCompile>
+    <ClCompile Include="AGCU2023\B.cpp">
+      <Filter>소스 파일\2023\AGCU2023</Filter>
+    </ClCompile>
+    <ClCompile Include="AGCU2023\C.cpp">
+      <Filter>소스 파일\2023\AGCU2023</Filter>
+    </ClCompile>
+    <ClCompile Include="AGCU2023\D.cpp">
+      <Filter>소스 파일\2023\AGCU2023</Filter>
+    </ClCompile>
+    <ClCompile Include="AGCU2023\E.cpp">
+      <Filter>소스 파일\2023\AGCU2023</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -45,8 +45,12 @@ void get_lcp(const int n, const char* s) {
 }
 
 int main() {
-	std::cin >> N >> S;
+	std::cin >> S;
+	N = strlen(S);
 	manber_myers(N, S);
 	get_lcp(N, S);
-	std::cout << *std::max_element(lcp + 1, lcp + N);
+	for (int i = 0; i < N; ++i) {
+		printf("%s\n", S + SA[i]);
+	}
+	for (int i = 1; i < N; ++i) std::cout << lcp[i] << ' ';
 }

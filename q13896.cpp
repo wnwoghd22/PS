@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <vector>
 
@@ -12,13 +13,14 @@ int size[LEN];
 int dfs(int u, int p = 0) {
 	level[u] = level[p] + 1;
 	parent[u][0] = p;
+	size[u] = 1;
 	for (int i = 1, v = p; v; v = parent[v][i++])
 		parent[u][i] = parent[v][i - 1];
 	for (const int& v : graph[u]) {
 		if (v == p) continue;
 		size[u] += dfs(v, u);
 	}
-	return ++size[u];
+	return size[u];
 }
 int find_ancestor(int u, int l) { // find ancestor of level l of u 
 	int v = u;
@@ -28,6 +30,7 @@ int find_ancestor(int u, int l) { // find ancestor of level l of u
 	return v;
 }
 int lca(int u, int v) {
+	std::cout << "lca(" << u << ", " << v;
 	if (level[u] ^ level[v]) {
 		if (level[u] > level[v]) std::swap(u, v);
 		for (int i = 20; i >= 0; --i)
@@ -44,6 +47,7 @@ int lca(int u, int v) {
 			l = parent[u][i];
 		}
 	}
+	std::cout << ") = " << l << '\n';
 	return l;
 }
 
@@ -56,14 +60,22 @@ void solve() {
 		graph[u].push_back(v);
 		graph[v].push_back(u);
 	}
+	dfs(1);
 	for (int i = 0, s, u; i < Q; ++i) {
 		std::cin >> s >> u;
 		if (s) {
 			if (u == R) std::cout << N << '\n';
 			else {
 				int l = lca(u, R);
-				if (l == R) std::cout << size[u] << '\n';
+				if (l == u) {
+					int p = find_ancestor(R, level[u] + 1);
+					std::cout << "ancestor: " << p << '\n';
+					std::cout << N - size[p] << '\n';
+					// std::cout << size[p] << '\n';
+				}
+				else std::cout << size[u] << '\n';
 				// TODO: complete casework
+				
 			}
 		}
 		else R = u;
@@ -71,6 +83,10 @@ void solve() {
 }
 
 int main() {
+	freopen("input.txt", "r", stdin);
 	std::cin >> T;
-	while (T--) solve();
+	for (int t = 1; t <= T; ++t) {
+		std::cout << "Case #" << t << ":\n";
+		solve();
+	}
 }

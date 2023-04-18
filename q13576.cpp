@@ -4,7 +4,7 @@
 
 const int LEN = 200'001;
 int N, cnt[LEN], ord[LEN], SA[LEN], g[LEN], tg[LEN];
-int lcp[LEN], rank[LEN];
+int lcp[LEN], rank[LEN], dp[LEN], sp, st[LEN];
 char S[LEN];
 
 inline int min(int x, int y) { return x < y ? x : y; }
@@ -33,15 +33,26 @@ void manber_myers(const int n, const char* s) {
 
 void get_lcp(const int n, const char* s) {
 	for (int i = 0; i < n; ++i) rank[SA[i]] = i;
-	int len = 0;
-	for (int i = 0, j, k; i < n; ++i) {
+	for (int i = 0, j, k, l = 0; i < n; ++i) {
 		if (k = rank[i]) {
 			j = SA[k - 1];
-			while (s[i + len] == s[j + len]) ++len;
-			lcp[k] = len;
-			if (len) --len;
+			while (s[i + l] == s[j + l]) ++l;
+			lcp[k] = l;
+			if (l) --l;
 		}
 	}
+}
+
+int f(int i) {
+	int& ref = dp[i];
+	if (ref) return ref;
+	ref = 1;
+	for (int j = i + 1; j < N && lcp[j] >= N - SA[i]; ++j) {
+		int len = f(j);
+		ref += len;
+		j += len - 1;
+	}
+	return ref;
 }
 
 int main() {
@@ -49,8 +60,19 @@ int main() {
 	N = strlen(S);
 	manber_myers(N, S);
 	get_lcp(N, S);
-	for (int i = 0; i < N; ++i) {
-		printf("%s\n", S + SA[i]);
+	for (int i = 0; SA[i]; ++i) f(i);
+
+	// for (int i = 0; i < N; ++i) std::cout << g[i] << ' '; std::cout << '\n';
+	// for (int i = 0; i < N; ++i) std::cout << SA[i] << ' '; std::cout << '\n';
+	// for (int i = 0; i < N; ++i) printf("%s\n", S + SA[i]);
+	// for (int i = 0; i < N; ++i) std::cout << lcp[i] << ' '; std::cout << '\n';
+	// for (int i = 0; i < N; ++i) std::cout << dp[i] << ' '; std::cout << '\n';
+
+	for (int i = g[0] - 2; i >= 0 && lcp[i + 1]; --i) {
+		// std::cout << N - SA[i] << ' ' << lcp[i + 1] << '\n';
+		if (N - SA[i] <= lcp[i + 1]) st[sp++] = i;
 	}
-	for (int i = 1; i < N; ++i) std::cout << lcp[i] << ' ';
+	for (int i = sp - 1; i >= 0; --i)
+		std::cout << N - SA[st[i]] << ' ' << dp[st[i]] << '\n';
+	std::cout << N << ' ' << 1;
 }

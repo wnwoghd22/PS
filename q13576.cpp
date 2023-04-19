@@ -56,6 +56,7 @@ int f(int i) {
 }
 
 int main() {
+	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> S;
 	N = strlen(S);
 	manber_myers(N, S);
@@ -68,11 +69,15 @@ int main() {
 	// for (int i = 0; i < N; ++i) std::cout << lcp[i] << ' '; std::cout << '\n';
 	// for (int i = 0; i < N; ++i) std::cout << dp[i] << ' '; std::cout << '\n';
 
-	for (int i = g[0] - 2; i >= 0 && lcp[i + 1]; --i) {
-		// std::cout << N - SA[i] << ' ' << lcp[i + 1] << '\n';
-		if (N - SA[i] <= lcp[i + 1]) st[sp++] = i;
+	for (int i = g[0] - 2, l = N; i >= 0 && lcp[i + 1]; --i) {
+		if (lcp[i + 1] <= l && N - SA[i] <= lcp[i + 1]) st[sp++] = i;
+		l = min(l, lcp[i + 1]);
 	}
+
+	std::cout << sp + 1 << '\n';
 	for (int i = sp - 1; i >= 0; --i)
 		std::cout << N - SA[st[i]] << ' ' << dp[st[i]] << '\n';
 	std::cout << N << ' ' << 1;
 }
+
+// adacadababadacada

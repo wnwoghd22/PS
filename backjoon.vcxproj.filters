@@ -2013,6 +2013,9 @@
     <ClCompile Include="q9525.cpp">
       <Filter>소스 파일\q6000~</Filter>
     </ClCompile>
+    <ClCompile Include="q2570.cpp">
+      <Filter>소스 파일\q2000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

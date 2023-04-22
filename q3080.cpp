@@ -79,7 +79,7 @@ public:
 } trie;
 
 int main() {
-	for (int i = 2; i < 27; ++i) 
+	for (int i = 2; i < 30; ++i) 
 		fact[i] = fact[i - 1] * i % MOD;
 	std::cin >> N;
 	for (int i = 0; i < N; ++i) {

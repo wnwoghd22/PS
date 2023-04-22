@@ -2013,8 +2013,14 @@
     <ClCompile Include="q9525.cpp">
       <Filter>소스 파일\q6000~</Filter>
     </ClCompile>
+    <ClCompile Include="hopcroft_karp.cpp">
+      <Filter>소스 파일\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="q11375_hopcroft_karp.cpp">
+      <Filter>소스 파일\q11000~</Filter>
+    </ClCompile>
     <ClCompile Include="q2570.cpp">
-      <Filter>소스 파일\q2000~</Filter>
+      <Filter>소스 파일\q2500~</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

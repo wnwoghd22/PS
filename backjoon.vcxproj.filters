@@ -232,6 +232,15 @@
     <Filter Include="소스 파일\2023\AGCU2023">
       <UniqueIdentifier>{650ff703-3ff3-418d-b3f6-da9bc0fd720c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\reference\seg_tree">
+      <UniqueIdentifier>{2736b47e-0916-4af8-b363-00b5c153df81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\reference\heap">
+      <UniqueIdentifier>{fb45d617-4582-4975-9162-0b3638747df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\reference\tree">
+      <UniqueIdentifier>{e77e44d6-eab5-49bb-abdd-a45126e75128}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -1878,9 +1887,6 @@
     <ClCompile Include="q11658.cpp">
       <Filter>소스 파일\q11000~</Filter>
     </ClCompile>
-    <ClCompile Include="seg_tree.cpp">
-      <Filter>소스 파일\reference</Filter>
-    </ClCompile>
     <ClCompile Include="splay_tree.cpp">
       <Filter>소스 파일\reference</Filter>
     </ClCompile>
@@ -1892,9 +1898,6 @@
     </ClCompile>
     <ClCompile Include="q10816.cpp">
       <Filter>소스 파일\q10000~</Filter>
-    </ClCompile>
-    <ClCompile Include="fenwick_tree.cpp">
-      <Filter>소스 파일\reference</Filter>
     </ClCompile>
     <ClCompile Include="Gazi2023\A.cpp">
       <Filter>소스 파일\2023\Gazi2023</Filter>
@@ -1955,9 +1958,6 @@
     </ClCompile>
     <ClCompile Include="q18236_hushing_leftistheap.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="leftist_heap.cpp">
-      <Filter>소스 파일\reference</Filter>
     </ClCompile>
     <ClCompile Include="lca.cpp">
       <Filter>소스 파일\reference</Filter>
@@ -2027,6 +2027,24 @@
     </ClCompile>
     <ClCompile Include="q9548.cpp">
       <Filter>소스 파일\q6000~</Filter>
+    </ClCompile>
+    <ClCompile Include="fenwick_tree.cpp">
+      <Filter>소스 파일\reference\seg_tree</Filter>
+    </ClCompile>
+    <ClCompile Include="seg_tree.cpp">
+      <Filter>소스 파일\reference\seg_tree</Filter>
+    </ClCompile>
+    <ClCompile Include="leftist_heap.cpp">
+      <Filter>소스 파일\reference\heap</Filter>
+    </ClCompile>
+    <ClCompile Include="centroid_tree.cpp">
+      <Filter>소스 파일\reference\tree</Filter>
+    </ClCompile>
+    <ClCompile Include="double_ended_priority_queue.cpp">
+      <Filter>소스 파일\reference\heap</Filter>
+    </ClCompile>
+    <ClCompile Include="q13514.cpp">
+      <Filter>소스 파일\q13000~</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

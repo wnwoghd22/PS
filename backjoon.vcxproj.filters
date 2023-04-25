@@ -241,6 +241,9 @@
     <Filter Include="소스 파일\reference\tree">
       <UniqueIdentifier>{e77e44d6-eab5-49bb-abdd-a45126e75128}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\reference\string">
+      <UniqueIdentifier>{e04b2877-3aea-4620-aa6b-d72f4673e4e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -1992,9 +1995,6 @@
     <ClCompile Include="AGCU2023\E.cpp">
       <Filter>소스 파일\2023\AGCU2023</Filter>
     </ClCompile>
-    <ClCompile Include="lcp.cpp">
-      <Filter>소스 파일\reference</Filter>
-    </ClCompile>
     <ClCompile Include="q3303.cpp">
       <Filter>소스 파일\q3000~</Filter>
     </ClCompile>
@@ -2051,6 +2051,15 @@
     </ClCompile>
     <ClCompile Include="q16901.cpp">
       <Filter>소스 파일\q16000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q2401.cpp">
+      <Filter>소스 파일\q2000~</Filter>
+    </ClCompile>
+    <ClCompile Include="lcp.cpp">
+      <Filter>소스 파일\reference\string</Filter>
+    </ClCompile>
+    <ClCompile Include="kmp.cpp">
+      <Filter>소스 파일\reference\string</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

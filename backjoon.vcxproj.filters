@@ -2061,11 +2061,14 @@
     <ClCompile Include="kmp.cpp">
       <Filter>소스 파일\reference\string</Filter>
     </ClCompile>
-    <ClCompile Include="q14504.cpp">
+    <ClCompile Include="q14504_sp.cpp">
       <Filter>소스 파일\q14000~</Filter>
     </ClCompile>
     <ClCompile Include="q13537_sp.cpp">
       <Filter>소스 파일\q13000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q14504_sq.cpp">
+      <Filter>소스 파일\q14000~</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

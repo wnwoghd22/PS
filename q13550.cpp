@@ -101,19 +101,6 @@ int main() {
 			++bucket[(tail[A[s]] - head[A[s]]) / sqN]; 
 			std::cout << "push s << " << s << " , range: " << head[A[s]] << "~" << tail[A[s]] << " " << tail[A[s]] - head[A[s]] << '\n';
 		}
-		while (s < qs) {
-			--dist[tail[A[s]] - head[A[s]]];
-			--bucket[(tail[A[s]] - head[A[s]]) / sqN];
-			std::cout << "pop s >> " << s << " , range: " << head[A[s]] << "~" << tail[A[s]] << " " << tail[A[s]] - head[A[s]] << '\n';
-			if (next[s] <= tail[A[s]]) {
-				head[A[s]] = next[s];
-				++dist[tail[A[s]] - head[A[s]]];
-				++bucket[(tail[A[s]] - head[A[s]]) / sqN];
-				std::cout << "push s >> " << s << " , range: " << head[A[s]] << "~" << tail[A[s]] << " " << tail[A[s]] - head[A[s]] << '\n';
-			}
-			else head[A[s]] = tail[A[s]] = -1;
-			++s;
-		}
 		while (e < qe) {
 			++e;
 			if (~head[A[e]]) {
@@ -126,6 +113,19 @@ int main() {
 			++dist[tail[A[e]] - head[A[e]]];
 			++bucket[(tail[A[e]] - head[A[e]]) / sqN]; 
 			std::cout << "push e >> " << e << " , range[" << A[e] << "]: " << head[A[e]] << "~" << tail[A[e]] << " " << tail[A[e]] - head[A[e]] << '\n';
+		}
+		while (s < qs) {
+			--dist[tail[A[s]] - head[A[s]]];
+			--bucket[(tail[A[s]] - head[A[s]]) / sqN];
+			std::cout << "pop s >> " << s << " , range: " << head[A[s]] << "~" << tail[A[s]] << " " << tail[A[s]] - head[A[s]] << '\n';
+			if (next[s] <= tail[A[s]]) {
+				head[A[s]] = next[s];
+				++dist[tail[A[s]] - head[A[s]]];
+				++bucket[(tail[A[s]] - head[A[s]]) / sqN];
+				std::cout << "push s >> " << s << " , range: " << head[A[s]] << "~" << tail[A[s]] << " " << tail[A[s]] - head[A[s]] << '\n';
+			}
+			else head[A[s]] = tail[A[s]] = -1;
+			++s;
 		}
 		while (e > qe) {
 			--dist[tail[A[e]] - head[A[e]]];

@@ -34,11 +34,15 @@ int get_max() { return seg_max[1]; }
 
 struct Edge {
 	int y, l, r, d;
-	bool operator<(const Edge& rhs) const { return y < rhs.y; }
-} edges[N_LEN];
+	bool operator<(const Edge& rhs) const {
+		if (y == rhs.y) return d > rhs.d;
+		return y < rhs.y;
+	}
+} edges[N_LEN * 2];
 int L, R, U, D, E, sp, posY[LEN], Y[N_LEN * 2], X, N, max;
 
 int main() {
+	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> L >> U >> R >> D;
 	std::cin >> X;
 	std::cin >> N;
@@ -47,6 +51,8 @@ int main() {
 		if (r - l > X || u - d > X) continue;
 		u = std::max(D, u - X);
 		r = std::max(L, r - X);
+		d = std::min(U - X, d);
+		l = std::min(R - X, l);
 		posY[u] = posY[d] = 1;
 		edges[E++] = { u, r, l, 1 };
 		edges[E++] = { d, r, l, -1 };
@@ -56,9 +62,8 @@ int main() {
 			Y[sp++] = i;
 	std::sort(edges, edges + E);
 	// for (int i = 0; i < E; ++i) std::cout << edges[i].y << ' ' << edges[i].l << ' ' << edges[i].r << ' ' << edges[i].d << '\n';
-	for (int i = 0, j = 0; i < sp; ++i) {
-		for (; j < E && edges[j].y == Y[i]; ++j)
-			update(edges[j].l, edges[j].r, edges[j].d);
+	for (int i = 0; i < E; ++i) {
+		update(edges[i].l, edges[i].r, edges[i].d);
 		max = std::max(max, get_max());
 	}
 	std::cout << max;

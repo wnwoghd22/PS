@@ -2085,6 +2085,9 @@
     <ClCompile Include="q2314.cpp">
       <Filter>소스 파일\q2000~</Filter>
     </ClCompile>
+    <ClCompile Include="q16877.cpp">
+      <Filter>소스 파일\q16000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

@@ -2115,6 +2115,9 @@
     <ClCompile Include="kitamasa.cpp">
       <Filter>소스 파일\reference</Filter>
     </ClCompile>
+    <ClCompile Include="q25974.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

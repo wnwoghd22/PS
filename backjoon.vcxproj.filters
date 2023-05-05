@@ -2109,6 +2109,12 @@
     <ClCompile Include="q11717.cpp">
       <Filter>소스 파일\q11000~</Filter>
     </ClCompile>
+    <ClCompile Include="q11444_kitamasa.cpp">
+      <Filter>소스 파일\q11000~</Filter>
+    </ClCompile>
+    <ClCompile Include="kitamasa.cpp">
+      <Filter>소스 파일\reference</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

@@ -19,12 +19,17 @@ int main() {
 	l = M, r = M + K;
 	inv = power(K + 1, MOD - 2);
 	S = dp[M] = 1;
+	if (M < N) {
+		for (int i = 0; i < N; ++i)
+			std::cout << dp[i] << '\n';
+		return 0;
+	}
 	while (r >= N) {
 		dp[r - N] = S * inv % MOD;
 		S = (S - dp[r--] + MOD) % MOD;
 		if (l > N)
 			S = (S + dp[--l]) % MOD;
 	}
-	for (int i = 0; i <= M; ++i)
+	for (int i = 0; i < N; ++i)
 		std::cout << dp[i] << '\n';
 }

@@ -1,8 +1,8 @@
 #include <cstring>
 
 typedef long long ll;
-const ll MOD = 1'000'001;
-const int LEN = 1'000'001;
+const ll MOD = 1'000'000;
+const int LEN = 1'000'000;
 
 int c; // width
 short seg_max[LEN << 2];

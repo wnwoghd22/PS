@@ -2133,6 +2133,9 @@
     <ClCompile Include="q13545.cpp">
       <Filter>소스 파일\q13000~</Filter>
     </ClCompile>
+    <ClCompile Include="swea5648_fast.cpp">
+      <Filter>소스 파일\swea</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

@@ -53,7 +53,7 @@ int get_key(int slope, int i) {
 bool isCollide(int slope, int bf, int nx) {
 	if (!~bf || !~nx) return false;
 	switch (slope) {
-	case LR: return atoms[bf].d == L && atoms[nx].d == R;
+	case LR: return atoms[bf].d == R && atoms[nx].d == L;
 	case UD: return atoms[bf].d == D && atoms[nx].d == U;
 	case LU: return atoms[bf].d == L && atoms[nx].d == U;
 	case LD: return atoms[bf].d == D && atoms[nx].d == L;
@@ -120,24 +120,24 @@ int solve() {
 	while (pq.size()) {
 		Collision c = pq.top(); pq.pop(); // fastest collision
 		if (!~atoms[c.bf].stamp && !~atoms[c.nx].stamp) { // new collision
-			// std::cout << "collide" << '\n';
+			std::cout << "collide" << '\n';
 			atoms[c.bf].stamp = atoms[c.nx].stamp = c.stamp;
 			pop(c.bf); pop(c.nx);
 		}
 		else if (~atoms[c.bf].stamp && ~atoms[c.nx].stamp) { // invalid
-			// std::cout << "not collide" << '\n';
+			std::cout << "not collide" << '\n';
 			continue;
 		}
 		else if (!~atoms[c.bf].stamp) {
 			if (atoms[c.nx].stamp == c.stamp) { // collides at one point
-				// std::cout << "collide bf" << '\n';
+				std::cout << "collide bf" << '\n';
 				atoms[c.bf].stamp = c.stamp;
 				pop(c.bf);
 			}
 		}
 		else if (!~atoms[c.nx].stamp) {
 			if (atoms[c.bf].stamp == c.stamp) { // collides at one point
-				// std::cout << "collide nx" << '\n';
+				std::cout << "collide nx" << '\n';
 				atoms[c.nx].stamp = c.stamp;
 				pop(c.nx);
 			}
@@ -153,7 +153,7 @@ int solve() {
 }
 
 int main() {
-	// freopen("input.txt", "r", stdin);
+	freopen("input.txt", "r", stdin);
 	int t, T;
 	std::cin >> T;
 	for (t = 1; t <= T; ++t) {

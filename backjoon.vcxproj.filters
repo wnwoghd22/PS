@@ -244,6 +244,9 @@
     <Filter Include="소스 파일\reference\string">
       <UniqueIdentifier>{e04b2877-3aea-4620-aa6b-d72f4673e4e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\q18000~">
+      <UniqueIdentifier>{d96268de-b9be-46b4-b5d5-e2696f7313df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -251,9 +254,6 @@
     </ClCompile>
     <ClCompile Include="Lgrader.cpp">
       <Filter>소스 파일\q24324</Filter>
-    </ClCompile>
-    <ClCompile Include="q18236.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="q22308_converter.cpp">
       <Filter>소스 파일\q22308</Filter>
@@ -311,9 +311,6 @@
     </ClCompile>
     <ClCompile Include="ChocolateCup2022\q4.cpp">
       <Filter>소스 파일\2022\ChocolateCup2022</Filter>
-    </ClCompile>
-    <ClCompile Include="q18185.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="yonsei2022\C.cpp">
       <Filter>소스 파일\2022\YONSEI2022</Filter>
@@ -603,9 +600,6 @@
     <ClCompile Include="swea15874.cpp">
       <Filter>소스 파일\swea</Filter>
     </ClCompile>
-    <ClCompile Include="q18437.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="swea4524.cpp">
       <Filter>소스 파일\swea</Filter>
     </ClCompile>
@@ -756,14 +750,8 @@
     <ClCompile Include="swea4047.cpp">
       <Filter>소스 파일\swea</Filter>
     </ClCompile>
-    <ClCompile Include="q19585.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="swea16006.cpp">
       <Filter>소스 파일\swea</Filter>
-    </ClCompile>
-    <ClCompile Include="q19089_hu_tucker.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SUAPC2023winter\A.cpp">
       <Filter>소스 파일\2023\SUAPC2023winter</Filter>
@@ -773,9 +761,6 @@
     </ClCompile>
     <ClCompile Include="hjroh2023\B2.cpp">
       <Filter>소스 파일\2023\hjroh</Filter>
-    </ClCompile>
-    <ClCompile Include="q18227.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SKK2023\A.cpp">
       <Filter>소스 파일\2023\SKK</Filter>
@@ -801,9 +786,6 @@
     <ClCompile Include="SKK2023\G.cpp">
       <Filter>소스 파일\2023\SKK</Filter>
     </ClCompile>
-    <ClCompile Include="q19970.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="q27654.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -811,9 +793,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="q23836.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="q18251.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="swea18601.cpp">
@@ -831,9 +810,6 @@
     <ClCompile Include="shake2022\A.cpp">
       <Filter>소스 파일\2023\shake2022</Filter>
     </ClCompile>
-    <ClCompile Include="q18227_simple.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="swea1770_main.cpp">
       <Filter>소스 파일\swea\swea1770</Filter>
     </ClCompile>
@@ -845,9 +821,6 @@
     </ClCompile>
     <ClCompile Include="swea9614.cpp">
       <Filter>소스 파일\swea</Filter>
-    </ClCompile>
-    <ClCompile Include="q19089_left_heap.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="swea13469.cpp">
       <Filter>소스 파일\swea\swea13469</Filter>
@@ -1959,9 +1932,6 @@
     <ClCompile Include="q13519.cpp">
       <Filter>소스 파일\q13000~</Filter>
     </ClCompile>
-    <ClCompile Include="q18236_hushing_leftistheap.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="lca.cpp">
       <Filter>소스 파일\reference</Filter>
     </ClCompile>
@@ -2100,9 +2070,6 @@
     <ClCompile Include="q5051.cpp">
       <Filter>소스 파일\q4000~</Filter>
     </ClCompile>
-    <ClCompile Include="q19651.cpp">
-      <Filter>소스 파일\q17000~</Filter>
-    </ClCompile>
     <ClCompile Include="Pro_B_4_29.cpp">
       <Filter>소스 파일\swea</Filter>
     </ClCompile>
@@ -2147,6 +2114,45 @@
     </ClCompile>
     <ClCompile Include="q28034.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="q19651.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18185.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18227.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18227_simple.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18236.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18236_hushing_leftistheap.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18251.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18437.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q19089_hu_tucker.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q19089_left_heap.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q19585.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q19970.cpp">
+      <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q16977.cpp">
+      <Filter>소스 파일\q16000~</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2163,19 +2163,19 @@
     <ClCompile Include="q8217.cpp">
       <Filter>소스 파일\q6000~</Filter>
     </ClCompile>
-    <ClCompile Include="A.cpp">
+    <ClCompile Include="ABC301\A.cpp">
       <Filter>소스 파일\2023\ABC301</Filter>
     </ClCompile>
-    <ClCompile Include="B.cpp">
+    <ClCompile Include="ABC301\B.cpp">
       <Filter>소스 파일\2023\ABC301</Filter>
     </ClCompile>
-    <ClCompile Include="C.cpp">
+    <ClCompile Include="ABC301\C.cpp">
       <Filter>소스 파일\2023\ABC301</Filter>
     </ClCompile>
-    <ClCompile Include="D.cpp">
+    <ClCompile Include="ABC301\D.cpp">
       <Filter>소스 파일\2023\ABC301</Filter>
     </ClCompile>
-    <ClCompile Include="E.cpp">
+    <ClCompile Include="ABC301\E.cpp">
       <Filter>소스 파일\2023\ABC301</Filter>
     </ClCompile>
   </ItemGroup>

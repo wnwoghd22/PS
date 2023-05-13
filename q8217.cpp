@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 typedef long long ll;
 const int LEN = 300'001;
@@ -25,6 +26,7 @@ int cnt, ptr[LEN], np[LEN], l[LEN], r[LEN], o[LEN], p[LEN];
 std::vector<int> s[LEN];
 
 int main() {
+	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N >> M;
 	for (int i = 1; i <= M; ++i) {
 		std::cin >> o[i];
@@ -35,7 +37,7 @@ int main() {
 	std::cin >> Q;
 	for (int u = 0; u < Q; ++u)
 		std::cin >> ql[u] >> qr[u] >> qa[u];
-	
+
 	for (int i = 1; i <= N; ++i) r[i] = Q;
 
 	while (1) {
@@ -58,8 +60,11 @@ int main() {
 			j = ptr[m];
 			while (~j) {
 				ll sum = 0;
-				for (const int& x : s[j])
+				for (const int& x : s[j]) {
 					sum += get(x);
+					if (sum >= p[j]) break;
+				}
+
 				if (sum >= p[j]) r[j] = m;
 				else l[j] = m + 1;
 				j = np[j];

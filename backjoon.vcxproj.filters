@@ -247,6 +247,9 @@
     <Filter Include="소스 파일\q18000~">
       <UniqueIdentifier>{d96268de-b9be-46b4-b5d5-e2696f7313df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\ABC301">
+      <UniqueIdentifier>{ffe58f03-ee39-404d-b1c4-85d57034340f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2159,6 +2162,21 @@
     </ClCompile>
     <ClCompile Include="q8217.cpp">
       <Filter>소스 파일\q6000~</Filter>
+    </ClCompile>
+    <ClCompile Include="A.cpp">
+      <Filter>소스 파일\2023\ABC301</Filter>
+    </ClCompile>
+    <ClCompile Include="B.cpp">
+      <Filter>소스 파일\2023\ABC301</Filter>
+    </ClCompile>
+    <ClCompile Include="C.cpp">
+      <Filter>소스 파일\2023\ABC301</Filter>
+    </ClCompile>
+    <ClCompile Include="D.cpp">
+      <Filter>소스 파일\2023\ABC301</Filter>
+    </ClCompile>
+    <ClCompile Include="E.cpp">
+      <Filter>소스 파일\2023\ABC301</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2178,6 +2178,9 @@
     <ClCompile Include="ABC301\E.cpp">
       <Filter>소스 파일\2023\ABC301</Filter>
     </ClCompile>
+    <ClCompile Include="20500.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

@@ -70,19 +70,19 @@ int main() {
 			std::cin >> x >> y;
 			update_seq(i, j, x, y);
 			if (i >= 2) {
-				int l1 = get_seq(i - 1), l2 = get_seq(i), l3 = get_seq(i + 1);
+				ll l1 = get_seq(i - 1), l2 = get_seq(i), l3 = get_seq(i + 1);
 				update_len(i + 1, l2 << 1 == l1 + l3);
 			}
 			if (i >= 3) {
-				int l1 = get_seq(i - 2), l2 = get_seq(i - 1), l3 = get_seq(i);
+				ll l1 = get_seq(i - 2), l2 = get_seq(i - 1), l3 = get_seq(i);
 				update_len(i, l2 << 1 == l1 + l3);
 			}
 			if (j < N) {
-				int r1 = get_seq(j - 1), r2 = get_seq(j), r3 = get_seq(j + 1);
+				ll r1 = get_seq(j - 1), r2 = get_seq(j), r3 = get_seq(j + 1);
 				update_len(j + 1, r2 << 1 == r1 + r3);
 			}
 			if (j < N - 1) {
-				int r1 = get_seq(j), r2 = get_seq(j + 1), r3 = get_seq(j + 2);
+				ll r1 = get_seq(j), r2 = get_seq(j + 1), r3 = get_seq(j + 2);
 				update_len(j + 2, r2 << 1 == r1 + r3);
 			}
 		}

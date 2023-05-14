@@ -1,7 +1,12 @@
 #include <iostream>
 
 typedef long long ll;
-const int LEN = 1'000'001;
+const int LEN = 100'001;
+
+/// <summary>
+/// range update
+/// point query
+/// </summary>
 
 int N, M, K;
 ll a, b, c, d, A[LEN], fenwick[LEN];
@@ -19,25 +24,27 @@ void update(int i, ll d) {
 		i += i & -i;
 	}
 }
+void update(int l, int r, ll d) {
+	update(l, d);
+	update(r + 1, -d);
+}
 
 int main() {
-	std::cin >> N >> M >> K;
+	std::cin >> N;
 	for (int i = 1; i <= N; ++i) {
 		std::cin >> A[i];
-		update(i, A[i]);
+		update(i, i, A[i]);
 	}
-	while (M || K) {
-		std::cin >> a >> b >> c;
+	std::cin >> M;
+	while (M--) {
+		std::cin >> a;
 		if (a == 1) {
-			--M;
-			d = c - A[b];
-			A[b] = c;
-			update(b, d);
+			std::cin >> b >> c >> d;
+			update(b, c, d);
 		}
 		if (a == 2) {
-			--K;
-			if (b > c) std::swap(b, c);
-			std::cout << sum(c) - sum(b - 1) << '\n';
+			std::cin >> b;
+			std::cout << sum(b) << '\n';
 		}
 	}
 }

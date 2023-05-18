@@ -22,7 +22,7 @@ struct Node {
 void update(int x, ll d, int s = 1, int e = N, int i = 1) {
 	if (x < s || e < x) return;
 	if (s == e) {
-		seg_tree[i].lm = seg_tree[i].rm = seg_tree[i].sum = seg_tree[i].max = A[i] += d;
+		seg_tree[i].lm = seg_tree[i].rm = seg_tree[i].sum = seg_tree[i].max = A[x] += d;
 		return;
 	}
 	int m = s + e >> 1;

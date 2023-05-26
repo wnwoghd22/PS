@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include <map>
+#include <cassert>
 
 std::map<std::string, int> lang_map;
 std::string ls[30];
@@ -31,7 +32,7 @@ int check(int langs) { // O(M^2 log M)
 int min, bit;
 
 void dfs(int d, int i, int b) { // O(N C 5)
-	if (d == min) return;
+	if (d >= min) return;
 
 	if (check(b)) {
 		if (d < min) {
@@ -40,13 +41,15 @@ void dfs(int d, int i, int b) { // O(N C 5)
 		}
 	}
 
-	for (int j = i; j < M; ++j)
+	for (int j = i; j < N; ++j)
 		dfs(d + 1, j + 1, b | 1 << j);
 }
 
 int solve() {
 	std::cin >> N >> M;
 	if (!N && !M) return 0;
+
+	assert(M > 1);
 
 	min = 6; bit = 0;
 	lang_map.clear();
@@ -64,17 +67,21 @@ int solve() {
 	}
 	dfs(0, 0, 0);
 
-	if (!bit) std::cout << "Impossible\n";
+	if (min == 6) std::cout << "Impossible\n";
 	else {
 		std::cout << min << '\n';
-		for (int i = 0; i < M; ++i) {
+		for (int i = 0; i < N; ++i) {
 			if (bit & 1 << i)
 				std::cout << ls[i] << '\n';
 		}
 	}
-	std::cout << '\n';
-	
+	// std::cout << '\n';
+
 	return 1;
 }
 
-int main() { freopen("input.txt", "r", stdin); while (solve()); }
+int main() { 
+	freopen("input.txt", "r", stdin);
+	std::cin.tie(0)->sync_with_stdio(0);
+	while (solve()) std::cout << '\n';
+}

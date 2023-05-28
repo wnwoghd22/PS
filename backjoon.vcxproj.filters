@@ -259,6 +259,9 @@
     <Filter Include="소스 파일\2023\ABC303">
       <UniqueIdentifier>{39ab3722-bc77-4af5-8d56-79e6ad45d53b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\SCSC">
+      <UniqueIdentifier>{a1d9dcaa-ea0e-44c7-8e20-7be673c71158}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2252,6 +2255,9 @@
     </ClCompile>
     <ClCompile Include="q2493.cpp">
       <Filter>소스 파일\q2000~</Filter>
+    </ClCompile>
+    <ClCompile Include="G.cpp">
+      <Filter>소스 파일\2023\SCSC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

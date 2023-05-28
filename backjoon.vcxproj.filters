@@ -262,6 +262,9 @@
     <Filter Include="소스 파일\2023\SCSC">
       <UniqueIdentifier>{a1d9dcaa-ea0e-44c7-8e20-7be673c71158}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\월간향유회">
+      <UniqueIdentifier>{c057e1ad-9708-4ea0-b97c-27c0d49357fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2258,6 +2261,15 @@
     </ClCompile>
     <ClCompile Include="G.cpp">
       <Filter>소스 파일\2023\SCSC</Filter>
+    </ClCompile>
+    <ClCompile Include="monthly2023\B.cpp">
+      <Filter>소스 파일\2023\월간향유회</Filter>
+    </ClCompile>
+    <ClCompile Include="monthly2023\A.cpp">
+      <Filter>소스 파일\2023\월간향유회</Filter>
+    </ClCompile>
+    <ClCompile Include="monthly2023\C.cpp">
+      <Filter>소스 파일\2023\월간향유회</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

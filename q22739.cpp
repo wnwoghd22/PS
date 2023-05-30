@@ -31,25 +31,23 @@ int check(int langs) { // O(M^2 log M)
 
 int min, bit;
 
-void dfs(int d, int i, int b) { // O(N C 5)
-	if (d >= min) return;
-
-	if (check(b)) {
-		if (d < min) {
+int dfs(int d, int i, int b, int cnt) { // O(N C 5)
+	if (d == cnt) {
+		if (check(b)) {
 			bit = b;
-			min = d;
+			return 1;
 		}
+		return 0;
 	}
 
+	int result = 0;
 	for (int j = i; j < N; ++j)
-		dfs(d + 1, j + 1, b | 1 << j);
+		result |= dfs(d + 1, j + 1, b | 1 << j, cnt);
+	return result;
 }
 
-int solve() {
-	std::cin >> N >> M;
-	if (!N && !M) return 0;
-
-	assert(M > 1);
+int solve(int n, int m) {
+	N = n, M = m;
 
 	min = 6; bit = 0;
 	lang_map.clear();
@@ -65,9 +63,15 @@ int solve() {
 			students[i] |= 1 << lang_map[s];
 		}
 	}
-	dfs(0, 0, 0);
 
-	if (min == 6) std::cout << "Impossible\n";
+	for (int i = 1; i < std::min(M, 6); ++i) {
+		if (dfs(0, 0, 0, i)) {
+			min = i;
+			break;
+		}
+	}
+
+	if (!bit) std::cout << "Impossible\n";
 	else {
 		std::cout << min << '\n';
 		for (int i = 0; i < N; ++i) {
@@ -82,6 +86,16 @@ int solve() {
 
 int main() { 
 	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 	std::cin.tie(0)->sync_with_stdio(0);
-	while (solve()) std::cout << '\n';
+	// while (solve()) std::cout << '\n';
+	bool first = true;
+	int n, m;
+	while (1) {
+		std::cin >> n >> m;
+		if (!n && !m) break;
+		if (!first) std::cout << '\n';
+		first = false;
+		solve(n, m);
+	}
 }

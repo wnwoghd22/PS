@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 const int LEN = 3001;
 typedef long long ll;
@@ -15,11 +17,39 @@ bool intersect(Pos p1, Pos p2, Pos p3, Pos p4) {
 	return ccw1 * ccw2 < 0 && ccw3 * ccw4 < 0;
 }
 
-bool c[LEN][LEN];
-
 const int MAX = 6001;
 inline int get_index(int x, bool b) { return (x - 1) << 1 | b; }
 inline int get_neg(int i) { return i ^ 1; }
+std::vector<int> graph[MAX];
+int checked[MAX];
+int val[MAX];
+std::vector<std::vector<int>> SCC;
+int group[MAX];
+std::pair<int, int> P[MAX];
+int idx, order[MAX];
+std::vector<int> stack;
+std::vector<int> results;
+
+int dfs(int u) {
+	order[u] = ++idx;
+	int min = order[u];
+	stack.push_back(u);
+	for (const int& v : graph[u]) {
+		if (!order[v]) min = std::min(min, dfs(v));
+		else if (!checked[v]) min = std::min(min, order[v]);
+	}
+	if (min == order[u]) { // cycle
+		std::vector<int> scc;
+		while (true) {
+			int e = stack.back(); stack.pop_back();
+			scc.push_back(e);
+			checked[e] = true;
+			if (e == u) break;
+		}
+		SCC.push_back(scc);
+	}
+	return min;
+}
 
 int main() {
 	std::cin >> N;
@@ -28,17 +58,59 @@ int main() {
 			std::cin >> pos[n * 3 + i][0].x >> pos[n * 3 + i][0].y;
 			std::cin >> pos[n * 3 + i][1].x >> pos[n * 3 + i][1].y;
 		}
-		//
+		graph[get_index(n * 3 + 1, false)].push_back(get_index(n * 3 + 2, true));
+		graph[get_index(n * 3 + 1, false)].push_back(get_index(n * 3 + 3, true));
+
+		graph[get_index(n * 3 + 2, false)].push_back(get_index(n * 3 + 1, true));
+		graph[get_index(n * 3 + 2, false)].push_back(get_index(n * 3 + 3, true));
+
+		graph[get_index(n * 3 + 3, false)].push_back(get_index(n * 3 + 1, true));
+		graph[get_index(n * 3 + 3, false)].push_back(get_index(n * 3 + 2, true));
 	}
 	for (int i = 1; i < N * 3; ++i) {
 		for (int j = i + 1; j <= N * 3; ++j) {
-			if (intersect(pos[i][0], pos[i][1], pos[j][0], pos[j][1]))
-				c[i][j] = 1;
+			if (intersect(pos[i][0], pos[i][1], pos[j][0], pos[j][1])) {
+				graph[get_index(i, true)].push_back(get_index(j, false));
+				graph[get_index(j, true)].push_back(get_index(i, false));
+			}
 		}
 	}
+
+	for (int i = 0; i < N * 6; ++i) {
+		if (!checked[i]) dfs(i);
+	}
+
+	for (int i = 0; i < SCC.size(); ++i) {
+		for (const int& v : SCC[i]) {
+			group[v] = i;
+		}
+	}
+
+	bool flag = true;
 	for (int i = 1; i <= N * 3; ++i) {
-		for (int j = 1; j <= N * 3; ++j)
-			std::cout << c[i][j];
-		std::cout << '\n';
+		if (group[get_index(i, true)] == group[get_index(i, false)]) {
+			flag = false;
+			break;
+		}
+	}
+	if (!flag) std::cout << -1;
+	else {
+		memset(val, -1, sizeof val);
+
+		for (int i = 0; i < N * 6; ++i) {
+			P[i] = { group[i], i };
+		}
+		std::sort(P, P + N * 6);
+		for (int i = 0; i < N * 6; ++i) {
+			std::cout << P[i].first << ' ' << P[i].second << '\n';
+		}
+
+		for (int i = N * 6 - 1; i >= 0; --i) {
+			int v = P[i].second;
+			if (val[get_neg(v)] == -1) {
+				val[get_neg(v)] = ~v & 1;
+			}
+		}
+		for (int i = 0; i < N * 6; ++i) std::cout << val[i] << ' ';
 	}
 }

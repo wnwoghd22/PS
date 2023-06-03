@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cstring>
 
 const int LEN = 3001;
 typedef long long ll;
@@ -20,6 +21,7 @@ bool intersect(Pos p1, Pos p2, Pos p3, Pos p4) {
 const int MAX = 6001;
 inline int get_index(int x, bool b) { return (x - 1) << 1 | b; }
 inline int get_neg(int i) { return i ^ 1; }
+inline int get_inv(int i) { return (i >> 1) + 1; }
 std::vector<int> graph[MAX];
 int checked[MAX];
 int val[MAX];
@@ -70,6 +72,7 @@ int main() {
 	for (int i = 1; i < N * 3; ++i) {
 		for (int j = i + 1; j <= N * 3; ++j) {
 			if (intersect(pos[i][0], pos[i][1], pos[j][0], pos[j][1])) {
+				// std::cout << "intersect: " << i << ' ' << j << '\n';
 				graph[get_index(i, true)].push_back(get_index(j, false));
 				graph[get_index(j, true)].push_back(get_index(i, false));
 			}
@@ -82,6 +85,7 @@ int main() {
 
 	for (int i = 0; i < SCC.size(); ++i) {
 		for (const int& v : SCC[i]) {
+			// std::cout << v << ' ' << i << '\n';
 			group[v] = i;
 		}
 	}
@@ -101,16 +105,22 @@ int main() {
 			P[i] = { group[i], i };
 		}
 		std::sort(P, P + N * 6);
-		for (int i = 0; i < N * 6; ++i) {
-			std::cout << P[i].first << ' ' << P[i].second << '\n';
-		}
+		// for (int i = 0; i < N * 6; ++i) {
+		// 	std::cout << P[i].first << ' ' << P[i].second << '\n';
+		// }
 
 		for (int i = N * 6 - 1; i >= 0; --i) {
 			int v = P[i].second;
-			if (val[get_neg(v)] == -1) {
-				val[get_neg(v)] = ~v & 1;
+			if (val[get_inv(v)] == -1) {
+				val[get_inv(v)] = ~v & 1;
 			}
 		}
-		for (int i = 0; i < N * 6; ++i) std::cout << val[i] << ' ';
+		// for (int i = 0; i < N * 6; ++i) std::cout << val[i] << ' ';
+		for (int i = 1; i <= N * 3; ++i) {
+			if (!val[i])
+				results.push_back(i);
+		}
+		std::cout << results.size() << '\n';
+		for (const int& i : results) std::cout << i << ' ';
 	}
 }

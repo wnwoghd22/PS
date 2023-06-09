@@ -265,6 +265,9 @@
     <Filter Include="소스 파일\2023\월간향유회">
       <UniqueIdentifier>{c057e1ad-9708-4ea0-b97c-27c0d49357fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\reference\tree\segment_tree">
+      <UniqueIdentifier>{23df2fed-46dc-4e89-a284-128f06669eb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2133,9 +2136,6 @@
     <ClCompile Include="q20500.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="seg_tree.cpp">
-      <Filter>소스 파일\reference\tree</Filter>
-    </ClCompile>
     <ClCompile Include="fenwick_tree_pu_rq.cpp">
       <Filter>소스 파일\reference\tree\fenwick_tree</Filter>
     </ClCompile>
@@ -2306,6 +2306,12 @@
     </ClCompile>
     <ClCompile Include="q14870.cpp">
       <Filter>소스 파일\q14000~</Filter>
+    </ClCompile>
+    <ClCompile Include="seg_tree.cpp">
+      <Filter>소스 파일\reference\tree\segment_tree</Filter>
+    </ClCompile>
+    <ClCompile Include="seg_tree_beats.cpp">
+      <Filter>소스 파일\reference\tree\segment_tree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

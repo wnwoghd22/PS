@@ -59,7 +59,7 @@ int decrease(int row, int col) {
 	for (int i = row + 1; l <= r && i <= N; ++i) {
 		while (l <= r && dp[i][l - 1] > dp[i - 1][l]) ++l;
 		if (l > r) break;
-		while (r < N && dp[i][r] + 1 >= dp[i - 1][r + 1]) ++r;
+		while (r < N && dp[i][r] - 1 >= dp[i - 1][r + 1]) ++r;
 		dp[i].update(l, r, -1);
 		diff += r - l + 1;
 	}

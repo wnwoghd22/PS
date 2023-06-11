@@ -2313,6 +2313,12 @@
     <ClCompile Include="seg_tree_beats.cpp">
       <Filter>소스 파일\reference\tree\segment_tree</Filter>
     </ClCompile>
+    <ClCompile Include="q16074.cpp">
+      <Filter>소스 파일\q16000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q16074_HLD.cpp">
+      <Filter>소스 파일\q16000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

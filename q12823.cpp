@@ -35,6 +35,7 @@ void topological_sort() {
 }
 
 int main() {
+	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N >> M;
 	for (int i = 0, u, v; i < M; ++i) {
 		std::cin >> u >> v;
@@ -45,12 +46,14 @@ int main() {
 
 	for (int i = 0, m; i < N; ++i) {
 		int u = order[i];
-		if (cnt[level[u]] == 1 && max <= level[u]) critical[num++] = u;
+		if (cnt[level[u]] == 1 && max <= level[u]) ++num, critical[u] = 1;
 		m = 1e9;
 		for (const int& v : graph[u])
 			m = std::min(m, level[v]);
 		max = std::max(m, max);
 	}
 	std::cout << num << '\n';
-	for (int i = 0; i < num; ++i) std::cout << critical[i] << ' ';
+	for (int i = 1; i <= N; ++i)
+		if (critical[i])
+			std::cout << i << ' ';
 }

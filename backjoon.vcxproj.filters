@@ -2334,6 +2334,9 @@
     <ClCompile Include="intersect.cpp">
       <Filter>소스 파일\reference\geo</Filter>
     </ClCompile>
+    <ClCompile Include="q17758.cpp">
+      <Filter>소스 파일\q17000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

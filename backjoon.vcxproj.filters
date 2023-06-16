@@ -271,6 +271,9 @@
     <Filter Include="소스 파일\reference\geo">
       <UniqueIdentifier>{5fabeb64-a0da-4f6f-b790-5e0a80b23fb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\reference\number_theory">
+      <UniqueIdentifier>{706ccdbd-05d3-4900-9a49-ebbae6bfb6b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2360,6 +2363,9 @@
     </ClCompile>
     <ClCompile Include="11385.cpp">
       <Filter>소스 파일\q11000~</Filter>
+    </ClCompile>
+    <ClCompile Include="factors.cpp">
+      <Filter>소스 파일\reference\number_theory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

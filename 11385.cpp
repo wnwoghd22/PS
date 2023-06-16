@@ -49,15 +49,14 @@ std::vector<ll> multiply(std::vector<ll>& v, std::vector<ll>& w) {
 	return ret;
 }
 int main() {
-	std::ios_base::sync_with_stdio(0);
-	std::cin.tie(0); std::cout.tie(0);
+	std::cin.tie(0)->sync_with_stdio(0);
 
 	int N, M;
 	ll result = 0;
 	std::cin >> N >> M;
 	std::vector<ll> F(N + 1, 0), f(N + 1, 0), G(M + 1, 0), g(M + 1, 0);
 	for (ll i = 0, a; i <= N; ++i) std::cin >> a, F[i] = a >> 10, f[i] = a & 1023;
-	for (ll i = 0, b; i <= N; ++i) std::cin >> b, G[i] = b >> 10, g[i] = b & 1023;
+	for (ll i = 0, b; i <= M; ++i) std::cin >> b, G[i] = b >> 10, g[i] = b & 1023;
 
 	std::vector<ll> FG = multiply(F, G);
 	std::vector<ll> fG = multiply(f, G);

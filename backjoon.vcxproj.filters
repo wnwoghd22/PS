@@ -2367,6 +2367,9 @@
     <ClCompile Include="factors.cpp">
       <Filter>소스 파일\reference\number_theory</Filter>
     </ClCompile>
+    <ClCompile Include="q9359.cpp">
+      <Filter>소스 파일\q6000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

@@ -3,10 +3,11 @@
 
 typedef long long int ll;
 const ll INF = 1e17;
+const int LEN = 20;
 
 int N;
-ll A1[18], A2[18], B1[18], B2[18];
-std::vector<std::pair<ll, int>> V1[18], V2[18];
+ll A1[LEN], A2[LEN], B1[LEN], B2[LEN];
+std::vector<std::pair<ll, int>> V1[LEN], V2[LEN];
 
 void f1(int i, ll Sa, ll Sb, int depth, int bit) {
 	if (i == N / 2) {

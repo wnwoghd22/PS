@@ -3,7 +3,7 @@
 
 typedef long long int ll;
 const int LEN = 500'000;
-ll seg_tree[LEN];
+ll seg_tree[LEN << 2];
 ll N, M, q, i, x;
 
 void update(int n, ll d, int s = 1, int e = N, int i = 1) {

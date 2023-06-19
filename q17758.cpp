@@ -64,6 +64,24 @@ int main() {
 		N = N * 10 + c - '0', mod *= 10;
 	
 	for (int i = 2; i < 1500; ++i) dp[i] = (dp[i - 1] + dp[i - 2]) % 1000;
+	if (S.length() < 3) {
+		if (S.length() == 1) {
+			for (ll i = 0; i < 1500; ++i) {
+				if (N == dp[i] % 10) {
+					std::cout << i;
+					return 0;
+				}
+			}
+		}
+		if (S.length() == 2 && S[0] != '0') {
+			for (ll i = 0; i < 1500; ++i) {
+				if (N == dp[i] % 100) {
+					std::cout << i;
+					return 0;
+				}
+			}
+		}
+	}
 
 	std::priority_queue<Info> q;
 	for (ll i = 0; i < 1500; ++i)

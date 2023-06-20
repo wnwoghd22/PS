@@ -2379,6 +2379,9 @@
     <ClCompile Include="q1321_fenwick.cpp">
       <Filter>소스 파일\q1100~</Filter>
     </ClCompile>
+    <ClCompile Include="q17103.cpp">
+      <Filter>소스 파일\q17000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

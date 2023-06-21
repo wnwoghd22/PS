@@ -2382,6 +2382,15 @@
     <ClCompile Include="q17103.cpp">
       <Filter>소스 파일\q17000~</Filter>
     </ClCompile>
+    <ClCompile Include="q1792.cpp">
+      <Filter>소스 파일\q1400~</Filter>
+    </ClCompile>
+    <ClCompile Include="mobius.cpp">
+      <Filter>소스 파일\reference\number_theory</Filter>
+    </ClCompile>
+    <ClCompile Include="euler_phi.cpp">
+      <Filter>소스 파일\reference\number_theory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

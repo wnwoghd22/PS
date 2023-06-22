@@ -2391,6 +2391,12 @@
     <ClCompile Include="euler_phi.cpp">
       <Filter>소스 파일\reference\number_theory</Filter>
     </ClCompile>
+    <ClCompile Include="q17372.cpp">
+      <Filter>소스 파일\q17000~</Filter>
+    </ClCompile>
+    <ClCompile Include="fibonacci.cpp">
+      <Filter>소스 파일\reference\number_theory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

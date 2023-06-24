@@ -2412,6 +2412,12 @@
     <ClCompile Include="Func2023\MN.cpp">
       <Filter>소스 파일\2023\FunctionCup2023</Filter>
     </ClCompile>
+    <ClCompile Include="pollard_rho.cpp">
+      <Filter>소스 파일\reference\number_theory</Filter>
+    </ClCompile>
+    <ClCompile Include="q13926.cpp">
+      <Filter>소스 파일\q13000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

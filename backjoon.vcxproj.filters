@@ -2397,6 +2397,15 @@
     <ClCompile Include="fibonacci.cpp">
       <Filter>소스 파일\reference\number_theory</Filter>
     </ClCompile>
+    <ClCompile Include="q16123.cpp">
+      <Filter>소스 파일\q16000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q16123_naive.cpp">
+      <Filter>소스 파일\q16000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q16123_ppsrac.cpp">
+      <Filter>소스 파일\q16000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

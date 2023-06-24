@@ -274,6 +274,9 @@
     <Filter Include="소스 파일\reference\number_theory">
       <UniqueIdentifier>{706ccdbd-05d3-4900-9a49-ebbae6bfb6b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\FunctionCup2023">
+      <UniqueIdentifier>{fbf4723b-d2ae-4d8a-aac9-df5c725a7e33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2405,6 +2408,9 @@
     </ClCompile>
     <ClCompile Include="q16123_ppsrac.cpp">
       <Filter>소스 파일\q16000~</Filter>
+    </ClCompile>
+    <ClCompile Include="Func2023\MN.cpp">
+      <Filter>소스 파일\2023\FunctionCup2023</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

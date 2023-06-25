@@ -277,6 +277,9 @@
     <Filter Include="소스 파일\2023\FunctionCup2023">
       <UniqueIdentifier>{fbf4723b-d2ae-4d8a-aac9-df5c725a7e33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\ChocolateCup2023">
+      <UniqueIdentifier>{d52e10c1-ba4a-48fe-95e6-cbe3fe4920eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2417,6 +2420,12 @@
     </ClCompile>
     <ClCompile Include="q13926.cpp">
       <Filter>소스 파일\q13000~</Filter>
+    </ClCompile>
+    <ClCompile Include="ChocolateCup2023\A.cpp">
+      <Filter>소스 파일\2023\ChocolateCup2023</Filter>
+    </ClCompile>
+    <ClCompile Include="ChocolateCup2023\B.cpp">
+      <Filter>소스 파일\2023\ChocolateCup2023</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

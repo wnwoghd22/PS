@@ -56,20 +56,24 @@ int main() {
 			lis[i].push_back({ d, b });
 		}
 		std::sort(lis[i].begin(), lis[i].end());
+		for (const auto& e : lis[i]) {
+			std::cout << "(" << e.first << ',' << e.second << ") ";
+		}
+		std::cout << '\n';
 	}
 
 	ll dif = INF, bit = (1ll << N) - 1;
 	for (int i = 0; i <= N / 2; ++i) {
 		for (const auto& [d1, b1] : V1[N / 2 - i]) {
-			std::cout << "L: " << d1 << ' ' << b1 << '\n';
+			// std::cout << "L: " << d1 << ' ' << b1 << '\n';
 			int ptr = lower_bound(i, d1);
 			if (ptr >= lis[i].size()) 
 				ptr = lis[i].size() - 1;
 			const auto& [d2, b2] = lis[i][ptr];
-			std::cout << "R: " << d2 << ' ' << b2 << '\n';
+			// std::cout << "R: " << d2 << ' ' << b2 << '\n';
 			ll cur_dif = abs(d1 + d2), cur_bit = b1 << (N >> 1) | b2;
-			std::cout << "dif: " << dif << ", cur: " << cur_dif << '\n';
-			std::cout << "bit: " << bit << ", cur: " << cur_bit << '\n';
+			// std::cout << "dif: " << dif << ", cur: " << cur_dif << '\n';
+			// std::cout << "bit: " << bit << ", cur: " << cur_bit << '\n';
 			if (cur_dif < dif)
 				dif = cur_dif, bit = cur_bit;
 			else if (cur_dif == dif && cur_bit < bit)
@@ -77,10 +81,10 @@ int main() {
 			
 			if (ptr > 0) {
 				const auto& [d2, b2] = lis[i][ptr - 1];
-				std::cout << "R: " << d2 << ' ' << b2 << '\n';
+				// std::cout << "R: " << d2 << ' ' << b2 << '\n';
 				ll cur_dif = abs(d1 + d2), cur_bit = b1 << (N >> 1) | b2;
-				std::cout << "dif: " << dif << ", cur: " << cur_dif << '\n';
-				std::cout << "bit: " << bit << ", cur: " << cur_bit << '\n';
+				// std::cout << "dif: " << dif << ", cur: " << cur_dif << '\n';
+				// std::cout << "bit: " << bit << ", cur: " << cur_bit << '\n';
 				if (cur_dif < dif)
 					dif = cur_dif, bit = cur_bit;
 				else if (cur_dif == dif && cur_bit < bit)
@@ -88,10 +92,10 @@ int main() {
 			}
 			if (ptr < lis[i].size() - 1) {
 				const auto& [d2, b2] = lis[i][ptr + 1];
-				std::cout << "R: " << d2 << ' ' << b2 << '\n';
+				// std::cout << "R: " << d2 << ' ' << b2 << '\n';
 				ll cur_dif = abs(d1 + d2), cur_bit = b1 << (N >> 1) | b2;
-				std::cout << "dif: " << dif << ", cur: " << cur_dif << '\n';
-				std::cout << "bit: " << bit << ", cur: " << cur_bit << '\n';
+				// std::cout << "dif: " << dif << ", cur: " << cur_dif << '\n';
+				// std::cout << "bit: " << bit << ", cur: " << cur_bit << '\n';
 				if (cur_dif < dif)
 					dif = cur_dif, bit = cur_bit;
 				else if (cur_dif == dif && cur_bit < bit)
@@ -102,3 +106,7 @@ int main() {
 	std::cout << bit << '\n';
 	for (int i = N - 1; i >= 0; --i) std::cout << !!(bit & 1ll << i) + 1 << ' ';
 }
+
+// 4
+// 7 8 3 8
+// 2 5 1 7

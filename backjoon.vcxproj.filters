@@ -2430,6 +2430,12 @@
     <ClCompile Include="q10742.cpp">
       <Filter>소스 파일\q10000~</Filter>
     </ClCompile>
+    <ClCompile Include="q1848.cpp">
+      <Filter>소스 파일\q1400~</Filter>
+    </ClCompile>
+    <ClCompile Include="q1848_ppsrac.cpp">
+      <Filter>소스 파일\q1400~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

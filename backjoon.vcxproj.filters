@@ -2442,6 +2442,9 @@
     <ClCompile Include="YS_Mirae2023\A.cpp">
       <Filter>소스 파일\2023\YS_Mirae2023</Filter>
     </ClCompile>
+    <ClCompile Include="q5466.cpp">
+      <Filter>소스 파일\q4000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

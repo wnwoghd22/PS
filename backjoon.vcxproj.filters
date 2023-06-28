@@ -280,6 +280,9 @@
     <Filter Include="소스 파일\2023\ChocolateCup2023">
       <UniqueIdentifier>{d52e10c1-ba4a-48fe-95e6-cbe3fe4920eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\YS_Mirae2023">
+      <UniqueIdentifier>{ac68a627-33b1-4e2f-a0db-28db80a0d32e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2435,6 +2438,9 @@
     </ClCompile>
     <ClCompile Include="q1848_ppsrac.cpp">
       <Filter>소스 파일\q1400~</Filter>
+    </ClCompile>
+    <ClCompile Include="YS_Mirae2023\A.cpp">
+      <Filter>소스 파일\2023\YS_Mirae2023</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

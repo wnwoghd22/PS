@@ -13,10 +13,14 @@ ll pow(ll a, int p) {
 	}
 	return x;
 }
-int f[1000001] = { 1, };
+int odd[333334] = { 1, };
+ll f(int n) {
+	if (n <= 1) return 1;
+	return odd[n - 1 >> 1] * f(n >> 1) % MOD * pow(2, n >> 1) % MOD;
+}
 
 int main() {
-	for (int i = 1; i <= 1000000; ++i) f[i] = (ll)i * f[i - 1] % MOD;
+	for (int i = 1; i <= 333333; ++i) odd[i] = (ll)(i << 1 | 1) * odd[i - 1] % MOD;
 	int t, T, x, y, n, k, p, r;
 	scanf("%d", &T);
 	for (t = 1; t <= T; ++t) {
@@ -25,8 +29,8 @@ int main() {
 		else {
 			n = (x + y) / 3;
 			k = x - n;
-			x = f[n];
-			y = (ll)f[k] * f[n - k] % MOD;
+			x = f(n);
+			y = (ll)f(k) * f(n - k) % MOD;
 			p = pow(y, MOD - 2);
 			r = (ll)x * p % MOD;
 		}

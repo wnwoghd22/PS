@@ -283,6 +283,9 @@
     <Filter Include="소스 파일\2023\YS_Mirae2023">
       <UniqueIdentifier>{ac68a627-33b1-4e2f-a0db-28db80a0d32e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\reference\geo\MEC">
+      <UniqueIdentifier>{b550be9d-9e24-44be-a8ab-2b9313543fb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2450,6 +2453,12 @@
     </ClCompile>
     <ClCompile Include="swea17322.cpp">
       <Filter>소스 파일\swea</Filter>
+    </ClCompile>
+    <ClCompile Include="q9495.cpp">
+      <Filter>소스 파일\q6000~</Filter>
+    </ClCompile>
+    <ClCompile Include="welzl.cpp">
+      <Filter>소스 파일\reference\geo\MEC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

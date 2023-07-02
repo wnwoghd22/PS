@@ -2460,6 +2460,9 @@
     <ClCompile Include="welzl.cpp">
       <Filter>소스 파일\reference\geo\MEC</Filter>
     </ClCompile>
+    <ClCompile Include="q2626.cpp">
+      <Filter>소스 파일\q2500~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

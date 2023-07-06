@@ -3,24 +3,21 @@
 #include <algorithm>
 #include <cstring>
 
-const int LEN = 2001;
+const int LEN = 4001;
 typedef long long ll;
 
-int N;
+int T, N, M, K;
 
-const int MAX = 6001;
+const int MAX = 4001;
 inline int get_index(int x, bool b) { return (x - 1) << 1 | b; }
 inline int get_neg(int i) { return i ^ 1; }
 inline int get_inv(int i) { return (i >> 1) + 1; }
 std::vector<int> graph[MAX];
 int checked[MAX];
-int val[MAX];
 std::vector<std::vector<int>> SCC;
 int group[MAX];
-std::pair<int, int> P[MAX];
 int idx, order[MAX];
 std::vector<int> stack;
-std::vector<int> results;
 
 int dfs(int u) {
 	order[u] = ++idx;
@@ -43,13 +40,32 @@ int dfs(int u) {
 	return min;
 }
 
-int main() {
-	std::cin >> N;
-	for (int n = 0; n < N; ++n) {
+bool solve() {
+	SCC.clear();
+	for (std::vector<int>& v : graph) v.clear();
+	memset(checked, 0, sizeof checked);
+	memset(order, 0, sizeof order);
+	idx = 0;
 
+	std::cin >> N >> M >> K;
+	for (int i = 0, a, b, c, d, x1, x2, y1, y2; i < K; ++i) {
+		std::cin >> a >> b >> c >> d;
+		if (a == c && b == d) continue;
+		
+		x1 = get_index(a, b < d), x2 = get_index(c, b < d);
+		y1 = get_index(b + N, a < c), y2 = get_index(d + N, a < c);
+
+		if (a == c) graph[get_neg(x1)].push_back(x1);
+		else if (b == d) graph[get_neg(y1)].push_back(y1);
+		else {
+			graph[get_neg(x1)].push_back(y1); graph[get_neg(y1)].push_back(x1);
+			graph[get_neg(x1)].push_back(x2); graph[get_neg(x2)].push_back(x1);
+			graph[get_neg(x2)].push_back(y2); graph[get_neg(y2)].push_back(x2);
+			graph[get_neg(y1)].push_back(y2); graph[get_neg(y2)].push_back(y1);
+		}
 	}
-
-	for (int i = 0; i < N * 6; ++i) {
+	
+	for (int i = 0; i < N + M << 1; ++i) {
 		if (!checked[i]) dfs(i);
 	}
 
@@ -61,36 +77,17 @@ int main() {
 	}
 
 	bool flag = true;
-	for (int i = 1; i <= N * 3; ++i) {
+	for (int i = 1; i <= N + M; ++i) {
 		if (group[get_index(i, true)] == group[get_index(i, false)]) {
 			flag = false;
 			break;
 		}
 	}
-	if (!flag) std::cout << -1;
-	else {
-		memset(val, -1, sizeof val);
+	return flag;
+}
 
-		for (int i = 0; i < N * 6; ++i) {
-			P[i] = { group[i], i };
-		}
-		std::sort(P, P + N * 6);
-		// for (int i = 0; i < N * 6; ++i) {
-		// 	std::cout << P[i].first << ' ' << P[i].second << '\n';
-		// }
-
-		for (int i = N * 6 - 1; i >= 0; --i) {
-			int v = P[i].second;
-			if (val[get_inv(v)] == -1) {
-				val[get_inv(v)] = ~v & 1;
-			}
-		}
-		// for (int i = 0; i < N * 6; ++i) std::cout << val[i] << ' ';
-		for (int i = 1; i <= N * 3; ++i) {
-			if (!val[i])
-				results.push_back(i);
-		}
-		std::cout << results.size() << '\n';
-		for (const int& i : results) std::cout << i << ' ';
-	}
+int main() {
+	std::cin >> T;
+	while (T--)
+		std::cout << (solve() ? "Yes\n" : "No\n");
 }

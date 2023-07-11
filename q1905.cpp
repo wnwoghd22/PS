@@ -2,108 +2,87 @@
 #include <iostream>
 #include <algorithm>
 
-const int LEN = 1001;
-int Lx, Ly, N, lx, ly, lz, px, py, max;
-int t[LEN * 4][LEN * 4];
-int z[LEN * 4][LEN * 4];
+/// https://www.shuizilong.com/house/archives/poi-2006-tet-tetris-3d/
 
-void propagate(int u, int d, int l, int r, int i, int j) {
-	if (z[i][j]) {
-		printf("propagate %d:%d, %d:%d [%d][%d]: %d\n", u, d, l, r, i, j, z[i][j]);
-		t[i][j] = z[i][j];
-		if (u ^ d) z[i << 1][j] = z[i << 1 | 1][j] = z[i][j];
-		if (l ^ r) z[i][j << 1] = z[i][j << 1 | 1] = z[i][j];
-		z[i][j] = 0;
-	}
-}
+const int LEN = 1024;
 
-void pull(int l, int r, int _u, int _d, int _l, int _r, int i, int j) {
-	propagate(_u, _d, _l, _r, i, j);
-	if (_r < l || r < _l) return;
-	if (l <= _l && _r <= r) {
-		printf("pull t[%d][%d] = %d, t[%d][%d] = %d\n", i << 1, j, t[i << 1][j], i << 1 | 1, j,  t[i << 1 | 1][j]);
-		t[i][j] = std::max(t[i << 1][j], t[i << 1 | 1][j]);
+struct SegTree {
+	int t[LEN << 1], z[LEN << 1];
+	void update(int, int, int);
+	void query(int, int, int);
+};
+
+struct SegTree2D {
+	SegTree t[LEN << 1], z[LEN << 1];
+	void update(int, int, int);
+	void query(int, int, int);
+} t;
+
+int root = 1;
+int xl, xr, yl, yr, h;
+int W, H, Q;
+int lx, ly, lz, px, py;
+
+void SegTree::update(int i, int l, int r) {
+	t[i] = std::max(t[i], h);
+
+	if (yl <= l && r <= yr) {
+		z[i] = std::max(z[i], h);
 		return;
 	}
-	int m = _l + _r >> 1;
-	pull(l, r, _u, _d, _l, m, i, j << 1);
-	pull(l, r, _u, _d, m + 1, _r, i, j << 1 | 1); 
-	printf("pull t[%d][%d] = %d, t[%d][%d] = %d\n", i << 1, j, t[i << 1][j], i << 1 | 1, j, t[i << 1 | 1][j]);
-	t[i][j] = std::max(t[i << 1][j], t[i << 1 | 1][j]);
+	int m = l + r >> 1; i <<= 1;
+	if (yl <= m) update(i, l, m);
+	if (m < yr) update(i | 1, m + 1, r);
 }
-void push(int l, int r, int v, int _u, int _d, int _l, int _r, int i, int j) {
-	propagate(_u, _d, _l, _r, i, j);
-	if (_r < l || r < _l) return;
-	if (l <= _l && _r <= r) {
-		t[i][j] = z[i][j] = v;
+void SegTree::query(int i, int l, int r) {
+	if (yl <= l && r <= yr) {
+		h = std::max(h, t[i]);
 		return;
 	}
-	int m = _l + _r >> 1;
-	push(l, r, v, _u, _d, _l, m, i, j << 1);
-	push(l, r, v, _u, _d, m + 1, _r, i, j << 1 | 1);
-	t[i][j] = std::max(t[i][j << 1], t[i][j << 1 | 1]);
+	h = std::max(h, z[i]);
+	int m = l + r >> 1; i <<= 1;
+	if (yl <= m) query(i, l, m);
+	if (m < yr) query(i | 1, m + 1, r);
 }
 
-void propagate_row(int l, int r, int _u, int _d, int _l, int _r, int i, int j) {
-	propagate(_u, _d, _l, _r, i, j);
-	if (_r < l || r < _l) return;
-	if (l <= _l && _r <= r) return;
-	int m = _l + _r >> 1;
-	propagate_row(l, r, _u, _d, _l, m, i, j << 1);
-	propagate_row(l, r, _u, _d, m + 1, _r, i, j << 1 | 1);
-}
+void SegTree2D::update(int i, int l, int r) {
+	t[i].update(root, 0, H);
 
-void update(int u, int d, int l, int r, int v, int _u = 0, int _d = Lx, int i = 1) {
-	propagate_row(l, r, _u, _d, 0, Ly, i, 1);
-	if (_d < u || d < _u) return;
-	if (u <= _u && _d <= d) {
-		std::cout << "update u: " << _u << ", d: " << _d << '\n';
-		return push(l, r, v, _u, _d, 0, Ly, i, 1);
+	if (xl <= l && r <= xr) {
+		z[i].update(root, 0, H);
+		return;
 	}
-	int m = _u + _d >> 1;
-	update(u, d, l, r, v, _u, m, i << 1);
-	update(u, d, l, r, v, m + 1, _d, i << 1 | 1);
-	printf("pull %d ~ %d\n", _u, _d);
-	pull(l, r, _u, _d, 0, Ly, i, 1);
+	int m = l + r >> 1; i <<= 1;
+	if (xl <= m) update(i, l, m);
+	if (m < xr) update(i | 1, m + 1, r);
 }
-
-int query_row(int l, int r, int _u, int _d, int _l, int _r, int i, int j) {
-	propagate(_u, _d, _l, _r, i, j);
-	if (_r < l || r < _l) return 0;
-	if (l <= _l && _r <= r) return t[i][j];
-	int m = _l + _r >> 1;
-	return std::max(
-		query_row(l, r, _u, _d, _l, m, i, j << 1),
-		query_row(l, r, _u, _d, m + 1, _r, i, j << 1 | 1));
-}
-
-int query(int u, int d, int l, int r, int _u = 0, int _d = Lx, int i = 1) {
-	if (_d < u || d < _u) return 0;
-	propagate_row(l, r, _u, _d, 0, Ly, i, 1);
-	if (_u ^ _d) pull(l, r, _u, _d, 0, Ly, i, 1);
-	if (u <= _u && _d <= d) {
-		std::cout << "query u: " << _u << ", d: " << _d << ", i: " << i << '\n';
-		int cur = query_row(l, r, _u, _d, 0, Ly, i, 1);
-		std::cout << cur << '\n';
-		return cur;
+void SegTree2D::query(int i, int l, int r) {
+	if (xl <= l && r <= xr) {
+		t[i].query(root, 0, H);
+		return;
 	}
-	int m = _u + _d >> 1;
-	return std::max(
-		query(u, d, l, r, _u, m, i << 1),
-		query(u, d, l, r, m + 1, _d, i << 1 | 1));
+	z[i].query(root, 0, H);
+	int m = l + r >> 1; i <<= 1;
+	if (xl <= m) query(i, l, m);
+	if (m < xr) query(i | 1, m + 1, r);
 }
 
 int main() {
 	// freopen("input.txt", "r", stdin);
 	// std::cin.tie(0)->sync_with_stdio(0);
-	std::cin >> Lx >> Ly >> N;
-	while (N--) {
+	std::cin >> W >> H >> Q;
+	W--; H--;
+	while (Q--) {
 		std::cin >> lx >> ly >> lz >> px >> py;
-		max = query(px, px + lx - 1, py, py + ly - 1);
-		std::cout << max << '\n';
-		max += lz;
-		update(px, px + lx - 1, py, py + ly - 1, max);
+		xl = px, xr = lx + px - 1;
+		yl = py, yr = ly + py - 1;
+		h = 0;
+		t.query(root, 0, W);
+		h += lz;
+		t.update(root, 0, W);
 	}
-	max = query(0, Lx, 0, Ly);
-	std::cout << max;
+	xl = 0, xr = W;
+	yl = 0, yr = H;
+	t.query(root, 0, W);
+	std::cout << h;
 }

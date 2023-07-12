@@ -55,7 +55,7 @@ public:
         }
     }
     SplayTree() : root(0) {}
-    ~SplayTree() { if (root) delete root; }
+    // ~SplayTree() { if (root) delete root; }
     int size() { return root ? root->size : 0; }
     void insert(int val) {
         if (!root) {

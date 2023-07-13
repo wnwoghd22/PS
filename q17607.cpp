@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstring>
 
 const int LEN = 100'001;
 
@@ -25,8 +24,8 @@ class SplayTree {
 		}
 		void update() {
 			size = 1;
-			if (l) size += l->size;
-			if (r) size += r->size;
+			if (l) l->propagate(), size += l->size;
+			if (r) r->propagate(), size += r->size;
 			if (l && r) {
 				full = l->full & val & r->full;
 				lm = (l->full & val) ? l->max + val + r->lm : l->lm;

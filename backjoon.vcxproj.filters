@@ -2487,6 +2487,12 @@
     <ClCompile Include="q17607.cpp">
       <Filter>소스 파일\q17000~</Filter>
     </ClCompile>
+    <ClCompile Include="link_cut_tree.cpp">
+      <Filter>소스 파일\reference\tree</Filter>
+    </ClCompile>
+    <ClCompile Include="q21973.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

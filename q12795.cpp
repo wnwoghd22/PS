@@ -65,7 +65,7 @@ public:
 ll Q, q, a, b, x;
 
 int main() {
-	freopen("input.txt", "r", stdin);
+	// freopen("input.txt", "r", stdin);
 	LiChaoTree hull(-INF, INF);
 	std::cin >> Q;
 	while (Q--) {

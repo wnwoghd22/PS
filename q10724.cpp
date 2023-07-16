@@ -10,58 +10,58 @@ struct Result { int max, max_i; };
 
 struct LinkCutTree {
 	struct Node {
-		int l, r, p;
+		Node* l, *r, *p;
 		int s; // size
 		bool f; // flip
-		int v, max, max_i;
+		int v, i, max, max_i;
 	} t[LEN];
-	void update(int x) {
-		t[x].s = 1;
-		t[x].max = t[x].v;
-		t[x].max_i = x;
-		if (t[x].l) {
-			t[x].s += t[t[x].l].s;
-			if (t[t[x].l].max > t[x].max) {
-				t[x].max = t[t[x].l].max;
-				t[x].max_i = t[t[x].l].max_i;
+	void update(Node* x) {
+		x->s = 1;
+		x->max = x->v;
+		x->max_i = x->i;
+		if (x->l) {
+			x->s += x->l->s;
+			if (x->l->max > x->max) {
+				x->max = x->l->max;
+				x->max_i = x->l->max_i;
 			}
 		}
-		if (t[x].r) {
-			t[x].s += t[t[x].r].s;
-			if (t[t[x].r].max > t[x].max) {
-				t[x].max = t[t[x].r].max;
-				t[x].max_i = t[t[x].r].max_i;
+		if (x->r) {
+			x->s += x->r->s;
+			if (x->r->max > x->max) {
+				x->max = x->r->max;
+				x->max_i = x->r->max_i;
 			}
 		}
 	}
-	bool is_root(int x) { return !t[x].p || (t[t[x].p].l ^ x && t[t[x].p].r ^ x); }
-	bool is_left(int x) { return t[t[x].p].l == x; }
-	void rotate(int x) {
-		int p = t[x].p;
+	bool is_root(Node* x) { return !x->p || (x->p->l != x && x->p->r != x); }
+	bool is_left(Node* x) { return x->p->l == x; }
+	void rotate(Node* x) {
+		Node* p = x->p;
 		if (is_left(x)) {
-			if (t[x].r) t[t[x].r].p = p;
-			t[p].l = t[x].r; t[x].r = p;
+			if (x->r) x->r->p = p;
+			p->l = x->r; x->r = p;
 		}
 		else {
-			if (t[x].l) t[t[x].l].p = p;
-			t[p].r = t[x].l; t[x].l = p;
+			if (x->l) x->l->p = p;
+			p->r = x->l; x->l = p;
 		}
-		if (!is_root(p)) (is_left(p) ? t[t[p].p].l : t[t[p].p].r) = x;
-		t[x].p = t[p].p; t[p].p = x;
+		if (!is_root(p)) (is_left(p) ? p->p->l : p->p->r) = x;
+		x->p = p->p; p->p = x;
 		update(p); update(x);
 	}
-	void push(int x) {
-		if (t[x].f) {
-			if (t[x].l) t[t[x].l].f ^= 1;
-			if (t[x].r) t[t[x].r].f ^= 1;
-			std::swap(t[x].l, t[x].r);
-			t[x].f = 0;
+	void push(Node* x) {
+		if (x->f) {
+			if (x->l) x->l->f ^= 1;
+			if (x->r) x->r->f ^= 1;
+			std::swap(x->l, x->r);
+			x->f = 0;
 		}
 	}
-	void splay(int x) {
-		for (int p; !is_root(x); rotate(x)) {
-			p = t[x].p;
-			if (!is_root(p)) push(t[p].p);
+	void splay(Node* x) {
+		for (Node* p; !is_root(x); rotate(x)) {
+			p = x->p;
+			if (!is_root(p)) push(p->p);
 			push(p); push(x);
 			if (is_root(p)) continue;	// zig
 			if (is_left(x) == is_left(p)) rotate(p);	// zig-zig
@@ -69,80 +69,86 @@ struct LinkCutTree {
 		}
 		push(x);
 	}
-	void access(int x) {
-		splay(x); t[x].r = 0;
-		for (int p; t[x].p; splay(x)) {
-			p = t[x].p;
-			splay(p); t[p].r = x;
+	void access(Node* x) {
+		splay(x); x->r = 0;
+		for (Node* p; x->p; splay(x)) {
+			p = x->p;
+			splay(p); p->r = x;
 		}
 	}
-	void make_root(int x) {
+	void make_root(Node* x) {
 		access(x);
-		t[x].f ^= 1;
+		x->f ^= 1;
 	}
-	void link(int x, int p) {
+	void link(Node* x, Node* p) {
 		make_root(x); push(x);
 		access(p);
-		t[p].p = x; t[x].l = p;
+		p->p = x; x->l = p;
 	}
-	void cut(int x) {
+	void cut(Node* x) {
 		access(x);
-		t[t[x].l].p = 0;
-		t[x].l = 0;
+		// if (!x->l) return;
+		x->l->p = 0;
+		x->l = 0;
 	}
-	void cut(int x, int y) {
+	Node* get_root(Node* x) {
+		access(x);
+		while (x->l) x = x->l, push(x);
+		splay(x);
+		return x;
+	}
+	Node* get_parent(Node* x) {
+		access(x);
+		if (!x->l) return 0;
+		x = x->l; push(x);
+		while (x->r) x = x->r, push(x);
+		splay(x);
+		return x;
+	}
+	void cut(Node* x, Node* y) {
 		if (get_parent(x) == y) cut(x);
 		else cut(y);
 	}
-	int get_root(int x) {
+	int get_depth(Node* x) {
 		access(x);
-		while (t[x].l) x = t[x].l;
-		splay(x);
-		return x;
+		return x->l ? x->l->s : 0;
 	}
-	int get_parent(int x) {
-		access(x);
-		if (!(x = t[x].l)) return 0;
-		while (t[x].r) x = t[x].r;
-		splay(x);
-		return x;
-	}
-	int get_depth(int x) {
-		access(x);
-		return t[x].l ? t[t[x].l].s : 0;
-	}
-	int get_lca(int x, int y) {
+	Node* get_lca(Node* x, Node* y) {
 		access(x); access(y); splay(x);
-		return t[x].p ? t[x].p : x;
+		return x->p ? x->p : x;
 	}
-	Result query(int x, int y) {
-		int l = get_lca(x, y);
-		Result result = { t[l].max, t[l].max_i };
+	Result query(Node* x, Node* y) {
+		Node* l = get_lca(x, y);
+		Result result = { l->max, l->max_i };
 
 		access(x); splay(l);
-		if (t[l].r) {
-			if (t[t[l].r].max > result.max) {
-				result.max = t[t[l].r].max;
-				result.max_i = t[t[l].r].max_i;
+		if (l->r) {
+			if (l->r->max > result.max) {
+				result.max = l->r->max;
+				result.max_i = l->r->max_i;
 			}
 		}
 
 		access(y); splay(l);
-		if (t[l].r) {
-			if (t[t[l].r].max > result.max) {
-				result.max = t[t[l].r].max;
-				result.max_i = t[t[l].r].max_i;
+		if (l->r) {
+			if (l->r->max > result.max) {
+				result.max = l->r->max;
+				result.max_i = l->r->max_i;
 			}
 		}
 
 		return result;
 	}
 
-	void update(int x, int d) {
+	void update(Node* x, int d) {
 		splay(x);
-		t[x].v = d;
+		x->v = d;
 		update(x);
 	}
+
+	void link(int u, int v) { link(&t[u], &t[v]); }
+	void cut(int u, int v) { cut(&t[u], &t[v]); }
+	Result query(int u, int v) { return query(&t[u], &t[v]); }
 } lct;
 
 struct Edge { int u, v; } edges[LEN];
@@ -154,7 +160,7 @@ ll solve() {
 	std::cin >> N >> M;
 	for (int i = 2, u, c; i <= N; ++i) {
 		std::cin >> u >> c; ++u;
-		lct.t[N + i].max_i = N + i;
+		lct.t[N + i].i = lct.t[N + i].max_i = N + i;
 		lct.t[N + i].v = lct.t[N + i].max = c;
 		lct.link(i, N + i);
 		lct.link(N + i, u);
@@ -168,7 +174,7 @@ ll solve() {
 			answer ^= mst;
 			continue;
 		}
-		lct.t[N * 2 + j].max_i = N * 2 + j;
+		lct.t[N * 2 + j].i = lct.t[N * 2 + j].max_i = N * 2 + j;
 		lct.t[N * 2 + j].v = lct.t[N * 2 + j].max = c;
 		edges[N * 2 + j] = { u, v };
 

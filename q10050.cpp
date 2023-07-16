@@ -36,17 +36,17 @@ void f(int n, int i) {
 		std::cout << i + 11 << " to " << i - 2 << '\n';
 		std::cout << i + 4 << " to " << i + 11 << '\n';
 		std::cout << i + 7 << " to " << i + 4 << '\n';
-		std::cout << i + 3 << " to " << i + 7 << '\n';
-		std::cout << i + 8 << " to " << i + 3 << '\n';
+		std::cout << i + 2 << " to " << i + 7 << '\n';
+		std::cout << i + 8 << " to " << i + 2 << '\n';
 		std::cout << i - 1 << " to " << i + 8 << '\n';
 		std::cout << i + 12 << " to " << i - 1 << '\n';
 		return;
 	}
-	std::cout << (n - 1) * 2 << " to " << i - 2 << '\n';
-	std::cout << i + 2 << " to " << (n - 1) * 2 << '\n';
+	std::cout << i + n * 2 - 3 << " to " << i - 2 << '\n';
+	std::cout << i + 2 << " to " << i + n * 2 - 3 << '\n';
 	f(n - 4, i + 4);
-	std::cout << i - 1 << " to " << n * 2 - 5 << '\n';
-	std::cout << n * 2 - 1 << " to " << i - 1 << '\n';
+	std::cout << i - 1 << " to " << i + n * 2 - 6 << '\n';
+	std::cout << i + (n - 1) * 2 << " to " << i - 1 << '\n';
 }
 
 int main() {

@@ -14,11 +14,14 @@ ll f(ll x) { // square free
 }
 
 ll binary_search(ll x) {
-	ll l = 0, r = x << 1, m, result = INF * 2;
+	ll l = 0, r = INF * 2, m, result = INF * 2;
 
 	while (l <= r) {
 		m = l + r >> 1;
-		if (f(m) >= x) {
+		ll sf = f(m);
+		ll nsf = m - sf;
+		// std::cout << m << ' '  << sf << ' ' << nsf << '\n';
+		if (nsf >= x) {
 			if (m < result) result = m;
 			r = m - 1;
 		}

@@ -104,13 +104,9 @@ struct LinkCutTree {
 			Node* tail = &t[head->f];
 
 			Node* lca = get_lca(&t[i], tail);
-			access(&t[i]);
-			Node* l = t[i].l;
 			cut(&t[i]);
-			if (&t[i] == lca && l) {
-				link(l, tail);
-				splay(tail);
-			}
+			if (&t[i] == lca)
+				link(head, tail);
 		}
 
 		head = get_root(&t[j]);

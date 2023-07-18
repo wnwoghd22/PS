@@ -90,17 +90,27 @@ struct LinkCutTree {
 	}
 
 	void link(int u, int v) { link(&t[u], &t[v]); }
+	void link_fast(int u, int v) {
+		t[v].r = &t[u];
+		t[u].p = &t[v];
+		t[v].update();
+	}
 	void cut(int u, int v) { cut(&t[u], &t[v]); }
 
 	void q1(int i, int j) {
 		if (t[i].f == j) return;
 		Node* head = get_root(&t[i]);
-		if (t[i].f != i) {
+		if (&t[i] != head) {
 			Node* tail = &t[head->f];
-			Node* l = get_lca(&t[i], tail);
+
+			Node* lca = get_lca(&t[i], tail);
+			access(&t[i]);
+			Node* l = t[i].l;
 			cut(&t[i]);
-			if (l == &t[i]) // cut cycle and make root
-				link(head, tail);
+			if (&t[i] == lca && l) {
+				link(l, tail);
+				splay(tail);
+			}
 		}
 
 		head = get_root(&t[j]);
@@ -115,16 +125,17 @@ struct LinkCutTree {
 		access(head);
 		Node* tail = &t[head->f];
 		access(tail);
+		ll t_sum = tail->sum;
 		splay(&t[x]);
 		if (t[x].p) {
-			result += tail->sum;
+			result += t_sum;
 			// std::cout << "cycle sum: " << result << '\n';
-			access(t[x].p);
+			access(tail);
 			splay(&t[x]);
 		}
 		// std::cout << "chain sum: " << t[x].sum << '\n';
 		result += t[x].sum;
-		
+
 		return result;
 	}
 } lct;
@@ -137,12 +148,12 @@ void dfs(int u, int color) {
 		if (visited[v]) {
 			if (visited[v] == color) continue; // cycle
 			else {
-				lct.link(v, u);
-				return;
+				lct.link_fast(v, u);
+				continue;
 			}
 		}
 		dfs(v, color);
-		lct.link(v, u);
+		lct.link_fast(v, u);
 	}
 }
 

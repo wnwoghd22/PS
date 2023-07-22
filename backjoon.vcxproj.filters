@@ -2529,6 +2529,9 @@
     <ClCompile Include="UCPC2023\G.cpp">
       <Filter>소스 파일\2023\UCPC2023</Filter>
     </ClCompile>
+    <ClCompile Include="q2109.cpp">
+      <Filter>소스 파일\q2000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

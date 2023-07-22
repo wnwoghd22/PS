@@ -286,6 +286,9 @@
     <Filter Include="소스 파일\reference\geo\MEC">
       <UniqueIdentifier>{b550be9d-9e24-44be-a8ab-2b9313543fb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\UCPC2023">
+      <UniqueIdentifier>{9c4c9602-89e2-48de-89d8-24eb8abf5f8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2519,6 +2522,12 @@
     </ClCompile>
     <ClCompile Include="q18861.cpp">
       <Filter>소스 파일\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q13515.cpp">
+      <Filter>소스 파일\q13000~</Filter>
+    </ClCompile>
+    <ClCompile Include="UCPC2023\G.cpp">
+      <Filter>소스 파일\2023\UCPC2023</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

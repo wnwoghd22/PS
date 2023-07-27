@@ -289,6 +289,9 @@
     <Filter Include="소스 파일\2023\UCPC2023">
       <UniqueIdentifier>{9c4c9602-89e2-48de-89d8-24eb8abf5f8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\reference\geo\convex_hull">
+      <UniqueIdentifier>{6b360449-6ba5-4656-b45a-6406fe8b718f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2549,6 +2552,9 @@
     </ClCompile>
     <ClCompile Include="q1034.cpp">
       <Filter>소스 파일\q1000~</Filter>
+    </ClCompile>
+    <ClCompile Include="monotone_chain.cpp">
+      <Filter>소스 파일\reference\geo\convex_hull</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

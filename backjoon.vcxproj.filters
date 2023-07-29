@@ -2556,6 +2556,9 @@
     <ClCompile Include="monotone_chain.cpp">
       <Filter>소스 파일\reference\geo\convex_hull</Filter>
     </ClCompile>
+    <ClCompile Include="q14567.cpp">
+      <Filter>소스 파일\q14000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

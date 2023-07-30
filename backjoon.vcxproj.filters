@@ -292,6 +292,9 @@
     <Filter Include="소스 파일\reference\geo\convex_hull">
       <UniqueIdentifier>{6b360449-6ba5-4656-b45a-6406fe8b718f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\월간향유회\7월">
+      <UniqueIdentifier>{25c1e155-c88f-4aad-968f-5f2ba12b6e65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2561,6 +2564,15 @@
     </ClCompile>
     <ClCompile Include="q1077.cpp">
       <Filter>소스 파일\q1000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q7610.cpp">
+      <Filter>소스 파일\q6000~</Filter>
+    </ClCompile>
+    <ClCompile Include="monthly7\A.cpp">
+      <Filter>소스 파일\2023\월간향유회\7월</Filter>
+    </ClCompile>
+    <ClCompile Include="q1430.cpp">
+      <Filter>소스 파일\q1400~</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

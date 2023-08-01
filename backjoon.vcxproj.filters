@@ -2577,6 +2577,12 @@
     <ClCompile Include="q1937.cpp">
       <Filter>소스 파일\q1400~</Filter>
     </ClCompile>
+    <ClCompile Include="q1035.cpp">
+      <Filter>소스 파일\q1000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q1035_dfs.cpp">
+      <Filter>소스 파일\q1000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

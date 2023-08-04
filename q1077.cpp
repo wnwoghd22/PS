@@ -69,26 +69,19 @@ int main() {
 	// for (int j = 0; j < M; ++j) std::cout << in2[j] << ' '; std::cout << '\n';
 
 	for (int i = 0; i < N; ++i)
-		if (in1[i] ^ in1[(i + 1) % N])
-			for (int j = 0; j < M; ++j)
-				if (is_intersect(pos1[i], pos1[(i + 1) % N], pos2[j], pos2[(j + 1) % M]))
-					p[len++] = intersection(pos1[i], pos1[(i + 1) % N], pos2[j], pos2[(j + 1) % M]);
-
-	for (int j = 0; j < M; ++j)
-		if (in2[j] ^ in2[(j + 1) % M])
-			for (int i = 0; i < N; ++i)
-				if (is_intersect(pos1[i], pos1[(i + 1) % N], pos2[j], pos2[(j + 1) % M]))
-					p[len++] = intersection(pos1[i], pos1[(i + 1) % N], pos2[j], pos2[(j + 1) % M]);
+		for (int j = 0; j < M; ++j)
+			if (is_intersect(pos1[i], pos1[(i + 1) % N], pos2[j], pos2[(j + 1) % M]))
+				p[len++] = intersection(pos1[i], pos1[(i + 1) % N], pos2[j], pos2[(j + 1) % M]);
 		
 	for (int i = 0; i < N; ++i) if (in1[i] == 1) p[len++] = { (ld)pos1[i].x, (ld)pos1[i].y };
 	for (int j = 0; j < M; ++j) if (in2[j] == 1) p[len++] = { (ld)pos2[j].x, (ld)pos2[j].y };
 
 	std::sort(p, p + len);
 
-	// std::cout << "hull\n";
-	// for (int i = 0; i < len; ++i) {
-	// 	std::cout << p[i].x << ' ' << p[i].y << '\n';
-	// }
+	 std::cout << "hull\n";
+	 for (int i = 0; i < len; ++i) {
+	 	std::cout << p[i].x << ' ' << p[i].y << '\n';
+	 }
 
 	hull1[sp1++] = p[0];
 	hull1[sp1++] = p[1];

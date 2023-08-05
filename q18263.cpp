@@ -55,7 +55,7 @@ bool query(int u, int v) {
 	bool b = 0;
 	while (c[u] ^ c[v]) {
 		if (lv[ct[c[u]]] > lv[ct[c[v]]]) std::swap(u, v);
-		b |= get(o[ct[c[v]]], o[c[v]]);
+		b |= get(o[ct[c[v]]], o[v]);
 		v = pt[ct[c[v]]];
 	}
 	if (lv[u] > lv[v]) std::swap(u, v);
@@ -91,7 +91,7 @@ int main() {
 		++cnt[C[i]];
 	}
 	for (int i = 1; i <= N; ++i) cnt[i] += cnt[i - 1];
-	for (int i = N; i; --i) Qi[cnt[C[i]]--] = i;
+	for (int i = M; i; --i) Qi[cnt[C[i]]--] = i;
 
 	std::vector<int> stack;
 	for (int i = 1, j = 1, k = 1; k <= N; ++k) {

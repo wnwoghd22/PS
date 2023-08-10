@@ -66,7 +66,7 @@ ll Q, q, a, b, x;
 
 int main() {
 	// freopen("input.txt", "r", stdin);
-	LiChaoTree hull(-INF, INF);
+	LiChaoTree hull(-INF, INF); // too large?
 	std::cin >> Q;
 	while (Q--) {
 		std::cin >> q;

@@ -21,21 +21,25 @@ int max_flow(const int source, const int sink) {
 		while (!q.empty()) {
 			int u = q.front(); q.pop();
 			for (const int& v : graph[u]) {
+				std::cout << u << "->" << v << ", cap: " << c[u][v] << ", flow: " << f[u][v] << '\n';
 				if (c[u][v] - f[u][v] > 0 && !~d[v]) {
 					q.push(v);
 					d[v] = u;
 				}
-				if (v == sink) break;
+				// if (v == sink) break;
 			}
+			if (!~d[sink]) break;
 		}
 		if (!~d[sink]) break;
 
 		int flow = INF;
 		for (int i = sink; i ^ source; i = d[i]) flow = std::min(flow, c[d[i]][i] - f[d[i]][i]);
 		for (int i = sink; i ^ source; i = d[i]) {
+			std::cout << i << '\n';
 			f[d[i]][i] += flow;
 			f[i][d[i]] -= flow;
 		}
+		std::cout << flow << '\n';
 		mf += flow;
 	}
 	return mf;
@@ -48,7 +52,7 @@ void change_flow(const int source, const int sink) {
 	while (!q.empty()) {
 		int u = q.front(); q.pop();
 		for (const int& v : graph[u]) {
-			// std::cout << u << "->" << v << ", cap: " << c[u][v] << ", flow: " << f[u][v] << '\n';
+			std::cout << u << "->" << v << ", cap: " << c[u][v] << ", flow: " << f[u][v] << '\n';
 			if (u < source || (u == source && v <= sink)) continue;
 			if (c[u][v] - f[u][v] > 0 && !~d[v]) {
 				q.push(v);
@@ -91,6 +95,8 @@ int main() {
 		}
 	}
 	int mf = max_flow(source, sink);
+
+	std::cout << in << ' ' << out << ' ' << mf << '\n';
 
 	if (in == out && out == mf) {
 		for (int i = 0; i < N; ++i) {

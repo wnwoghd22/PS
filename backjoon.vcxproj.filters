@@ -304,6 +304,9 @@
     <Filter Include="소스 파일\~30000">
       <UniqueIdentifier>{4074b4ed-acda-4c79-9cf6-1a4c4714ee7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\utilCup2023">
+      <UniqueIdentifier>{5a2a267d-bda9-447e-9f6a-6388ad4ec9da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2618,6 +2621,15 @@
     </ClCompile>
     <ClCompile Include="q1083.cpp">
       <Filter>소스 파일\~10000\q1000~</Filter>
+    </ClCompile>
+    <ClCompile Include="utilcup2023\B.cpp">
+      <Filter>소스 파일\2023\utilCup2023</Filter>
+    </ClCompile>
+    <ClCompile Include="utilcup2023\C.cpp">
+      <Filter>소스 파일\2023\utilCup2023</Filter>
+    </ClCompile>
+    <ClCompile Include="utilcup2023\D.cpp">
+      <Filter>소스 파일\2023\utilCup2023</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

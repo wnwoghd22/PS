@@ -2631,6 +2631,9 @@
     <ClCompile Include="utilcup2023\D.cpp">
       <Filter>소스 파일\2023\utilCup2023</Filter>
     </ClCompile>
+    <ClCompile Include="q1810.cpp">
+      <Filter>소스 파일\~10000\q1400~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

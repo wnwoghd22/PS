@@ -307,6 +307,9 @@
     <Filter Include="소스 파일\2023\utilCup2023">
       <UniqueIdentifier>{5a2a267d-bda9-447e-9f6a-6388ad4ec9da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\swea\swea15963">
+      <UniqueIdentifier>{28095cdb-fd44-41c1-81e7-b82d10abfef6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2651,6 +2654,12 @@
     </ClCompile>
     <ClCompile Include="q13512.cpp">
       <Filter>소스 파일\~20000\q13000~</Filter>
+    </ClCompile>
+    <ClCompile Include="swea15963.cpp">
+      <Filter>소스 파일\swea\swea15963</Filter>
+    </ClCompile>
+    <ClCompile Include="swea15963_solution.cpp">
+      <Filter>소스 파일\swea\swea15963</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

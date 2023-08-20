@@ -41,7 +41,7 @@ void hirschberg(int u, int d, int l, int r) {
 		// y = dp0 << 1 | 1
 		// dp1 = x & (x ^ (x - y))
 		for (int j = 0; j <= (len >> 6); ++j) {
-			s = (sl[S[i] - 'A'][(l >> 6) + j] >> (l & 63)) | (sl[S[i] - 'A'][(l >> 6) + j + 1] << (64 - (l & 63)));
+			s = (sl[S[i] - 'A'][(l >> 6) + j] >> (l & 63)) | ((l & 63) ? (sl[S[i] - 'A'][(l >> 6) + j + 1] << (64 - (l & 63))) : 0);
 			x = s | dp[j];
 			y = dp[j] << 1 | carry;
 			carry = dp[j] >> 63;
@@ -57,17 +57,18 @@ void hirschberg(int u, int d, int l, int r) {
 	}
 	for (int j = l; j <= r; ++j) L[j - l + 1] = L[j - l] + !!(dp[(j - l) >> 6] & (1llu << ((j - l) & 63)));
 
+	int o = M - r - 1; // offset
 	std::fill(dp.begin(), dp.end(), 0);
 
 	for (int j = r; j >= l; --j) if (T[j] == S[d]) { dp[r - j >> 6] |= 1llu << (r - j & 63); break; }
 	for (int i = d - 1; i > mid; --i) {
 		ull s, x, y, z, carry = 1, borrow = 0;
-
+		
 		// x = s | dp0
 		// y = dp0 << 1 | 1
 		// dp1 = x & (x ^ (x - y))
 		for (int j = 0; j <= (len >> 6); ++j) {
-			s = (sr[S[i] - 'A'][(M - r - 1 >> 6) + j] >> (M - r - 1 & 63)) | (sr[S[i] - 'A'][(M - r - 1 >> 6) + j + 1] << (64 - (M - r - 1 & 63)));
+			s = (sr[S[i] - 'A'][(o >> 6) + j] >> (o & 63)) | ((o & 63) ? (sr[S[i] - 'A'][(o >> 6) + j + 1] << (64 - (o & 63))) : 0);
 			x = s | dp[j];
 			y = dp[j] << 1 | carry;
 			carry = dp[j] >> 63;

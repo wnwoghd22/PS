@@ -2664,6 +2664,21 @@
     <ClCompile Include="q17069.cpp">
       <Filter>소스 파일\~20000\q17000~</Filter>
     </ClCompile>
+    <ClCompile Include="q18438.cpp">
+      <Filter>소스 파일\~20000\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18438_hirschberg.cpp">
+      <Filter>소스 파일\~20000\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18439.cpp">
+      <Filter>소스 파일\~20000\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q18440.cpp">
+      <Filter>소스 파일\~20000\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q6086.cpp">
+      <Filter>소스 파일\~10000\q6000~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

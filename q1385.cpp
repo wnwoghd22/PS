@@ -37,6 +37,7 @@ int main() {
 
 	while (q.size()) {
 		int u = q.front(); q.pop();
+		if (u == B) break;
 		// std::cout << u << '\n';
 		if (u == 1) {
 			for (int v = 2; v <= std::min(K, 7); ++v) {

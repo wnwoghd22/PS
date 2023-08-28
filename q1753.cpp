@@ -53,6 +53,6 @@ int main() {
 
     for (v = 0; v < V; ++v) {
         if (!visited[v]) std::cout << "INF\n";
-        else std::cout << distance[v] << '\n';s
+        else std::cout << distance[v] << '\n';
     }
 }

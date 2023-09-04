@@ -31,9 +31,10 @@ int main() {
 
 	int remain = k[N];
 	for (int i = N; i >= K; --i) {
-		if (k[i] == remain && cost[i - K] + C == cost[i]) {
+		if (k[i] == remain && k[i - K] == remain - 1 && cost[i - K] + C == cost[i]) {
 			trace[sp++] = i - K + 1;
 			--remain;
+			i -= K - 1;
 		}
 	}
 	while (sp) std::cout << trace[--sp] << ' ';

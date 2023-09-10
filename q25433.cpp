@@ -30,7 +30,7 @@ int lcs(const std::string& S, const std::string& T) {
 	memset(s, 0, sizeof s);
 
 	for (int j = 0; j < T.length(); ++j) // preprocessing bitset s
-		s[T[j] - 'A'][j >> 6] |= 1llu << (j & 63);
+		s[T[j] - 'a'][j >> 6] |= 1llu << (j & 63);
 
 	// if one character is same, then other right values are all 1. break
 	for (int j = 0; j < T.length(); ++j) if (T[j] == S[0]) { dp[0][j >> 6] |= 1llu << (j & 63); break; }
@@ -50,7 +50,7 @@ int lcs(const std::string& S, const std::string& T) {
 		// y = dp0 << 1 | 1
 		// dp1 = x & (x ^ (x - y))
 		for (int j = 0; j <= (T.length() >> 6); ++j) {
-			x = s[S[i] - 'A'][j] | dp0[j];
+			x = s[S[i] - 'a'][j] | dp0[j];
 			y = dp0[j] << 1 | carry;
 			carry = dp0[j] >> 63;
 

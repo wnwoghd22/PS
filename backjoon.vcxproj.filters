@@ -2718,6 +2718,24 @@
     <ClCompile Include="q14498.cpp">
       <Filter>소스 파일\~20000\q14000~</Filter>
     </ClCompile>
+    <ClCompile Include="q1158.cpp">
+      <Filter>소스 파일\~10000\q1100~</Filter>
+    </ClCompile>
+    <ClCompile Include="q11055.cpp">
+      <Filter>소스 파일\~20000\q11000~\q11000</Filter>
+    </ClCompile>
+    <ClCompile Include="q15860.cpp">
+      <Filter>소스 파일\~20000\q15000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q15903.cpp">
+      <Filter>소스 파일\~20000\q15000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q25430.cpp">
+      <Filter>소스 파일\~30000</Filter>
+    </ClCompile>
+    <ClCompile Include="q25433.cpp">
+      <Filter>소스 파일\~30000</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

@@ -4,22 +4,23 @@
 #include <cstring>
 #include <vector>
 
+typedef long long ll;
 const int LEN = 100'001;
 int N, M;
 
 bool on[LEN];
-int pre[LEN];
+ll pre[LEN];
 
 struct SegCount {
-	int t[LEN << 2];
-	void update(int l, int r, int d, int s = 1, int e = N, int i = 1) {
+	ll t[LEN << 2];
+	void update(int l, int r, ll d, int s = 1, int e = N, int i = 1) {
 		if (r < s || e < l) return;
 		if (l <= s && e <= r) { t[i] += d; return; }
 		int m = s + e >> 1;
 		update(l, r, d, s, m, i << 1);
 		update(l, r, d, m + 1, e, i << 1 | 1);
 	}
-	int get(int x, int s = 1, int e = N, int i = 1) {
+	ll get(int x, int s = 1, int e = N, int i = 1) {
 		if (x < s || e < x) return 0;
 		if (s == e) { return t[i]; }
 		int m = s + e >> 1;
@@ -46,7 +47,7 @@ struct SegConnect {
 } seg;
 
 std::vector<int> graph[LEN];
-int ord, in[LEN], out[LEN], index[LEN];
+int ord, in[LEN], out[LEN], idx[LEN];
 int par[LEN], size[LEN], level[LEN];
 int ch, chain[LEN], chain_top[LEN], heavy[LEN];
 
@@ -66,7 +67,7 @@ int dfs(int u, int p = 0) {
 
 void dfs_euler(int u, int p = 0) {
 	in[u] = ++ord;
-	index[ord] = u;
+	idx[ord] = u;
 	chain[u] = ch;
 	if (!chain_top[ch]) chain_top[ch] = u;
 
@@ -95,7 +96,7 @@ int highest_connected_ancestor(int u) {
 		u = par[v];
 	}
 
-	l = in[chain_top[chain[u]]], r = in[u], v = N;
+	l = in[chain_top[chain[u]]], r = in[u], v = in[u];
 	// std::cout << "parametric: " << chain_top[chain[u]] << ' ' << l << ' ' << u << ' ' << r << '\n';
 
 	while (l <= r) {
@@ -106,7 +107,7 @@ int highest_connected_ancestor(int u) {
 		}
 		else l = m + 1;
 	}
-	return index[v];
+	return idx[v];
 }
 
 int get_count(int u) {
@@ -125,8 +126,9 @@ void update_count(int u, int v, int d) {
 
 void query1(int u) {
 	// std::cout << "query1 " << u << '\n';
-	pre[u] = (rotate.get(in[u]) % 360 + 360) % 360; // save current state
+	pre[u] = rotate.get(in[u]); // save current state
 	int v = highest_connected_ancestor(u);
+	if (par[v]) pre[u] -= rotate.get(in[par[v]]) - pre[par[v]];
 	seg.update(in[u], on[u] = 0);
 	// std::cout << "highest: " << v << '\n';
 	int d = count.get(in[u]);
@@ -137,9 +139,10 @@ void query1(int u) {
 void query2(int u) {
 	// std::cout << "query2 " << u << '\n';
 	seg.update(in[u], on[u] = 1);
-	int lazy = pre[u] - rotate.get(in[u]);
-	rotate.update(in[u], out[u], lazy); // set rotation off
+	ll lazy = pre[u] - rotate.get(in[u]);
 	int v = highest_connected_ancestor(u);
+	if (par[v]) lazy += rotate.get(in[par[v]]) - pre[par[v]];
+	rotate.update(in[u], out[u], lazy); // set rotation off
 	int d = count.get(in[u]);
 	update_count(par[u], par[v], d);
 }
@@ -158,7 +161,7 @@ int query3(int u, int r) {
 }
 
 int main() {
-	freopen("input.txt", "r", stdin);
+	// freopen("input.txt", "r", stdin);
 	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N;
 	for (int i = 1, u, v; i < N; ++i) {
@@ -183,7 +186,12 @@ int main() {
 			query2(u);
 	}
 
-	int sum = 0;
-	for (int u = 1; u <= N; ++u) sum += ((level[u] & 1 ? 1 : -1) * rotate.get(in[u]) % 360 + 360) % 360;
+	ll sum = 0;
+	for (int u = 1; u <= N; ++u) {
+		ll r = rotate.get(in[u]) % 360;
+		if (r < 0) r += 360;
+		if (~level[u] & 1) r = (360 - r) % 360;
+		sum += r;
+	}
 	std::cout << sum;
 }

@@ -8,13 +8,13 @@ typedef long long ll;
 typedef long double ld;
 typedef std::complex<ld> cd;
 
-const ld TOL = 1e-9; // tolerance
+const ld TOL = 1e-7; // tolerance
 const ld PI = acos(-1);
 
 struct Circle {
 	ld x, y, r;
 	Circle operator-(const Circle& c) const { return { x - c.x, y - c.y, r - c.r }; }
-	bool operator!=(const Circle& c) const { return abs(x - c.x) > TOL || abs(y - c.y) > TOL || abs(r - c.r) > TOL; }
+	bool operator!=(const Circle& c) const { return std::abs(x - c.x) >= TOL || std::abs(y - c.y) >= TOL || std::abs(r - c.r) >= TOL; }
 	ld H(const ld theta) const { return sin(theta) * x + cos(theta) * y + r; } // coordinate transform(rotate theta) and get top y-intercept
 };
 
@@ -33,16 +33,16 @@ inline ld norm(ld theta) {
 Arcs merge(const Circle& p, const Circle& q, ld cur, ld next) {
 	if (cur >= next) return std::vector<Arc>();
 	Circle delta = p - q;
-	if (abs(delta.x) < TOL && abs(delta.y) < TOL) {
+	if (std::abs(delta.x) < TOL && std::abs(delta.y) < TOL) {
 		if (delta.r >= 0) return { { cur, next, p } };
 		else return { { cur, next, q } };
 	}
-	ld t = delta.r / hypot(delta.x, delta.y);
+	ld t = -delta.r / hypot(delta.x, delta.y);
 	if (t >= 1) return { { cur, next, q } };
 	if (t <= -1) return { { cur, next, p } };
 	
 	ld phi = atan2(delta.y, delta.x);
-	ld x1 = asin(abs(t)) + (t < 0 ? PI : 0);
+	ld x1 = asin(std::abs(t)) + (t < 0 ? PI : 0);
 	ld x2 = PI - x1;
 	x1 = norm(x1 - phi);
 	x2 = norm(x2 - phi);
@@ -106,14 +106,14 @@ Arcs get_hull(std::vector<Circle>& c) {
 ld get_perimeter(const Arcs& hull) {
 	ld ans = 0;
 	std::vector<cd> v;
-	for (auto[l, r, c] : hull) {
+	for (auto [l, r, c] : hull) {
 		ans += c.r * (r - l);
-		cd p(c.x, c.y), rad(c.r, 0);
+		cd p{ c.x, c.y }, rad{ c.r, 0 };
 		v.push_back(p + rad * exp(cd(0, l)));
 		v.push_back(p + rad * exp(cd(0, r)));
 	}
 	for (int i = 0; i < v.size(); i += 2)
-		ans += abs(v[(i + v.size() - 1) % v.size()] - v[i]);
+		ans += std::abs(v[(i + v.size() - 1) % v.size()] - v[i]);
 	return ans;
 }
 
@@ -127,5 +127,7 @@ int main() {
 		std::cin >> x >> y >> r;
 		C.push_back({ (ld)x, (ld)y, (ld)r });
 	}
+	std::cout << std::fixed;
+	std::cout.precision(9);
 	std::cout << get_perimeter(get_hull(C));
 }

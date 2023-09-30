@@ -1,12 +1,10 @@
 #include <iostream>
 #include <algorithm>
-#include <complex>
 #include <vector>
 #include <cmath>
 
 typedef long long ll;
 typedef long double ld;
-typedef std::complex<ld> cd;
 
 const ld TOL = 1e-7; // tolerance
 const ld PI = acos(-1);
@@ -105,15 +103,11 @@ Arcs get_hull(std::vector<Circle>& c) {
 
 ld get_perimeter(const Arcs& hull) {
 	ld ans = 0;
-	std::vector<cd> v;
-	for (auto [l, r, c] : hull) {
-		ans += c.r * (r - l);
-		cd p{ c.x, c.y }, rad{ c.r, 0 };
-		v.push_back(p + rad * exp(cd(0, l)));
-		v.push_back(p + rad * exp(cd(0, r)));
+	for (int i = 0; i < hull.size(); ++i) {
+		ans += (hull[i].r - hull[i].l) * hull[i].c.r;
+		Circle c = hull[i].c - hull[(i + 1) % hull.size()].c;
+		ans += sqrt((c.x * c.x + c.y * c.y) - c.r * c.r);
 	}
-	for (int i = 0; i < v.size(); i += 2)
-		ans += std::abs(v[(i + v.size() - 1) % v.size()] - v[i]);
 	return ans;
 }
 

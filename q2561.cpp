@@ -8,7 +8,7 @@ int N, C, A[1000], depth, ans[3][2];
 
 bool check() {
 	for (int i = 0; i < C; ++i)
-		if (abs(p[i].r - p[i + 1].l) != 1)
+		if (~(p[i].r - p[i + 1].l))
 			return false;
 	return true;
 }

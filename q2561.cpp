@@ -1,12 +1,15 @@
 #include <iostream>
 
-struct P { 
+struct P {
 	int l, r;
 	int s() { return abs(r - l) + 1; }
-} p[8];
+} p[30];
 int N, C, A[1000], depth, ans[3][2];
 
 bool check() {
+	if (!C) {
+		return p[0].l < p[0].r;
+	}
 	for (int i = 0; i < C; ++i)
 		if (~(p[i].r - p[i + 1].l))
 			return false;
@@ -49,13 +52,26 @@ int main() {
 	p[C].l = p[C].r = A[0];
 	for (int i = 1; i < N; ++i) {
 		if (abs(A[i] - A[i - 1]) != 1) {
+			if (abs(p[C].l - p[C].r) == 1) {
+				++C;
+				p[C].l = p[C].r = p[C - 1].r;
+				p[C - 1].r = p[C - 1].l;
+			}
 			++C;
 			p[C].l = p[C].r = A[i];
 		}
 		else p[C].r = A[i];
+
+		if (i == N - 1) {
+			if (abs(p[C].l - p[C].r) == 1) {
+				++C;
+				p[C].l = p[C].r = p[C - 1].r;
+				p[C - 1].r = p[C - 1].l;
+			}
+		}
 	}
-	std::cout << C << '\n';
-	for (int i = 0; i <= C; ++i) std::cout << p[i].l << ' ' << p[i].r << '\n';
+	// std::cout << C << '\n';
+	// for (int i = 0; i <= C; ++i) std::cout << p[i].l << ' ' << p[i].r << '\n';
 	dfs(0);
 	for (int i = 0; i < 3; ++i) {
 		if (i > depth) std::cout << "1 1\n";

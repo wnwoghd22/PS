@@ -3,11 +3,25 @@
 #include <map>
 
 const int LEN = 121;
+typedef long long ll;
+
 struct Pos {
-	int x, y;
+	ll x, y;
 	bool operator<(const Pos& r) const { return x == r.x ? y < r.y : x < r.x; }
 	bool operator==(const Pos& r) const { return x == r.x && y == r.y; }
 };
+ll cross(const Pos& p1, const Pos& p2, const Pos& p3, const Pos& p4) { return (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x); }
+ll dot(const Pos& p1, const Pos& p2, const Pos& p3, const Pos& p4) { return (p2.x - p1.x) * (p4.x - p3.x) + (p2.y - p1.y) * (p4.y - p3.y); }
+bool intersect(const Pos& p1, const Pos& p2, const Pos& p3, const Pos& p4) {
+	bool f11 = cross(p1, p2, p2, p3) * cross(p2, p1, p1, p4) > 0;
+	bool f12 = cross(p3, p4, p4, p1) * cross(p4, p3, p3, p2) > 0;
+	bool line = !cross(p1, p3, p3, p2) && dot(p1, p3, p3, p2) >= 0 ||
+		!cross(p1, p4, p4, p2) && dot(p1, p4, p4, p2) >= 0 ||
+		!cross(p3, p1, p1, p4) && dot(p3, p1, p1, p4) >= 0 ||
+		!cross(p3, p2, p2, p4) && dot(p3, p2, p2, p4) >= 0;
+	return f11 && f12 || line;
+}
+
 std::map<Pos, int> vert;
 std::map<int, Pos> pos;
 int ord = 1;
@@ -21,13 +35,7 @@ int get(int x, int y) {
 }
 
 struct Edge { Pos a, b; };
-bool intersect(const Edge& r, const Edge& l) {
-	if (r.a == l.a || r.a == l.b || r.b == l.a || r.b == l.b) return false;
-
-
-
-	return false;
-}
+bool intersect(const Edge& r, const Edge& l) { return intersect(r.a, r.b, l.a, l.b); }
 
 int N;
 
@@ -70,8 +78,8 @@ bool f(int i) {
 	if (size < 3) return false;
 
 	for (int l = 0; l < edges.size(); ++l) {
-		for (int r = l + 1; r < edges.size(); ++r) {
-			if (intersect(edges[l], edges[r]))
+		for (int k = 2; k < edges.size() - 3; ++k) {
+			if (intersect(edges[l], edges[(l + k) % edges.size()]))
 				return false;
 		}
 	}

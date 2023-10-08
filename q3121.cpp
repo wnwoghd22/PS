@@ -6,34 +6,11 @@ typedef long long ll;
 const int LEN = 1001;
 const ll INF = 1e17;
 
-ll gcd(ll a, ll b) { return !b ? a : gcd(b, a % b); }
-struct Fraction {
-	ll num, den;
-	Fraction(ll n, ll d) : num(n), den(d) { if (den < 0) num *= -1, den *= -1; if (!num) den = 1; }
-	Fraction(const Fraction& f) : num(f.num), den(f.den) {}
-	Fraction& operator=(const Fraction& f) { if (this != &f) num = f.num, den = f.den; return *this; }
-	Fraction normalize() const { ll g = gcd(std::abs(num), den); return Fraction(num / g, den / g); }
-	Fraction inv() const { return Fraction(den, num); }
-	Fraction operator+(const Fraction& r) const {
-		ll d = den * r.den / gcd(den, r.den);
-		ll n = num * d / den + r.num * d / r.den;
-		return Fraction(n, d).normalize();
-	}
-	Fraction operator-() const { return Fraction(-num, den); }
-	Fraction operator-(const Fraction& r) const { return *this + (-r); }
-	Fraction operator*(const Fraction& r) const { return Fraction(num * r.num, den * r.den).normalize(); }
-	Fraction operator/(const Fraction& r) const { return *this * r.inv(); }
-	bool operator<(const Fraction& r) const { return num * r.den < r.num * den; }
-	bool operator==(const Fraction& r) const { return num * r.den == r.num * den; }
-	friend std::ostream& operator<<(std::ostream& o, const Fraction& f) { return (o << f.num << '/' << f.den); }
-};
-
 struct Slope {
 	int u, v;
-	Fraction f;
-	Slope() : u(-1), v(-1), f(0, 1) {}
-	Slope(int u, int v, const Fraction& f) : u(u), v(v), f(f.normalize()) {}
-	bool operator<(const Slope& r) const { return f < r.f; }
+	ll dx, dy;
+	bool operator<(const Slope& r) const { return dy * r.dx < r.dy * dx; }
+	bool operator==(const Slope& r) const { return dy * r.dx == r.dy * dx; }
 } slopes[LEN * LEN];
 int M;
 
@@ -82,15 +59,17 @@ int main() {
 		pos[i].i = i;
 		val[i] = c == 'R';
 	}
+	std::sort(pos, pos + N);
 	for (int i = 0; i < N; ++i) {
+		int ii = pos[i].i;
 		for (int j = i + 1; j < N; ++j) {
+			int jj = pos[j].i;
 			int dx = pos[i].x - pos[j].x;
 			int dy = pos[i].y - pos[j].y;
 			if (!dx) continue;
-			slopes[M++] = { i, j, Fraction(dy, dx) };
+			slopes[M++] = { ii, jj, dx, dy };
 		}
 	}
-	std::sort(pos, pos + N);
 	std::sort(slopes, slopes + M);
 	for (int i = 0; i < N; ++i) {
 		idx[pos[i].i] = i;
@@ -100,7 +79,7 @@ int main() {
 
 	for (int i = 0, j; i < M; i = j) {
 		j = i;
-		while (j < M && slopes[i].f == slopes[j].f) {
+		while (j < M && slopes[i] == slopes[j]) {
 			int u = slopes[j].u, v = slopes[j].v;
 			int x = idx[u], y = idx[v];
 			int v0 = val[u], v1 = val[v];

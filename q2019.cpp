@@ -68,7 +68,7 @@ bool dfs(int u, int p = 0) {
 bool f(int i) {
 	size = 0;
 	edges.clear();
-	std::cout << "----------------------\n";
+	// std::cout << "----------------------\n";
 	
 	bool result = dfs(i);
 	for (const Edge& e : edges) {

@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <algorithm>
 
@@ -74,6 +75,7 @@ LenNode get_len(int l, int r, int s = 0, int e = N - 1, int i = 1) {
 }
 
 int main() {
+	freopen("input.txt", "r", stdin);
 	std::cin >> N;
 	for (int i = 0; i < N; ++i) {
 		std::cin >> pos[i].x >> pos[i].y >> c;

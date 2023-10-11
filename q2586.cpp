@@ -27,12 +27,9 @@ int main() {
 		j = cnt[C += -1 + k * 2];
 		S[i] = S[i - 1] + A[k][idx[k]] * (-1 + k * 2);
 		
-		if (k) {
-			dp[i] = dp[i - 1] + std::min(std::abs(A[k][idx[k]] - A[k ^ 1][idx[k ^ 1]]), std::abs(A[k][idx[k]] - A[k ^ 1][idx[k ^ 1] - 1]));
-			if (~j) dp[i] = std::min(dp[i], dp[j] + std::abs(S[i] - S[j]));
-		}
-		else dp[i] = dp[i - 1];
-
+		dp[i] = k ? INF : dp[i - 1];
+		if (~j) dp[i] = std::min(dp[i], dp[j] + std::abs(S[i] - S[j]));
+		
 		cnt[C] = i;
 		if (idx[k] <= N[k]) ++idx[k];
 	}

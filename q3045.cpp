@@ -40,7 +40,7 @@ int main() {
 	}
 	int cur = list[0].nxt;
 	for (int i = 0; i < N; ++i, cur = list[cur].nxt) A[i] = cur;
-	for (int i = 0; i < N; ++i) std::cout << A[i] << ' '; std::cout << std::endl;
+	// for (int i = 0; i < N; ++i) std::cout << A[i] << ' '; std::cout << std::endl;
 
 	for (int i = 0; i < N; ++i) {
 		int j = lower_bound(A[i]);
@@ -50,11 +50,20 @@ int main() {
 		}
 		else dp[idx[i] = len++] = A[i];
 	}
-	for (int i = 0; i < len; ++i) std::cout << dp[i] << ' '; std::cout << std::endl;
-	for (int i = 0; i < N; ++i) std::cout << idx[i] << ' '; std::cout << std::endl;
+	// for (int i = 0; i < len; ++i) std::cout << dp[i] << ' '; std::cout << std::endl;
+	// for (int i = 0; i < N; ++i) std::cout << idx[i] << ' '; std::cout << std::endl;
 	for (int i = N - 1, j = len - 1; i >= 0; --i)
 		if (idx[i] == j)
 			lis[j--] = A[i];
 
-	for (int i = 0; i < len; ++i) std::cout << lis[i] << ' ';
+	// for (int i = 0; i < len; ++i) std::cout << lis[i] << ' ';
+
+	std::cout << N - len << '\n';
+	for (int i = 1, j = 0; i <= N; ++i) {
+		if (lis[j] == i) ++j;
+		else {
+			if (i == 1) std::cout << "A " << 1 << ' ' << lis[j] << '\n';
+			else std::cout << "B " << i << ' ' << i - 1 << '\n';
+		}
+	}
 }

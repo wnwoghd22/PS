@@ -54,7 +54,7 @@ struct Horizontal {
 struct Vertical {
 	int y, x, d, i; // y, x, diff
 	bool operator<(const Vertical& o) const {
-		if (x == o.x) return y < o.y;
+		if (y == o.y) return x < o.x;
 		return y < o.y;
 	}
 } pool_v[LEN << 1];
@@ -63,7 +63,7 @@ std::set<int> verts[LEN << 2];
 int seg_v[LEN << 2];
 int maxY[LEN];
 
-int seg_pos[LEN  << 2];
+int seg_pos[LEN << 2];
 int add_line(int l, int r, int idx, int s = 0, int e = xi - 1, int i = 1) {
 	if (e < l || r < s) return 0;
 	if (l <= s && e <= r) {

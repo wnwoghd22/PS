@@ -13,29 +13,26 @@ struct Pos {
 } pos[LEN];
 
 ll cross(const Pos& d1, const Pos& d2, const Pos& d3, const Pos& d4) { return (d2.x - d1.x) * (d4.y - d3.y) - (d2.y - d1.y) * (d4.x - d3.x); }
-std::vector<Pos> monotone_chain(std::vector<Pos>& C) {
-	std::vector<Pos> H;
-	std::sort(C.begin(), C.end());
-	if (C.size() <= 2) {
-		for (const Pos& pos : C) H.push_back(pos);
-		return H;
+void monotone_chain(std::vector<Pos>& H, int s, int e) {
+	if (e - s <= 1) {
+		for (int i = s; i <= e; ++i) H.push_back(pos[i]);
+		return;
 	}
-	for (int i = 0; i < C.size(); i++) {
-		while (H.size() > 1 && cross(H[H.size() - 2], H[H.size() - 1], H[H.size() - 1], C[i]) <= 0) {
+	for (int i = s; i <= e; ++i) {
+		while (H.size() > 1 && cross(H[H.size() - 2], H[H.size() - 1], H[H.size() - 1], pos[i]) <= 0) {
 			H.pop_back();
 		}
-		H.push_back(C[i]);
+		H.push_back(pos[i]);
 	}
 	H.pop_back();
-	int s = H.size() + 1;
-	for (int i = C.size() - 1; i >= 0; i--) {
-		while (H.size() > s && cross(H[H.size() - 2], H[H.size() - 1], H[H.size() - 1], C[i]) <= 0) {
+	int k = H.size() + 1;
+	for (int i = e - 1; i >= s; --i) {
+		while (H.size() > k && cross(H[H.size() - 2], H[H.size() - 1], H[H.size() - 1], pos[i]) <= 0) {
 			H.pop_back();
 		}
-		H.push_back(C[i]);
+		H.push_back(pos[i]);
 	}
 	H.pop_back();
-	return H;
 }
 
 std::vector<Pos> seg[LEN << 2];
@@ -47,10 +44,7 @@ void init(int s, int e, int i = 1) {
 	}
 	int m = s + e >> 1;
 	init(s, m, i << 1); init(m + 1, e, i << 1 | 1);
-	std::vector<Pos> c;
-	for (const Pos& p : seg[i << 1]) c.push_back(p);
-	for (const Pos& p : seg[i << 1 | 1]) c.push_back(p);
-	seg[i] = monotone_chain(c);
+	monotone_chain(seg[i], s, e);
 }
 
 bool ter_search(const Pos& p1, const Pos& p2, const std::vector<Pos>& hull) {
@@ -81,6 +75,11 @@ bool search(const Pos& l, const Pos& r, int s, int e, int i = 1) {
 int K, M;
 Pos p1, p2;
 int main() {
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+
+	std::cin.tie(0)->sync_with_stdio(0);
+
 	std::cin >> K >> M;
 	for (int i = 0; i < K; ++i) std::cin >> pos[i].x >> pos[i].y;
 	std::sort(pos, pos + K);

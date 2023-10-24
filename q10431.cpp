@@ -16,9 +16,9 @@ int main() {
 				else l = m + 1;
 			}
 			S += i - r;
-			k = A[r];
-			for (int j = r; j < i; ++j) A[j] = A[j + 1];
-			A[i] = k;
+			k = A[i];
+			for (int j = i; j > r; --j) A[j] = A[j - 1];
+			A[r] = k;
 		}
 		std::cout << T << ' ' << S << '\n';
 	}

@@ -7,7 +7,7 @@
 typedef long long ll;
 const ll INF = 2e17;
 const ll MOD = 1e9 + 7;
-const int MAX = 20002;
+const int MAX = 20010;
 const int OUT = 10000;
 
 int N, K, source = 0, sink = MAX - 1;
@@ -99,17 +99,17 @@ int main() {
 			char k = map[i][j];
 			if (k == '+') continue;
 			int node = i * N + j + 1;
-			
+
 			A[node + OUT].push_back(node);
 			A[node].push_back(node + OUT);
 			c[node + OUT][node] = 0;
-			c[node][node + OUT] = INF;
+			c[node][node + OUT] = 1;
 			f[node + OUT][node] = 0;
 			f[node][node + OUT] = 0;
 			if (k == 'X') {
-				A[source].push_back(node);
-				c[source][node] = INF;
-				f[source][node] = 0;
+				A[source].push_back(node + OUT);
+				c[source][node + OUT] = INF;
+				f[source][node + OUT] = 0;
 			}
 			if (k == 'O') {
 				A[node].push_back(sink);

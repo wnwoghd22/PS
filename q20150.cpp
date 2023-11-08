@@ -25,7 +25,10 @@ int dot(const Pos& p1, const Pos& p2, const Pos& p3, const Pos& p4) {
 
 struct Segment {
 	Pos l, r;
-	bool operator<(const Segment& rhs) const { return cross(l, r, r, rhs.l) < 0; }
+	bool operator<(const Segment& rhs) const {
+		if (rhs.l < l) return cross(rhs.l, rhs.r, rhs.r, l) < 0;
+		return cross(l, r, r, rhs.l) < 0; 
+	}
 } segments[LEN];
 
 bool intersect(const Pos& p1, const Pos& p2, const Pos& p3, const Pos& p4) {

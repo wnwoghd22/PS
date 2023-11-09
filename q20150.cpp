@@ -27,7 +27,7 @@ struct Segment {
 	Pos l, r;
 	bool operator<(const Segment& rhs) const {
 		if (rhs.l < l) return cross(rhs.l, rhs.r, rhs.r, l) < 0;
-		return cross(l, r, r, rhs.l) < 0; 
+		return cross(rhs.l, rhs.r, rhs.r, r) < 0;
 	}
 } segments[LEN];
 

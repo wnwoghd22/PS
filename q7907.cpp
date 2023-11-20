@@ -24,6 +24,7 @@ struct Pos { int x, y; } p[LEN];
 
 int N, M, K;
 
+// WRONG CODE
 int main() {
 	std::cin >> N >> M >> K;
 	for (int i = 1; i <= N; ++i) std::cin >> p[i].x >> p[i].y;
@@ -55,17 +56,8 @@ int main() {
 		}
 	}
 
-	for (int i = 0; i < N; ++i) A[i] = i + 1;
-
-	std::sort(A, A + N, [](int a, int b) { return p[a].y == p[b].y ? p[a].x < p[b].x : p[a].y < p[b].y; });
-	for (int i = 0; i < N; ++i)
-		if (!ord[0][A[i]] && !incoming[0][A[i]])
-			dfs0(A[i]);
-
-	std::sort(A, A + N, [](int a, int b) { return p[a].x == p[a].x ? p[a].y > p[b].y : p[a].x > p[b].x; });
-	for (int i = 0; i < N; ++i)
-		if (!ord[1][A[i]] && !incoming[1][A[i]])
-			dfs1(A[i]);
+	dfs0(1);
+	dfs1(1);
 
 	for (int i = 1; i <= N; ++i) std::cout << ord[0][i] << ' '; std::cout << '\n';
 	for (int i = 1; i <= N; ++i) std::cout << ord[1][i] << ' '; std::cout << '\n';

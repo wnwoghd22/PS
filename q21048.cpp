@@ -64,7 +64,7 @@ bool half_plane_intersection(std::vector<L>& lines, std::vector<V>& hull) {
 		dq.push_back(l);
 	}
 	while (dq.size() >= 3 && cw(dq[dq.size() - 2], dq.back(), dq.front())) dq.pop_back();
-	while (dq.size() >= 3 && cw(dq.back(), dq.front(), dq[1])) dq.front();
+	while (dq.size() >= 3 && cw(dq.back(), dq.front(), dq[1])) dq.pop_front();
 
 	for (int i = 0; i < dq.size(); ++i) {
 		L  cur = dq[i], nxt = dq[(i + 1) % dq.size()];

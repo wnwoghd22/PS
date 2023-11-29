@@ -44,7 +44,7 @@ struct L {
 		ld ccw = s * o.s;
 		return z(ccw) ? c * hypot(o.s.x, o.s.y) < o.c * hypot(s.x, s.y) : ccw > 0;
 	}
-} lines[LEN], planes[LEN], dq[LEN];
+} lines[LEN], dq[LEN];
 L line(const V& s, const V& p) { return { s, s.y * p.x + s.x * p.y }; }
 V intersect(const L& l1, const L& l2) {
 	ld det = l1.s * l2.s;
@@ -88,10 +88,10 @@ L border[4];
 
 int main() {
 	std::cin >> N >> x;
-	border[0] = { {1, 0}, 0 };
-	border[1] = { {0, -1}, x };
-	border[2] = { {-1, 0}, x };
-	border[3] = { {0, 1}, 0 };
+	border[0] = { {-1, 0}, 0 };
+	border[1] = { {0, 1}, x };
+	border[2] = { {1, 0}, x };
+	border[3] = { {0, -1}, 0 };
 	for (int i = 0; i < N; ++i) std::cin >> pos[i].x >> pos[i].y >> c[i];
 	for (int i = 0, n; i < N; ++i) {
 		n = 0;
@@ -102,12 +102,14 @@ int main() {
 		for (int j = 0; j < N; ++j) {
 			if (j == i) continue;
 			V pivot = mid(pos[i], pos[j]);
-			V slope = pos[j] / pos[i];
+			V slope = ~(pos[j] / pos[i]);
 			lines[n++] = { slope, slope.y * pivot.x + slope.x * pivot.y };
 		}
 		std::sort(lines, lines + n);
 		half_plane_intersection(n);
 		a[c[i]] += area(hpi_len);
 	}
+	std::cout << std::fixed;
+	std::cout.precision(1);
 	std::cout << a[0] << ' ' << a[1];
 }

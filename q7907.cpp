@@ -3,7 +3,7 @@
 
 const int LEN = 100'001;
 
-int L[LEN], D[LEN];
+int R[LEN], D[LEN];
 int ord[2][LEN];
 int incoming[2][LEN];
 int A[LEN];
@@ -12,11 +12,11 @@ int order;
 void dfs0(int u) {
 	ord[0][u] = ++order;
 	if (!--incoming[0][D[u]]) dfs0(D[u]);
-	if (!--incoming[0][L[u]]) dfs0(L[u]);
+	if (!--incoming[0][R[u]]) dfs0(R[u]);
 }
 void dfs1(int u) {
 	ord[1][u] = ++order;
-	if (!--incoming[1][L[u]]) dfs1(L[u]);
+	if (!--incoming[1][R[u]]) dfs1(R[u]);
 	if (!--incoming[1][D[u]]) dfs1(D[u]);
 }
 
@@ -24,7 +24,6 @@ struct Pos { int x, y; } p[LEN];
 
 int N, M, K;
 
-// WRONG CODE
 int main() {
 	std::cin >> N >> M >> K;
 	for (int i = 1; i <= N; ++i) std::cin >> p[i].x >> p[i].y;
@@ -44,12 +43,12 @@ int main() {
 		}
 		else {
 			if (p[u].x < p[v].x) {
-				L[u] = v;
+				R[u] = v;
 				incoming[0][v]++;
 				incoming[1][v]++;
 			}
 			else {
-				L[v] = u;
+				R[v] = u;
 				incoming[0][u]++;
 				incoming[1][u]++;
 			}
@@ -64,7 +63,7 @@ int main() {
 
 	for (int i = 0, a, b; i < K; ++i) {
 		std::cin >> a >> b;
-		if (p[a].x > p[b].x) std::swap(a, b);
+		if (p[a].x > p[b].x || p[a].x == p[b].x && p[a].y < p[b].y) std::swap(a, b);
 		std::cout << (ord[0][a] < ord[0][b] && ord[1][a] < ord[1][b] ? "TAK\n" : "NIE\n");
 	}
 }

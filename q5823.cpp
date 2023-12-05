@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <algorithm>
 
@@ -52,11 +53,6 @@ struct Bucket {
 		update();
 	}
 	void push(int a) {
-		if (!size) {
-			A[size++] = a;
-			update();
-			return;
-		}
 		int l = 0, r = size - 1, m;
 		int k = size;
 		while (l <= r) {
@@ -76,21 +72,23 @@ struct Bucket {
 } buckets[SQ];
 
 void init() {
-	for (int i = 0; i < SQ; ++i) buckets[i].size = 0;
+	for (int i = 0; i < b_len; ++i) buckets[i].size = 0;
 	for (int i = 0; i < N; ++i) buckets[i / SQ].push_back(a[i]);
-	for (int i = 0; i < SQ; ++i) buckets[i].update();
+	for (int i = 0; i < b_len; ++i) buckets[i].update();
 }
 
 void normalize() {
-	for (int i = 0, k = 0; i < SQ; ++i) {
-		for (int j = 0; j < buckets[i].size; ++j)
-			a[k++] = buckets[i].A[j];
-			b[a[i]] = i / SQ;
+	for (int i = 0, k = 0; i < b_len; ++i) {
+		for (int j = 0; j < buckets[i].size; ++j, ++k) {
+			a[k] = buckets[i].A[j];
+			b[a[k]] = k / SQ;
+		}
 	}
 	init();
 }
 
 int main() {
+	freopen("input.txt", "r", stdin);
 	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N >> L >> M;
 	b_len = N / SQ + 1;
@@ -100,28 +98,34 @@ int main() {
 		b[i] = i / SQ;
 	}
 	init();
-	for (int q = 0, j = 0, i, y, k, s, x; q < M; ++q, ++j) {
+	for (int q = 0, j = 0, i, y, s, x, S; q < M; ++q, ++j) {
 		if (j == SQ - 1) j = 0, normalize();
 		std::cin >> i >> y;
 		buckets[b[i]].pop(i);
 		pos[i] = y;
-		k = b_len - 1;
+		b[i] = b_len - 1;
 		for (int kk = 0; kk < b_len; ++kk) {
 			if (y <= buckets[kk].end()) {
-				k = b[i] = kk;
+				b[i] = kk;
 				break;
 			}
 		}
-		buckets[k].push(i);
+		buckets[b[i]].push(i);
 
 		s = buckets[0].cameras[0];
 		x = buckets[0].cover[0];
-		for (int kk = 1; kk < b_len; ++kk) {
+		for (int kk = 1, k; kk < b_len; ++kk) {
 			if (!buckets[kk].size || buckets[kk].end() <= x) continue;
 			k = buckets[kk].bound(x);
 			s += buckets[kk].cameras[k];
 			x = buckets[kk].cover[k];
 		}
-		std::cout << s << '\n';
+		std::cin >> S;
+		if (s != S) {
+			std::cout << "Incorrect: " << q << ' ' << "expected: " << S << ' ' << "output: " << s;
+			return 0;
+		}
+		// std::cout << s << '\n';
 	}
+	std::cout << "Correct";
 }

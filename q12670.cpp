@@ -88,43 +88,37 @@ int solve() {
     std::cin >> N >> M;
     for (int i = 0; i <= N + 1; ++i)
         for (int j = 0; j <= M + 1; ++j)
-            map[i][j] = 1;
+            map[i][j] = 1 << ((i ^ j) & 1);
 
     for (int i = 0; i < N; ++i) {
         std::cin >> S[i];
         for (int j = 0; j < M; ++j) {
-            if (S[i][j] == '#') map[i + 1][j + 1] = 2;
+            if (S[i][j] == '#') map[i + 1][j + 1] = 1 << (~(i ^ j) & 1);
             if (S[i][j] == '?') map[i + 1][j + 1] = 3;
         }
     }
 
     for (int i = 0; i <= N + 1; ++i) {
         for (int j = 0; j <= M + 1; ++j) {
-            int node = i * (M + 2) + j;
-            if ((i ^ j) & 1) {
+            int node = i * (M + 2) + j; 
+            if (map[i][j] == 1) {
                 A[source].push_back(node);
                 c[source][node] = 4;
                 f[source][node] = 0;
-
-                for (int d = 0; d < 4; ++d) {
-                    int di = i + dx[d], dj = j + dy[d];
-                    int dn = (M + 2) * dx[d] + dy[d];
-
-                    if (di < 0 || di > N + 1 || dj < 0 || dj > M + 1) continue;
-                    if (map[i][j] & map[di][dj]) {
-                        A[node].push_back(node + dn);
-                        A[node + dn].push_back(node);
-                        c[node + dn][node] = 0;
-                        c[node][node + dn] = 1;
-                        f[node + dn][node] = 0;
-                        f[node][node + dn] = 0;
-                    }
-                }
             }
-            else {
+            if (map[i][j] == 2) {
                 A[node].push_back(sink);
-                c[node][sink] = 4;
+                c[node][sink] = INF;
                 f[node][sink] = 0;
+            }
+            for (int d = 0; d < 4; ++d) {
+                int di = i + dx[d], dj = j + dy[d];
+                int dn = (M + 2) * dx[d] + dy[d];
+
+                if (di < 0 || di > N + 1 || dj < 0 || dj > M + 1) continue;
+                A[node].push_back(node + dn);
+                c[node][node + dn] = 1;
+                f[node][node + dn] = 0;
             }
         }
     }

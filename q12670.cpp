@@ -9,7 +9,7 @@ const int source = MAX - 2;
 const int sink = MAX - 1;
 
 int T, N, M;
-std::string S[50];
+char S[51];
 int map[52][52];
 std::map<int, int> c[MAX], f[MAX];
 int work[MAX], level[MAX];
@@ -73,11 +73,6 @@ int dinic(int S, int T) {
     return totalFlow;
 }
 
-/// <summary>
-/// too simple and naive logic
-/// got too large flow. need to fix rules to add edges
-/// </summary>
-/// <returns></returns>
 int solve() {
     for (int i = 0; i < MAX; ++i) {
         c[i].clear();
@@ -91,10 +86,10 @@ int solve() {
             map[i][j] = 1 << ((i ^ j) & 1);
 
     for (int i = 0; i < N; ++i) {
-        std::cin >> S[i];
+        std::cin >> S;
         for (int j = 0; j < M; ++j) {
-            if (S[i][j] == '#') map[i + 1][j + 1] = 1 << (~(i ^ j) & 1);
-            if (S[i][j] == '?') map[i + 1][j + 1] = 3;
+            if (S[j] == '#') map[i + 1][j + 1] = 1 << (~(i ^ j) & 1);
+            if (S[j] == '?') map[i + 1][j + 1] = 3;
         }
     }
 

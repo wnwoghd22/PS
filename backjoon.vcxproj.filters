@@ -310,6 +310,9 @@
     <Filter Include="소스 파일\swea\swea15963">
       <UniqueIdentifier>{28095cdb-fd44-41c1-81e7-b82d10abfef6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\ABC333">
+      <UniqueIdentifier>{aaa0857e-f11e-4f2a-85fe-0b6b7c70f513}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2807,6 +2810,21 @@
     </ClCompile>
     <ClCompile Include="q18110.cpp">
       <Filter>소스 파일\~20000\q18000~</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC333\A.cpp">
+      <Filter>소스 파일\2023\ABC333</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC333\B.cpp">
+      <Filter>소스 파일\2023\ABC333</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC333\C.cpp">
+      <Filter>소스 파일\2023\ABC333</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC333\D.cpp">
+      <Filter>소스 파일\2023\ABC333</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC333\E.cpp">
+      <Filter>소스 파일\2023\ABC333</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

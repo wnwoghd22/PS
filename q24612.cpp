@@ -5,7 +5,7 @@
 
 using namespace std;
 typedef long long ll;
-const int LEN = 1e5 + 1;
+const int LEN = 2e5 + 1;
 
 ll prime_set[] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37 };
 ll gcd(ll a, ll b) { return !b ? a : gcd(b, a % b); }
@@ -89,20 +89,51 @@ vector<ll> pollard_rho(ll n) {
 
 ll N, Q, A;
 ll S[LEN];
-
+int len = 1, ans[LEN];
 vector<ll> primes;
-map<ll, int> factors;
+map<ll, int> cnt;
+
+int idx(ll x) {
+    int i = 0;
+    for (const ll& p : primes) {
+        int j = 0;
+        while (!(x % p))
+            ++j, x /= p;
+        i = i * cnt[p] + j;
+    }
+    return i;
+}
 
 int main() {
+    std::cin.tie(0)->sync_with_stdio(0);
     std::cin >> N;
     for (int i = 1; i <= N; ++i) {
         std::cin >> A;
         S[i] = S[i - 1] + A;
     }
     primes = pollard_rho(S[N]);
-    for (const ll& k : primes) {
-        if (factors.find(k) == factors.end()) factors[k] = 1;
-        else factors[k]++;
+    for (const ll& p : primes) {
+        if (cnt.find(p) == cnt.end()) cnt[p] = 2;
+        else cnt[p]++;
+    }
+    primes.erase(unique(primes.begin(), primes.end()), primes.end());
+    len = idx(S[N]) + 1;
+
+    for (int i = 1; i <= N; ++i)
+        ans[idx(gcd(S[N], S[i]))]++;
+
+    int stripe = 1;
+    for (int j = primes.size() - 1; j >= 0; --j) {
+        ll p = primes[j];
+        for (int k = len - 1; k; --k)
+            if (k / stripe % cnt[p]) ans[k - stripe] += ans[k];
+        stripe *= cnt[p];
     }
 
+    std::cin >> Q;
+    for (int i = 0; i < Q; ++i) {
+        std::cin >> A;
+        if (S[N] % A) std::cout << "-1\n";
+        else std::cout << N + (S[N] / A) - 2 * ans[idx(A)] << '\n';
+    }
 }

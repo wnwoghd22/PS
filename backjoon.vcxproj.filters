@@ -313,6 +313,12 @@
     <Filter Include="소스 파일\2023\ABC333">
       <UniqueIdentifier>{aaa0857e-f11e-4f2a-85fe-0b6b7c70f513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\q20090">
+      <UniqueIdentifier>{45623345-3f7a-425c-9982-4689a814cfa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\q20090">
+      <UniqueIdentifier>{e64ca357-0996-42a2-862d-b368067c1acf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2832,10 +2838,28 @@
     <ClCompile Include="q2285.cpp">
       <Filter>소스 파일\~10000\q2000~</Filter>
     </ClCompile>
+    <ClCompile Include="q22872.cpp">
+      <Filter>소스 파일\~30000</Filter>
+    </ClCompile>
+    <ClCompile Include="q24612.cpp">
+      <Filter>소스 파일\~30000</Filter>
+    </ClCompile>
+    <ClCompile Include="q27172.cpp">
+      <Filter>소스 파일\~30000</Filter>
+    </ClCompile>
+    <ClCompile Include="aliens.cpp">
+      <Filter>소스 파일\q20090</Filter>
+    </ClCompile>
+    <ClCompile Include="q20090.cpp">
+      <Filter>소스 파일\q20090</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">
       <Filter>헤더 파일\q24324</Filter>
+    </ClInclude>
+    <ClInclude Include="aliens.h">
+      <Filter>헤더 파일\q20090</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

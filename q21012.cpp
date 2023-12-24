@@ -16,7 +16,7 @@ struct PersistentSegTree {
 	int cur = 0, ptr[LEN];
 	void update(int k, int x, int d) { update(ptr[k - 1], ptr[k] = ++cur, 1, LEN, x, d); }
 	void update(int p, int i, int s, int e, int x, int d) {
-		if (s == e) { t[i].cnt += 1; t[i].sum += d; return; }
+		if (s == e) { t[i].cnt = t[p].cnt + 1; t[i].sum = t[p].sum + d; return; }
 		int m = s + e >> 1;
 		if (x <= m) { // update left
 			t[i].l = ++cur; t[i].r = t[p].r;

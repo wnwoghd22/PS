@@ -19,7 +19,6 @@ ll C(ll n, ll k) {
         den = den * (p + 1) % MOD;
     }
     ll ret = num * power(den, MOD - 2) % MOD;
-    // std::cout << "C(" << n << ", " << k << ") = " << ret << '\n';
     return ret;
 }
 
@@ -28,10 +27,15 @@ ll F(ll n, ll k) {
         S[i] = (S[i - 1] + power(i, k)) % MOD;
     if (n < k + 2) return S[n];
 
-    ll ret = 0;
-    for (int i = 0, j = k & 1 ? 1 : -1; i < k + 2; ++i, j *= -1)
-        ret += S[i] * C(n, i) % MOD * C(n - i - 1, k - i) % MOD * j,
+    ll ret = 0, nCi = 1, nCk = C(n - 1, k + 1);
+    for (int i = 1, j = k & 1 ? -1 : 1; i < k + 2; ++i, j *= -1) {
+        nCi *= (n - i + 1); nCi %= MOD;
+        nCi *= power(i, MOD - 2); nCi %= MOD;
+        nCk *= (k - i + 2); nCk %= MOD;
+        nCk *= power(n - i, MOD - 2); nCk %= MOD;
+        ret += S[i] * nCi % MOD * nCk % MOD * j;
         ret = (ret + MOD) % MOD;
+    }
     return ret;
 }
 
@@ -44,5 +48,4 @@ int main() {
         std::cout << F(A - 1, D) << ' ';
         std::cout << (F(B, D) - F(A - 1, D) + MOD) % MOD << '\n';
     }
-
 }

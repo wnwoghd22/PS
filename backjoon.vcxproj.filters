@@ -319,12 +319,15 @@
     <Filter Include="소스 파일\q20090">
       <UniqueIdentifier>{e64ca357-0996-42a2-862d-b368067c1acf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\SciOI2023">
+      <UniqueIdentifier>{ac7ebe8e-e743-40d4-828e-e61503deb48a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
       <Filter>소스 파일\q24324</Filter>
     </ClCompile>
-    <ClCompile Include="Lgrader.cpp">
+    <ClCompile Include="q24324.cpp">
       <Filter>소스 파일\q24324</Filter>
     </ClCompile>
     <ClCompile Include="q22308_converter.cpp">
@@ -2870,6 +2873,12 @@
     </ClCompile>
     <ClCompile Include="q1218.cpp">
       <Filter>소스 파일\~10000\q1100~</Filter>
+    </ClCompile>
+    <ClCompile Include="SciOI2023\A.cpp">
+      <Filter>소스 파일\2023\SciOI2023</Filter>
+    </ClCompile>
+    <ClCompile Include="SciOI2023\B.cpp">
+      <Filter>소스 파일\2023\SciOI2023</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

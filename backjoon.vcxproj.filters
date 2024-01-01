@@ -13,14 +13,8 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\q24324">
-      <UniqueIdentifier>{0035b660-529f-4d91-9f5a-fa2194088d15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일\q24324">
       <UniqueIdentifier>{9fc2c91a-291b-4dd7-9451-8a89dbc053f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\q22308">
-      <UniqueIdentifier>{79dd26f6-bed1-4aef-a4b1-1f1be12f83d1}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\2022">
       <UniqueIdentifier>{58723944-6831-4231-8398-e90616104e87}</UniqueIdentifier>
@@ -316,28 +310,46 @@
     <Filter Include="헤더 파일\q20090">
       <UniqueIdentifier>{45623345-3f7a-425c-9982-4689a814cfa9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\q20090">
-      <UniqueIdentifier>{e64ca357-0996-42a2-862d-b368067c1acf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\2023\SciOI2023">
       <UniqueIdentifier>{ac7ebe8e-e743-40d4-828e-e61503deb48a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\~30000\q20000~">
+      <UniqueIdentifier>{2660403a-1260-4dec-9b6e-21d76c74fae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\~30000\q25000~">
+      <UniqueIdentifier>{ec792a1e-8f58-4b39-9f48-ab63d91b7a44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\~30000\q20000~\q24324">
+      <UniqueIdentifier>{0035b660-529f-4d91-9f5a-fa2194088d15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\~30000\q20000~\q20090">
+      <UniqueIdentifier>{e64ca357-0996-42a2-862d-b368067c1acf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\~30000\q20000~\q22308">
+      <UniqueIdentifier>{79dd26f6-bed1-4aef-a4b1-1f1be12f83d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\~30000\q25000~\q25441">
+      <UniqueIdentifier>{d775844e-c8ea-443d-a132-c2c34feccadc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\q25441">
+      <UniqueIdentifier>{e5f443e0-111b-466a-890e-1b3ddd6d0dfc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
-      <Filter>소스 파일\q24324</Filter>
+      <Filter>소스 파일\~30000\q20000~\q24324</Filter>
     </ClCompile>
     <ClCompile Include="q24324.cpp">
-      <Filter>소스 파일\q24324</Filter>
+      <Filter>소스 파일\~30000\q20000~\q24324</Filter>
     </ClCompile>
     <ClCompile Include="q22308_converter.cpp">
-      <Filter>소스 파일\q22308</Filter>
+      <Filter>소스 파일\~30000\q20000~\q22308</Filter>
     </ClCompile>
     <ClCompile Include="q22308_path_finder.cpp">
-      <Filter>소스 파일\q22308</Filter>
+      <Filter>소스 파일\~30000\q20000~\q22308</Filter>
     </ClCompile>
     <ClCompile Include="q22308_path_checker.cpp">
-      <Filter>소스 파일\q22308</Filter>
+      <Filter>소스 파일\~30000\q20000~\q22308</Filter>
     </ClCompile>
     <ClCompile Include="IGRUS\q1.cpp">
       <Filter>소스 파일\2022\IGRUS2022</Filter>
@@ -2535,84 +2547,6 @@
     <ClCompile Include="q5894.cpp">
       <Filter>소스 파일\~10000\q4000~</Filter>
     </ClCompile>
-    <ClCompile Include="q21973.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q20176.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q20303.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q20500.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q21730.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q22739.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q23757.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q23835.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q23836.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q24060.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q24505.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q24505_fenwick.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q24515.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q24896.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q25567.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q25682.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q25974.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q26076.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="ZOAC2022\q26601.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q27654.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q28027.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q28030.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q28034.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q28036.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q28299.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q20441.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
     <ClCompile Include="q1068.cpp">
       <Filter>소스 파일\~10000\q1000~</Filter>
     </ClCompile>
@@ -2700,9 +2634,6 @@
     <ClCompile Include="q1385.cpp">
       <Filter>소스 파일\~10000\q1100~</Filter>
     </ClCompile>
-    <ClCompile Include="q23765.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
     <ClCompile Include="q2850.cpp">
       <Filter>소스 파일\~10000\q2500~</Filter>
     </ClCompile>
@@ -2742,23 +2673,11 @@
     <ClCompile Include="q15903.cpp">
       <Filter>소스 파일\~20000\q15000~</Filter>
     </ClCompile>
-    <ClCompile Include="q25430.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q25433.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
     <ClCompile Include="q1024.cpp">
       <Filter>소스 파일\~10000\q1000~</Filter>
     </ClCompile>
-    <ClCompile Include="q27534.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
     <ClCompile Include="q4117.cpp">
       <Filter>소스 파일\~10000\q4000~</Filter>
-    </ClCompile>
-    <ClCompile Include="q23234.cpp">
-      <Filter>소스 파일\~30000</Filter>
     </ClCompile>
     <ClCompile Include="q2207.cpp">
       <Filter>소스 파일\~10000\q2000~</Filter>
@@ -2784,14 +2703,8 @@
     <ClCompile Include="q13543.cpp">
       <Filter>소스 파일\~20000\q13000~</Filter>
     </ClCompile>
-    <ClCompile Include="q20151.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
     <ClCompile Include="q12670.cpp">
       <Filter>소스 파일\~20000\q12000~</Filter>
-    </ClCompile>
-    <ClCompile Include="q24611_fenwick.cpp">
-      <Filter>소스 파일\~30000</Filter>
     </ClCompile>
     <ClCompile Include="q10049.cpp">
       <Filter>소스 파일\~20000\q10000~</Filter>
@@ -2841,32 +2754,17 @@
     <ClCompile Include="q2285.cpp">
       <Filter>소스 파일\~10000\q2000~</Filter>
     </ClCompile>
-    <ClCompile Include="q22872.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q24612.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
-    <ClCompile Include="q27172.cpp">
-      <Filter>소스 파일\~30000</Filter>
-    </ClCompile>
     <ClCompile Include="aliens.cpp">
-      <Filter>소스 파일\q20090</Filter>
+      <Filter>소스 파일\~30000\q20000~\q20090</Filter>
     </ClCompile>
     <ClCompile Include="q20090.cpp">
-      <Filter>소스 파일\q20090</Filter>
-    </ClCompile>
-    <ClCompile Include="q21012.cpp">
-      <Filter>소스 파일\~30000</Filter>
+      <Filter>소스 파일\~30000\q20000~\q20090</Filter>
     </ClCompile>
     <ClCompile Include="q14510.cpp">
       <Filter>소스 파일\~20000\q14000~</Filter>
     </ClCompile>
     <ClCompile Include="q17439.cpp">
       <Filter>소스 파일\~20000\q17000~</Filter>
-    </ClCompile>
-    <ClCompile Include="q27293.cpp">
-      <Filter>소스 파일\~30000</Filter>
     </ClCompile>
     <ClCompile Include="q14466.cpp">
       <Filter>소스 파일\~20000\q14000~</Filter>
@@ -2886,6 +2784,126 @@
     <ClCompile Include="q1351.cpp">
       <Filter>소스 파일\~10000\q1100~</Filter>
     </ClCompile>
+    <ClCompile Include="q20151.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q20176.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q20303.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q20441.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q20500.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q21012.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q21730.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q21973.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q22739.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q22872.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q23234.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q23757.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q23765.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q23835.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q23836.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q24060.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q24505.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q24505_fenwick.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q24515.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q24611_fenwick.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q24612.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q24896.cpp">
+      <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q25430.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q25433.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q25567.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q25682.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q25974.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q26076.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="ZOAC2022\q26601.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q27172.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q27293.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q27534.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q27654.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q28027.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q28030.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q28034.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q28036.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q28299.cpp">
+      <Filter>소스 파일\~30000\q25000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q25441.cpp">
+      <Filter>소스 파일\~30000\q25000~\q25441</Filter>
+    </ClCompile>
+    <ClCompile Include="circuit.cpp">
+      <Filter>소스 파일\~30000\q25000~\q25441</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">
@@ -2893,6 +2911,9 @@
     </ClInclude>
     <ClInclude Include="aliens.h">
       <Filter>헤더 파일\q20090</Filter>
+    </ClInclude>
+    <ClInclude Include="circuit.h">
+      <Filter>헤더 파일\q25441</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

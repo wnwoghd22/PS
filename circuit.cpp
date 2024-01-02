@@ -3,14 +3,12 @@
 #include <vector>
 #include <cstring>
 
-// #include <iostream>
-
 typedef long long ll;
 const int LEN = 100'001;
 const ll MOD = 1e9 + 2022;
 
 std::vector<int> graph[LEN];
-ll n, _m, C[LEN], l[LEN], S[LEN];
+ll n, _m, C[LEN << 1], l[LEN << 1], S[LEN];
 inline ll sum(int l, int r) { return (S[r] - S[l - 1] + MOD) % MOD; }
 
 ll tree[LEN << 2];
@@ -73,7 +71,6 @@ void init(int N, int M, std::vector<int> P, std::vector<int> A) {
 	dfs1(0);
 	dfs2(0, 1);
 	for (int i = 0; i < _m; ++i) {
-		// std::cout << i + n << ' ' << S[i + 1] << '\n';
 		if (A[i]) add(i + 1, S[i + 1]);
 	}
 	for (int i = 1; i <= _m; ++i) 

@@ -2907,6 +2907,12 @@
     <ClCompile Include="q3996.cpp">
       <Filter>소스 파일\~10000\q3000~</Filter>
     </ClCompile>
+    <ClCompile Include="q2103.cpp">
+      <Filter>소스 파일\~10000\q2000~</Filter>
+    </ClCompile>
+    <ClCompile Include="q1339.cpp">
+      <Filter>소스 파일\~10000\q1100~</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="biggest.h">

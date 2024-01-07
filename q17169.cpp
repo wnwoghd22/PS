@@ -3,7 +3,7 @@
 #include <queue>
 
 typedef long long ll;
-const int LEN = 500'000;
+const int LEN = 200;
 
 int N;
 
@@ -39,14 +39,16 @@ int main() {
 			ll aug = -lq.top();
 			lq.pop();
 			cost += aug + dinner[d].x;
-			dq.push(aug + dinner[d].x - dinner[d].y);
+			lq.push(dinner[d].x - dinner[d].y);
+			dq.push(aug);
 		}
 		else if (l >= N * 2) {
 			used[dinner[d].i] = 1;
 			ll aug = -lq.top();
 			lq.pop();
 			cost += aug + dinner[d].x;
-			dq.push(aug + dinner[d].x - dinner[d].y);
+			lq.push(dinner[d].x - dinner[d].y);
+			dq.push(aug);
 		}
 		else {
 			used[lunch[l].i] = 1;
@@ -62,14 +64,16 @@ int main() {
 			ll aug = -dq.top();
 			dq.pop();
 			cost += aug + lunch[l].x;
-			lq.push(aug + lunch[l].x - lunch[l].y);
+			dq.push(lunch[l].x - lunch[l].y);
+			lq.push(aug);
 		}
 		else if (d >= N * 2) {
 			used[lunch[l].i] = 1;
 			ll aug = -dq.top();
 			dq.pop();
 			cost += aug + lunch[l].x;
-			lq.push(aug + lunch[l].x - lunch[l].y);
+			dq.push(lunch[l].x - lunch[l].y);
+			lq.push(aug);
 		}
 		else {
 			used[dinner[d].i] = 1;

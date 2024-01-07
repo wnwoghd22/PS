@@ -334,6 +334,9 @@
     <Filter Include="헤더 파일\q25441">
       <UniqueIdentifier>{e5f443e0-111b-466a-890e-1b3ddd6d0dfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2024">
+      <UniqueIdentifier>{68029632-8d2f-46fc-8a56-d4321c2a2515}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -2921,6 +2924,21 @@
     </ClCompile>
     <ClCompile Include="q21921.cpp">
       <Filter>소스 파일\~30000\q20000~</Filter>
+    </ClCompile>
+    <ClCompile Include="2024\hjroh\A.cpp">
+      <Filter>소스 파일\2024</Filter>
+    </ClCompile>
+    <ClCompile Include="2024\hjroh\B.cpp">
+      <Filter>소스 파일\2024</Filter>
+    </ClCompile>
+    <ClCompile Include="2024\hjroh\C.cpp">
+      <Filter>소스 파일\2024</Filter>
+    </ClCompile>
+    <ClCompile Include="H.cpp">
+      <Filter>소스 파일\2024</Filter>
+    </ClCompile>
+    <ClCompile Include="2024\hjroh\D.cpp">
+      <Filter>소스 파일\2024</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

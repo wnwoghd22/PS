@@ -2934,11 +2934,14 @@
     <ClCompile Include="2024\hjroh\C.cpp">
       <Filter>소스 파일\2024</Filter>
     </ClCompile>
-    <ClCompile Include="H.cpp">
-      <Filter>소스 파일\2024</Filter>
-    </ClCompile>
     <ClCompile Include="2024\hjroh\D.cpp">
       <Filter>소스 파일\2024</Filter>
+    </ClCompile>
+    <ClCompile Include="2024\hjroh\H.cpp">
+      <Filter>소스 파일\2024</Filter>
+    </ClCompile>
+    <ClCompile Include="q17517.cpp">
+      <Filter>소스 파일\~20000\q17000~</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

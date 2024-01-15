@@ -24,21 +24,18 @@ std::priority_queue<E> pq[LEN];
 int p[LEN];
 int find(int i) { return p[i] < 0 ? i : p[i] = find(p[i]); }
 int join(int a, int b) {
-	// std::cout << "merge " << a << ' ' << b << '\n';
 	a = find(a); b = find(b);
 	if (a == b) return 0;
 	if (p[a] < p[b]) p[a] += p[b], p[b] = a;
 	else p[b] += p[a], p[a] = b;
 	return 1;
 }
-int pqi[LEN];
 int merge(int a, int b) {
 	if (pq[a].size() > pq[b].size()) {
 		while (pq[b].size()) {
 			pq[a].push(pq[b].top());
 			pq[b].pop();
 		}
-		pqi[b] = a;
 		return a;
 	}
 	while (pq[a].size()) {
@@ -91,12 +88,12 @@ void solve() {
 		assert(pq[idx].top().w > pq[idx].top().c);
 		if (pq[idx].top().c <= weight) {
 			weight += pq[idx].top().w - pq[idx].top().c;
-			join(1, pq[idx].top().i);
+			join(0, pq[idx].top().i);
 			pq[idx].pop();
 		}
 		else break;
 	}
-	std::cout << (find(1) == find(t) ? "escaped\n" : "trapped\n");
+	std::cout << (find(0) == find(t) ? "escaped\n" : "trapped\n");
 	for (int i = 1; i <= N; ++i) graph[i].clear();
 	while (pq[idx].size()) pq[idx].pop();
 }

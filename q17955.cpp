@@ -1,67 +1,74 @@
 #include <iostream>
+#include <vector>
 
 const int LEN = 2e5 + 1;
+int abs(int i) { return i > 0 ? i : -i; }
 
-int N, M, K;
-int A[LEN + 2], fenwick[LEN], cnt[LEN];
+int N, M;
+std::vector<int> pos[LEN];
 
-int sum(int i) {
-	int result = 0;
-	while (i > 0) {
-		result += fenwick[i];
-		i -= i & -i;
+struct Node {
+	int l, m, r;
+	bool f;
+	Node operator+(const Node& o) const {
+		Node ret = { l, m + o.m, o.r, 0 };
+		if (r && o.l && (r > 0) != (o.l > 0)) { // merge middle
+			ret.f = f && o.f;
+			if (!f && !o.f) ret.m += abs(r) + abs(o.l) >> 1;
+			if (f) ret.l += l > 0 ? abs(o.l) : -abs(o.l);
+			if (o.f) ret.r += o.r > 0 ? abs(r) : -abs(r);
+		}
+		else {
+			if (!f) ret.m += abs(r) >> 1;
+			if (!o.f) ret.m += abs(o.l) >> 1;
+		}
+		return ret;
 	}
-	return result;
+} t[LEN << 3];
+
+void init(int s = 1, int e = N * 2, int i = 1) {
+	t[i] = { 1, 0, 1, s == e };
+	if (s == e) return;
+	int m = s + e >> 1;
+	init(s, m, i << 1); init(m + 1, e, i << 1 | 1);
 }
-void update(int i, int d) {
-	while (i <= M) {
-		fenwick[i] += d;
-		i += i & -i;
+
+void update(int x, int d, int s = 1, int e = N * 2, int i = 1) {
+	if (x < s || e < x) return;
+	if (s == e) {
+		t[i] = { d, 0, d, !!d };
+		return;
 	}
+	int m = s + e >> 1;
+	update(x, d, s, m, i << 1); update(x, d, m + 1, e, i << 1 | 1);
+	t[i] = t[i << 1] + t[i << 1 | 1];
 }
-void update(int l, int r, int d) {
-	update(l, d);
-	update(r + 1, -d);
+Node query(int l, int r, int s = 1, int e = N * 2, int i = 1) {
+	if (r < s || e < l) return { 0, 0, 0, 0 };
+	if (l <= s && e <= r) return t[i];
+	int m = s + e >> 1;
+	return query(l, r, s, m, i << 1) + query(l, r, m + 1, e, i << 1 | 1);
 }
 
-void query(int l, int r, int d) {
-	if (l + 1 >= r - 1) return;
-	update(l + 1, r - 1, d);
-}
-
-/// <summary>
-/// Wrong code
-/// Need to fix
-/// </summary>
-/// <returns></returns>
 int main() {
 	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N >> M;
-	for (int i = 1; i <= N; ++i) {
-		std::cin >> A[i];
-		++cnt[A[i]];
+	for (int i = 1, a; i <= N; ++i) {
+		std::cin >> a;
+		pos[a].push_back(i);
 	}
-	A[N + 1] = A[1];
-	A[N + 2] = A[2];
-
-	for (int i = 3, l, r; i <= N + 2; ++i) {
-		if (A[i] == A[i - 1]) continue;
-		if ((A[i - 2] < A[i - 1]) == (A[i] < A[i - 1])) {
-			l = std::min(A[i - 2], A[i]);
-			r = std::max(A[i - 2], A[i]);
-			if (A[i] < A[i - 1]) {
-
-			}
-		}
-		else {
-			l = std::min(A[i - 1], A[i]);
-			r = std::max(A[i - 1], A[i]);
-		}
-		std::cout << "l, r: " << l << ' ' << r << '\n';
-		query(l, r, 1);
-	}
+	init();
 	for (int i = 1; i <= M; ++i) {
-		if (!cnt[i]) std::cout << -1 << ' ';
-		else std::cout << N - cnt[i] + sum(i) << ' ';
+		if (pos[i].empty()) {
+			std::cout << -1 << ' ';
+			continue;
+		}
+		for (const int& x : pos[i])
+			update(x, 0), update(x + N, 0);
+		
+		std::cout << N - pos[i].size() + query(pos[i][0], pos[i][0] + N).m << ' ';
+
+		for (const int& x : pos[i])
+			update(x, -1), update(x + N, -1);
 	}
 }

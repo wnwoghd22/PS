@@ -2952,9 +2952,6 @@
     <ClCompile Include="q1374.cpp">
       <Filter>소스 파일\~10000\q1100~</Filter>
     </ClCompile>
-    <ClCompile Include="q1763.cpp">
-      <Filter>소스 파일\~10000\q6000~</Filter>
-    </ClCompile>
     <ClCompile Include="q18526.cpp">
       <Filter>소스 파일\~20000\q18000~</Filter>
     </ClCompile>
@@ -2990,6 +2987,12 @@
     </ClCompile>
     <ClCompile Include="q1135.cpp">
       <Filter>소스 파일\~10000\q1100~</Filter>
+    </ClCompile>
+    <ClCompile Include="q1763.cpp">
+      <Filter>소스 파일\~10000\q1400~</Filter>
+    </ClCompile>
+    <ClCompile Include="q7785.cpp">
+      <Filter>소스 파일\~10000\q6000~</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

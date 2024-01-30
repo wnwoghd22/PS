@@ -76,14 +76,15 @@ ll get_inner(const Pos& p, int& l, int& r) {
 	if (l > r) std::swap(l, r);
 	ll area = Si[r] - Si[l] - cross(Hi[0], Hi[l], Hi[r]);
 	ll tri = cross(Hi[l], Hi[r], p);
-	if (tri < 0) area -= tri;
+	if (tri < 0) area -= tri, std::swap(l, r);
 	else area = Si[M - 1] - area + tri;
 	return area;
 }
 
-ll get_outer(const Pos& p, int& l, int& r, const int li, const int ri) {
+ld get_outer(const Pos& p, int& l, int& r, const int li, const int ri) {
 	l = 0, r = 0;
 	int s = 0, e = N - 1, m;
+	ld wing_l = 0, wing_r = 0;
 	const Pos& pl = Hi[li];
 	const Pos& pr = Hi[ri];
 
@@ -96,28 +97,63 @@ ll get_outer(const Pos& p, int& l, int& r, const int li, const int ri) {
 	if (ccw(p, Ho[s], pl) >= 0 && ccw(p, Ho[e], pl) <= 0) { // between s and e
 		sl = s, el = e;
 	}
-	else if (ccw(p, Ho[s], pl) < 0 && ccw(p, Ho[0], pl) >= 0) { // right
-		sl = 0, el = s;
+	else {
+		if (ccw(Ho[0], p, pl) < 0) sl = 0, el = s;
+		if (ccw(Ho[0], p, pl) > 0) sl = e, el = N;
 		while (sl < el - 1) {
 			m = sl + el >> 1;
-			
+			if (ccw(p, Ho[m % N], pl) > 0) sl = m;
+			else el = m;
 		}
 	}
+	sl %= N, el %= N; l = sl;
+	if (cross(p, pl, Ho[l])) {
+		ll tril = std::abs(cross(p, Ho[sl], Ho[el]));
+		ll al = std::abs(cross(p, pl, Ho[sl]));
+		ll bl = std::abs(cross(p, pl, Ho[el]));
+		wing_l = tril *(ld)al / (al + bl);
+	}
 
+	int sr, er;
+	if (ccw(p, Ho[s], pr) >= 0 && ccw(p, Ho[e], pr) <= 0) { // between s and e
+		sr = s, er = e;
+	}
+	else {
+		if (ccw(Ho[0], p, pr) < 0) sr = 0, er = s;
+		if (ccw(Ho[0], p, pr) > 0) sr = e, er = N;
+		while (sr < er - 1) {
+			m = sr + er >> 1;
+			if (ccw(p, Ho[m % N], pr) > 0) sr = m;
+			else er = m;
+		}
+	}
+	sr %= N, er %= N; r = er;
+	if (cross(p, pr, Ho[r])) {
+		ll trir = std::abs(cross(p, Ho[sr], Ho[er]));
+		ll ar = std::abs(cross(p, pr, Ho[sr]));
+		ll br = std::abs(cross(p, pr, Ho[er]));
+		wing_r = trir * (ld)br / (ar + br);
+	}
 
+	if (l > r) std::swap(l, r);
 	ll area = So[r] - So[l] - cross(Ho[0], Ho[l], Ho[r]);
 	ll tri = cross(Ho[l], Ho[r], p);
 	if (tri < 0) area -= tri;
 	else area = So[N - 1] - area + tri;
-	return area;
+
+	std::cout << "outer: " << area << " - " << wing_l << " - " << wing_r << " = " << area - (wing_l + wing_r) << '\n';
+
+	return area - (wing_l + wing_r);
 }
 
 ld get_area(const Pos& p) {
 	int li, ri, lo, ro;
 	ll inner = get_inner(p, li, ri);
-	ll outer = get_outer(p, lo, ro, li, ri);
+	ld outer = get_outer(p, lo, ro, li, ri);
 
-	return 0;
+	std::cout << "inner: " << inner << '\n';
+
+	return (outer - inner) * 0.5;
 }
 
 
@@ -147,10 +183,6 @@ int main() {
 
 		if (check(Ho, p) <= 0) std::cout << "OUT\n";
 		else if (check(Hi, p) >= 0) std::cout << "IN\n";
-		else {
-			int l, r;
-			std::cout << get_inner(p, l, r) << '\n';
-
-		}
+		else std::cout << get_area(p) << '\n';
 	}
 }

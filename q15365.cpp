@@ -110,8 +110,8 @@ public:
         Node** pp;
         while (1) {
             if (p->val.x == val.x) {
-                if (val.x >= p->val.x) return 0;
-                p->val.x = val.x;
+                if (val.y >= p->val.y) return 0;
+                p->val.y = val.y;
                 return update_convex(p);
             }
             if (val < p->val) {
@@ -196,6 +196,7 @@ std::vector<Info> graph[LEN];
 int N, M;
 
 int main() {
+    std::cin.tie(0)->sync_with_stdio(0);
     std::cin >> N >> M;
     for (int i = 0, u, v, t, c; i < M; ++i) {
         std::cin >> u >> v >> t >> c;

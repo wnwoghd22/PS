@@ -82,7 +82,7 @@ ll get_inner(const Pos& p, int& l, int& r) {
 	return area;
 }
 
-ld get_outer(const Pos& p, int& l, int& r, const int li, const int ri) {
+std::pair<ll, ld> get_outer(const Pos& p, int& l, int& r, const int li, const int ri) {
 	l = 0, r = 0;
 	int s = 0, e = N - 1, m;
 	ld wing_l = 0, wing_r = 0;
@@ -107,12 +107,12 @@ ld get_outer(const Pos& p, int& l, int& r, const int li, const int ri) {
 			else el = m;
 		}
 	}
-	sl %= N, el %= N; l = sl;
+	sl %= N, el %= N; l = el;
 	if (cross(p, pl, Ho[l])) {
 		ll tril = std::abs(cross(p, Ho[sl], Ho[el]));
 		ll al = std::abs(cross(p, pl, Ho[sl]));
 		ll bl = std::abs(cross(p, pl, Ho[el]));
-		wing_l = tril * ((ld)al / (al + bl));
+		wing_l = tril * ((ld)bl / (al + bl));
 	}
 
 	int sr = 0, er = 0;
@@ -128,16 +128,18 @@ ld get_outer(const Pos& p, int& l, int& r, const int li, const int ri) {
 			else er = m;
 		}
 	}
-	sr %= N, er %= N; r = er;
+	sr %= N, er %= N; r = sr;
 	if (cross(p, pr, Ho[r])) {
 		ll trir = std::abs(cross(p, Ho[sr], Ho[er]));
 		ll ar = std::abs(cross(p, pr, Ho[sr]));
 		ll br = std::abs(cross(p, pr, Ho[er]));
-		wing_r = trir * ((ld)br / (ar + br));
+		wing_r = trir * ((ld)ar / (ar + br));
 	}
 
 	bool f = l > r;
 	ll tri = cross(Ho[l], Ho[r], p);
+	if (sl == sr) return { -std::abs(tri), wing_l + wing_r };
+
 	if (f) std::swap(l, r);
 	ll area = So[r] - So[l] - cross(Ho[0], Ho[l], Ho[r]);
 	if (f) area = So[N - 1] - area;
@@ -149,7 +151,7 @@ ld get_outer(const Pos& p, int& l, int& r, const int li, const int ri) {
 	// std::cout << sl << ' ' << el << ' ' << sr << ' ' << er << '\n';
 	// std::cout << "outer: " << area << " - " << wing_l << " - " << wing_r << " = " << area - (wing_l + wing_r) << '\n';
 
-	return area - (wing_l + wing_r);
+	return { area, wing_l + wing_r };
 }
 
 ld get_area(const Pos& p) {
@@ -157,11 +159,11 @@ ld get_area(const Pos& p) {
 	// std::cout << "in\n";
 	ll inner = get_inner(p, li, ri);
 	// std::cout << "out\n";
-	ld outer = get_outer(p, lo, ro, li, ri);
+	std::pair<ll, ld> outer = get_outer(p, lo, ro, li, ri);
 
 	// std::cout << "inner: " << inner << '\n';
 
-	return (outer - inner) * 0.5l;
+	return ((outer.first - inner) + outer.second) *0.5l;
 }
 
 

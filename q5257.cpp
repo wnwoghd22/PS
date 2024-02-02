@@ -56,10 +56,10 @@ ll min_a, min_b;
 void f(const Pos& s, const Pos& e) {
     ll dx = e.x - s.x;
     ll dy = s.y - e.y;
-    Pos m = mst(dx, dy);
+    Pos m = mst(dy, dx);
     if (m.f() < min_cost.f()) {
         min_cost = m;
-        min_a = dx, min_b = dy;
+        min_a = dy, min_b = dx;
     }
     if (ccw(s, e, m) >= 0) return;
     f(s, m);

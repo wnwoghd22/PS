@@ -63,7 +63,7 @@ Tri rooted_stable(const std::vector<Pos>& hull, int r) {
 	return t.normalize();
 }
 
-ll largest_triangle(const std::vector<Pos>& hull) {
+ll largest_triangle(std::vector<Pos>& hull) {
 	int l = hull.size();
 	if (l <= 6) { // naive
 		ll ret = 0;
@@ -84,25 +84,29 @@ ll largest_triangle(const std::vector<Pos>& hull) {
 	ret = std::max(ret, cross(hull, tm));
 	assert(t0.b <= tm.c);
 
-	std::vector<Pos> p; // subpolygon
-
 	if (t0.a < tm.a && tm.a < t0.b &&
 		t0.b < tm.b && tm.b < t0.c &&
 		t0.c < tm.c && tm.c < l) { // interleave
-		for (int i = t0.a; i <= tm.a; ++i) p.push_back(hull[i]);
-		for (int i = t0.b; i <= tm.b; ++i) p.push_back(hull[i]);
-		for (int i = t0.c; i <= tm.c; ++i) p.push_back(hull[i]);
-		ret = std::max(ret, largest_triangle(p));
-		p.clear();
+		std::vector<Pos> p1, p2; // subpolygon
+		for (int i = t0.a; i <= tm.a; ++i) p1.push_back(hull[i]);
+		for (int i = t0.b; i <= tm.b; ++i) p1.push_back(hull[i]);
+		for (int i = t0.c; i <= tm.c; ++i) p1.push_back(hull[i]);
+		
 
-		for (int i = tm.a; i <= t0.b; ++i) p.push_back(hull[i]);
-		for (int i = tm.b; i <= t0.c; ++i) p.push_back(hull[i]);
-		for (int i = tm.c; i < l; ++i) p.push_back(hull[i]);
-		p.push_back(hull[0]);
-		ret = std::max(ret, largest_triangle(p));
-		p.clear();
+		for (int i = tm.a; i <= t0.b; ++i) p2.push_back(hull[i]);
+		for (int i = tm.b; i <= t0.c; ++i) p2.push_back(hull[i]);
+		for (int i = tm.c; i < l; ++i) p2.push_back(hull[i]);
+		p2.push_back(hull[0]);
+
+		hull.clear();
+
+		ret = std::max(ret, largest_triangle(p1));
+		ret = std::max(ret, largest_triangle(p2));
+		p1.clear();
+		p2.clear();
 	}
 	else {
+		std::vector<Pos> p; // subpolygon
 		int arr[7] = { t0.a, t0.b, t0.c, tm.a, tm.b, tm.c };
 		std::sort(arr, arr + 6); arr[6] = 0;
 		
@@ -128,6 +132,7 @@ ll largest_triangle(const std::vector<Pos>& hull) {
 			for (int i = arr[5] + (arr[4] == arr[5]); i < l; ++i) p.push_back(hull[i]);
 			if (arr[1]) p.push_back(hull[0]);
 		}
+		hull.clear();
 
 		ret = std::max(ret, largest_triangle(p));
 		p.clear();

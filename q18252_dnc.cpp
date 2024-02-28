@@ -98,12 +98,10 @@ ll largest_triangle(std::vector<Pos>& hull) {
 		for (int i = tm.c; i < l; ++i) p2.push_back(hull[i]);
 		p2.push_back(hull[0]);
 
-		hull.resize(0);
+		std::vector<Pos>().swap(hull); // free memory
 
 		ret = std::max(ret, largest_triangle(p1));
 		ret = std::max(ret, largest_triangle(p2));
-		p1.clear();
-		p2.clear();
 	}
 	else {
 		std::vector<Pos> p; // subpolygon
@@ -132,10 +130,9 @@ ll largest_triangle(std::vector<Pos>& hull) {
 			for (int i = arr[5] + (arr[4] == arr[5]); i < l; ++i) p.push_back(hull[i]);
 			if (arr[1]) p.push_back(hull[0]);
 		}
-		hull.resize(0);
+		std::vector<Pos>().swap(hull); // free memory
 
 		ret = std::max(ret, largest_triangle(p));
-		p.clear();
 	}
 
 	return ret;

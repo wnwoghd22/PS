@@ -98,7 +98,7 @@ ll largest_triangle(std::vector<Pos>& hull) {
 		for (int i = tm.c; i < l; ++i) p2.push_back(hull[i]);
 		p2.push_back(hull[0]);
 
-		hull.clear();
+		hull.resize(0);
 
 		ret = std::max(ret, largest_triangle(p1));
 		ret = std::max(ret, largest_triangle(p2));
@@ -132,7 +132,7 @@ ll largest_triangle(std::vector<Pos>& hull) {
 			for (int i = arr[5] + (arr[4] == arr[5]); i < l; ++i) p.push_back(hull[i]);
 			if (arr[1]) p.push_back(hull[0]);
 		}
-		hull.clear();
+		hull.resize(0);
 
 		ret = std::max(ret, largest_triangle(p));
 		p.clear();

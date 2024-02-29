@@ -34,7 +34,7 @@ void monotone_chain(std::vector<Pos>& p, std::vector<Pos>& hull) {
 	hull.pop_back();
 }
 
-struct Tri { 
+struct Tri {
 	int a, b, c;
 	Tri& normalize() {
 		if (a > b) std::swap(a, b);
@@ -62,78 +62,46 @@ Tri rooted_stable(const std::vector<Pos>& hull, int r) {
 	}
 	return t.normalize();
 }
-
+int depth = 0;
 ll largest_triangle(std::vector<Pos>& hull) {
+	assert(depth < 10000);
 	int l = hull.size();
-	if (l <= 6) { // naive
+	if (l <= 50) { // naive
 		ll ret = 0;
-		for (int i = 0; i < l; ++i) 
+		for (int i = 0; i < l; ++i)
 			ret = std::max(ret, cross(hull, rooted_stable(hull, i)));
 		return ret;
 	}
-
 	Tri t0 = rooted_stable(hull, 0);
 	ll ret = cross(hull, t0);
 
 	int m = -1;
-	if (!~m && t0.a + 1 < t0.b) m = t0.a + t0.b >> 1;
-	if (!~m && t0.b + 1 < t0.c) m = t0.b + t0.c >> 1;
-	if (!~m && t0.c + 1 < l - 1) m = t0.c + l >> 1;
+	int interval = 0;
+	if (t0.b - t0.a > interval && t0.a + 1 < t0.b) m = t0.a + t0.b >> 1, interval = t0.b - t0.a;
+	if (t0.c - t0.b > interval && t0.b + 1 < t0.c) m = t0.b + t0.c >> 1, interval = t0.c - t0.b;
+	if (l - t0.c > interval && t0.c + 1 < l - 1) m = t0.c + l >> 1;
 	assert(~m);
 	Tri tm = rooted_stable(hull, m);
 	ret = std::max(ret, cross(hull, tm));
 	assert(t0.b <= tm.c);
 
-	if (t0.a < tm.a && tm.a < t0.b &&
-		t0.b < tm.b && tm.b < t0.c &&
-		t0.c < tm.c && tm.c < l) { // interleave
-		std::vector<Pos> p1, p2; // subpolygon
-		for (int i = t0.a; i <= tm.a; ++i) p1.push_back(hull[i]);
-		for (int i = t0.b; i <= tm.b; ++i) p1.push_back(hull[i]);
-		for (int i = t0.c; i <= tm.c; ++i) p1.push_back(hull[i]);
-		
+	std::vector<Pos> p1, p2; // subpolygon
+	int arr[7] = { t0.a, t0.b, t0.c, tm.a, tm.b, tm.c };
+	std::sort(arr, arr + 6); arr[6] = 0;
 
-		for (int i = tm.a; i <= t0.b; ++i) p2.push_back(hull[i]);
-		for (int i = tm.b; i <= t0.c; ++i) p2.push_back(hull[i]);
-		for (int i = tm.c; i < l; ++i) p2.push_back(hull[i]);
-		p2.push_back(hull[0]);
+	for (int i = arr[2] + (arr[2] == arr[1]); i <= arr[3]; ++i) p1.push_back(hull[i]);
+	for (int i = arr[4] + (arr[4] == arr[3]); i <= arr[5]; ++i) p1.push_back(hull[i]);
+	for (int i = arr[0]; i <= arr[1]; ++i) p1.push_back(hull[i]);
 
-		std::vector<Pos>().swap(hull); // free memory
+	for (int i = arr[3] + (arr[2] == arr[3]); i <= arr[4]; ++i) p2.push_back(hull[i]);
+	for (int i = arr[5] + (arr[4] == arr[5]); i < l; ++i) p2.push_back(hull[i]);
+	for (int i = arr[1]; i <= arr[2]; ++i) p2.push_back(hull[i]);
 
-		ret = std::max(ret, largest_triangle(p1));
-		ret = std::max(ret, largest_triangle(p2));
-	}
-	else {
-		std::vector<Pos> p; // subpolygon
-		int arr[7] = { t0.a, t0.b, t0.c, tm.a, tm.b, tm.c };
-		std::sort(arr, arr + 6); arr[6] = 0;
-		
-		// find potential largest subpolygon
-		int x = -1;
-		for (int i = 0; i < 6; ++i) {
-			if ((arr[i] == t0.a && arr[i + 1] == t0.b) ||
-				(arr[i] == t0.b && arr[i + 1] == t0.c) ||
-				(arr[i] == t0.c && arr[i + 1] == t0.a)) {
-				x = i & 1;
-				break;
-			}
-		}
-		assert(~x);
-		if (!x) {
-			for (int i = arr[0]; i <= arr[1]; ++i) p.push_back(hull[i]);
-			for (int i = arr[2] + (arr[2] == arr[1]); i <= arr[3]; ++i) p.push_back(hull[i]);
-			for (int i = arr[4] + (arr[4] == arr[3]); i <= arr[5]; ++i) p.push_back(hull[i]);
-		}
-		else {
-			for (int i = arr[1]; i <= arr[2]; ++i) p.push_back(hull[i]);
-			for (int i = arr[3] + (arr[2] == arr[3]); i <= arr[4]; ++i) p.push_back(hull[i]);
-			for (int i = arr[5] + (arr[4] == arr[5]); i < l; ++i) p.push_back(hull[i]);
-			if (arr[1]) p.push_back(hull[0]);
-		}
-		std::vector<Pos>().swap(hull); // free memory
-
-		ret = std::max(ret, largest_triangle(p));
-	}
+	std::vector<Pos>().swap(hull); // free memory
+	depth++;
+	ret = std::max(ret, largest_triangle(p1));
+	ret = std::max(ret, largest_triangle(p2));
+	depth--;
 
 	return ret;
 }
@@ -143,6 +111,7 @@ std::vector<Pos> P, H;
 Pos U, D;
 
 int main() {
+	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N >> U >> D;
 	P.push_back(U); P.push_back(D);
 	for (int i = 0, y, xs, xe; i < N; ++i) {

@@ -37,12 +37,13 @@ int main() {
 			nx = x + dx[d];
 			ny = y + dy[d];
 			if (map[nx][ny] == '#') continue;
-			if (~visited[nx][ny]) continue;
 			if (map[x][y] == '*' && map[nx][ny] == '*') {
+				if (~visited[nx][ny] && visited[x][y] >= visited[nx][ny])  continue;
 				visited[nx][ny] = visited[x][y];
 				dq.push_front(nx * W + ny);
 			}
 			else {
+				if (~visited[nx][ny] && visited[x][y] + 1 >= visited[nx][ny])  continue;
 				visited[nx][ny] = visited[x][y] + 1;
 				dq.push_back(nx * W + ny);
 			}

@@ -160,6 +160,14 @@ struct SegMax {
 		int m = s + e >> 1;
 		return std::max(get_max(l, r, s, m, i << 1), get_max(l, r, m + 1, e, i << 1 | 1));
 	}
+    int nge(int x, int s = 1, int e = N, int i = 1) {
+        if (e <= x || seg_max[i] <= A[x]) return N + 1;
+        if (s == e) return s;
+        int m = s + e >> 1;
+        int l = nge(x, s, m, i << 1);
+        if (l <= N) return l;
+        return nge(x, m + 1, e, i << 1 | 1);
+    }
 } depth, signals;
 
 int get_rightmost(int i) {
@@ -219,7 +227,7 @@ int main() {
                 std::swap(A[i], A[i + 1]);
                 depth.update(i, A[i]);
                 depth.update(i + 1, A[i + 1]);
-                int r = get_rightmost(i + 1);
+                int r = depth.nge(i + 1);
                 std::cout << "r " << i + 1 << ": " << A[i + 1] << ", " << A[r] << '\n';
                 if (r <= N) {
                     st[r].insert(A[i + 1]);
@@ -227,7 +235,7 @@ int main() {
                 }
             }
             else { // A[i] > A[i + 1]
-                int r = get_rightmost(i + 1);
+                int r = depth.nge(i + 1);
                 std::cout << "r " << i + 1 << ": " << A[i + 1] << ", " << r << ' ' <<  A[r] << '\n';
                 if (r <= N) {
                     std::cout << "pop " << A[i + 1] << '\n';

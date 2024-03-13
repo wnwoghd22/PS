@@ -340,6 +340,9 @@
     <Filter Include="소스 파일\~40000">
       <UniqueIdentifier>{45a08458-f40b-408e-ab2f-cc678a050827}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023\kakao">
+      <UniqueIdentifier>{9cd0f9fa-93fd-4829-b841-0ed7a4de1228}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -3125,6 +3128,24 @@
     </ClCompile>
     <ClCompile Include="q1091.cpp">
       <Filter>소스 파일\~10000\q1000~</Filter>
+    </ClCompile>
+    <ClCompile Include="kakao_internship\A.cpp">
+      <Filter>소스 파일\2023\kakao</Filter>
+    </ClCompile>
+    <ClCompile Include="kakao_internship\B.cpp">
+      <Filter>소스 파일\2023\kakao</Filter>
+    </ClCompile>
+    <ClCompile Include="kakao_internship\C.cpp">
+      <Filter>소스 파일\2023\kakao</Filter>
+    </ClCompile>
+    <ClCompile Include="kakao_internship\D.cpp">
+      <Filter>소스 파일\2023\kakao</Filter>
+    </ClCompile>
+    <ClCompile Include="kakao_internship\E.cpp">
+      <Filter>소스 파일\2023\kakao</Filter>
+    </ClCompile>
+    <ClCompile Include="q5972.cpp">
+      <Filter>소스 파일\~10000\q4000~</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

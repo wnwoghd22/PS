@@ -188,11 +188,11 @@ bool check(int i) {
 	// (y1 * dx1 * dx0) + (dy1 * px1 * dx0) > (y0 * dx1 * dx0) + (dy0 * px0 * dx1)
 	// return y1 * dx1 * dx0 + dy1 * px1 * dx0 > y0 * dx1 * dx0 + dy0 * px0 * dx1;
 
-	return y1 + dy1 * (double)(px1 / dx1) > y0 + dy0 * (double)(px0 / dx0);
+	return y1 + dy1 * ((double)px1 / dx1) > y0 + dy0 * ((double)px0 / dx0);
 }
 
 int main() {
-	freopen("input.txt", "r", stdin);
+	// freopen("input.txt", "r", stdin);
 
 	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N;
@@ -212,13 +212,13 @@ int main() {
 
 	// for (int i = 0; i < N; ++i) 
 	// 	std::cout << par[i] << ' ';
-	// std::cout << '\n';
+	//  std::cout << '\n';
 
 	for (int i = 0; i < N; ++i) {
 		if (x >= seg[i].l.x && x <= seg[i].r.x && check(i)) 
 			idx = i;
 	}
-	// std::cout << idx << '\n';
+	//  std::cout << idx << '\n';
 	if (!~idx) std::cout << x;
 	else {
 		while (~par[idx]) idx = par[idx];

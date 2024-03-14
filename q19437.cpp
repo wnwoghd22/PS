@@ -45,6 +45,7 @@ int dfs(int u, int p = 0, int h = idx) {
 
 ll solve() {
 	idx = 0; P[0] = 1;
+	memset(ord, 0, sizeof ord);
 	std::cin >> N >> M;
 	for (int i = 1; i <= N; ++i) {
 		g[i].clear();
@@ -60,7 +61,7 @@ ll solve() {
 		if (!ord[i]) {
 			dfs(i);
 			t[H[i]] = idx;
-			S = (S + Hp[idx]);
+			S = (S + P[idx]);
 		}
 	}
 

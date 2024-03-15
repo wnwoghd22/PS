@@ -18,19 +18,19 @@ ll pow(ll a, ll b) {
 
 int T, N, M;
 std::vector<int> g[LEN];
-int idx, cc, ord[LEN], H[LEN], c[LEN], par[LEN];
+int idx, cc, ord[LEN], H[LEN], par[LEN];
 ll W[LEN], Wg[LEN], P[LEN], Hs[LEN], Hp[LEN];
 
 int dfs(int u, int p, int h) {
 	par[u] = p;
-	c[u] = ord[u] = ++idx;
+	int m = ord[u] = ++idx;
 	H[u] = h;
 	Wg[h] = (Wg[h] * W[u]) % MOD;
 	Hs[u] = 0; Hp[u] = W[u];
 	P[ord[u]] = P[ord[u] - 1] * W[u] % MOD;
 	for (const int& v : g[u]) {
 		if (v == p) continue;
-		if (ord[v]) c[u] = std::min(c[u], c[v]);
+		if (ord[v]) m = std::min(m, ord[v]);
 		else {
 			int nxt = dfs(v, u, h);
 			if (nxt >= ord[u]) { // cycle detected, articulation
@@ -38,10 +38,10 @@ int dfs(int u, int p, int h) {
 				Hs[u] = (Hs[u] + sub) % MOD;
 				Hp[u] = (Hp[u] * sub) % MOD;
 			}
-			c[u] = std::min(c[u], nxt);
+			m = std::min(m, nxt);
 		}
 	}
-	return c[u];
+	return m;
 }
 
 ll solve() {

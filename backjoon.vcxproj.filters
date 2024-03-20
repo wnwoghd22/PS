@@ -1971,7 +1971,7 @@
     <ClCompile Include="AGCU2023\E.cpp">
       <Filter>소스 파일\2023\AGCU2023</Filter>
     </ClCompile>
-    <ClCompile Include="q3303.cpp">
+    <ClCompile Include="q3033.cpp">
       <Filter>소스 파일\~10000\q3000~</Filter>
     </ClCompile>
     <ClCompile Include="q13576.cpp">
@@ -3164,6 +3164,9 @@
     </ClCompile>
     <ClCompile Include="q2610.cpp">
       <Filter>소스 파일\~10000\q2500~</Filter>
+    </ClCompile>
+    <ClCompile Include="q3303.cpp">
+      <Filter>소스 파일\~10000\q3000~</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

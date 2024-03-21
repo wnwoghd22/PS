@@ -53,7 +53,6 @@ int main() {
 	if (L > 1) stack.push_back(1);
 	
 	for (int i = 2, fv = -1, bv = -1, cw = 0; i <= L; ++i) {
-		// j -> i
 		ll dir = cross(O, p[i - 1], p[i]);
 		ll ccw = cross(p[i - 2], p[i - 1], p[i]);
 
@@ -80,23 +79,19 @@ int main() {
 				}
 				cw = 0;
 			}
-			if (stack.empty() || p[stack.back()] < p[i]) stack.push_back(i);
 		}
 		else if (~fv) {
-			if (p[fv] < p[i]) {
-				cw = 0;
-				fv = -1;
-				if (stack.empty() || p[stack.back()] < p[i]) stack.push_back(i);
-			}
+			if (!(p[fv] < p[i])) continue; 
+			cw = 0;
+			fv = -1;
 		}
 		else if (~bv) {
-			if (p[i] < p[bv]) {
-				cw = 1;
-				bv = -1;
-				while (stack.size() && invisible(p[i - 1], p[i], p[stack.back()])) stack.pop_back();
-				if (stack.empty() || p[stack.back()] < p[i]) stack.push_back(i);
-			}
+			if (!(p[i] < p[bv])) continue;
+			cw = 1;
+			bv = -1;
+			while (stack.size() && invisible(p[i - 1], p[i], p[stack.back()])) stack.pop_back();
 		}
+		if (stack.empty() || p[stack.back()] < p[i]) stack.push_back(i);
 	}
 
 	std::vector<int> ret;

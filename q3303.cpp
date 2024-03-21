@@ -29,12 +29,14 @@ int main() {
 	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N >> p[0];
 	
+	p[0].i = 1;
 	ll area = 0;
 	for (int i = 1; i < N; ++i) {
 		std::cin >> p[i];
 		p[i].i = i + 1;
 		area += cross(O, p[i - 1], p[i]);
 	}
+	area += cross(O, p[N - 1], p[0]);
 	if (area > 0) std::reverse(p, p + N);
 	for (int i = 1; i < N; ++i) {
 		if (p[L] < p[i] || p[i] == p[L] && p[i].s() < p[L].s()) L = i;
@@ -84,7 +86,7 @@ int main() {
 			if (p[fv] < p[i]) {
 				cw = 0;
 				fv = -1;
-				stack.push_back(i);
+				if (stack.empty() || p[stack.back()] < p[i]) stack.push_back(i);
 			}
 		}
 		else if (~bv) {

@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define DEBUG_PRINT 1
-// #undef DEBUG_PRINT
+#undef DEBUG_PRINT
 
 #include <iostream>
 #include <algorithm>
@@ -69,12 +69,6 @@ struct PriceInfo {
 #ifdef DEBUG_PRINT
 		std::cout << "!MAKE TRADES... : " << p << ' ' << v << ' ' << (is_sell ? "SELL" : "BUY") << '\n';
 #endif
-		if (v == nodes[head].cv) {
-#ifdef DEBUG_PRINT
-			std::cout << "only one trade\n";
-#endif
-			assert(0);
-		}
 		int bid, sid;
 		int last_ordered = -1;
 		std::map<int, int> traded;
@@ -99,31 +93,40 @@ struct PriceInfo {
 			traded[n.id] = delta;
 			n.cv -= delta;
 			v -= delta;
-			if (!v) break;
+			if (!v) {
+				last_ordered = n.n_id;
+				break;
+			}
 
 			cur = n.nxt;
 		} while (cur != head);
 
-		if (cur != head) { // no cycles
+		if (~last_ordered) { // no cycles
 #ifdef DEBUG_PRINT
 				std::cout << "	no cycle\n";
 #endif
 			int now = head;
-			do {
+			bool refilled = 0;
+			while (1) {
 				Node& n = nodes[now];
 
 				if (n.cv == 0) {
+#ifdef DEBUG_PRINT
+					std::cout << "		refill cv: " << n.id << "\n";
+#endif
+					if (n.n_id == last_ordered) refilled = 1;
+
 					int term = n.v / n.tv; // how many cycles remain?
-					n.cv = std::min(n.v, n.tv);
-					n.v -= n.cv;
-					diffs[term] -= n.tv - n.cv % n.tv;
+					diffs[term] -= n.tv - n.v % n.tv;
 					TVs[term] -= n.tv;
 					if (diffs[term] == 0) diffs.erase(term);
 					if (TVs[term] == 0) TVs.erase(term);
+					n.cv = std::min(n.v, n.tv);
+					n.v -= n.cv;
 					if (n.v) {
 						if (diffs.find(term - 1) == diffs.end()) diffs[term - 1] = 0;
 						if (TVs.find(term - 1) == TVs.end()) TVs[term - 1] = 0;
-						diffs[term - 1] += n.tv - n.cv % n.tv;
+						diffs[term - 1] += n.tv - n.v % n.tv;
 						TVs[term - 1] += n.tv;
 					}
 					else STV -= n.tv;
@@ -135,12 +138,16 @@ struct PriceInfo {
 					}
 				}
 
+				if (n.n_id == last_ordered) break;
 				now = n.nxt;
-			} while (now != cur);
-			head = cur;
-			while (nodes[head].cv == 0) head = nodes[head].nxt;
+			};
+			head = now;
+			if (refilled) {
+				head = nodes[head].nxt;
+				while (nodes[head].v + nodes[head].cv == 0) head = nodes[head].nxt;
+			}
 		}
-		else if (nodes[head].cv == 0) { // cycle detected -> sweep
+		else { // cycle detected -> sweep
 #ifdef DEBUG_PRINT
 				std::cout << "	cycle detected\n";
 #endif
@@ -155,21 +162,39 @@ struct PriceInfo {
 #endif
 					
 				int terms = iter.first - cycle;
-				
-				int cycles = v / STV;
-				if (cycles <= terms) {
-					cycle += cycles;
-					v -= STV * cycle;
-					if (!v) last_ordered = nodes[head].pre;
-					break;
+#ifdef DEBUG_PRINT
+				std::cout << "		terms: " << terms << '\n';
+#endif
+				if (terms) {
+					int cycles = v / STV;
+#ifdef DEBUG_PRINT
+					std::cout << "		cycles: " << cycles << '\n';
+#endif
+					if (cycles <= terms) {
+#ifdef DEBUG_PRINT
+						std::cout << "			reduce cycles and break\n";
+						std::cout << "			v: " << v << ", STV: " << STV << ", cycles: " << cycles << '\n';
+#endif
+						cycle += cycles;
+						v -= STV * cycles;
+						if (!v) last_ordered = nodes[nodes[head].pre].n_id;
+						break;
+					}
+					v -= STV * terms;
+					cycle += terms;
 				}
-				v -= STV * terms;
+
 				ll SCV = STV - diffs[terms];
-				if (v >= SCV) cycle++, v -= SCV;
-				if (!v) {
-					last_ordered = nodes[head].pre;
-					break;
-				}
+
+#ifdef DEBUG_PRINT
+				std::cout << "		check diffs\n";
+				std::cout << "		current cycle: " << cycle << '\n';
+				std::cout << "		current SCV: " << SCV << '\n';
+				std::cout << "		remains: " << v << '\n';
+#endif
+
+				if (v > SCV) cycle++, v -= SCV;
+				else if (v <= SCV) break;
 
 				STV -= iter.second;
 			}
@@ -181,9 +206,12 @@ struct PriceInfo {
 			std::set<int> visited;
 
 #ifdef DEBUG_PRINT
-				std::cout << "	sweep with cycle " << cycle << "\n";
+			std::cout << "	sweep with cycle " << cycle << "\n";
+			std::cout << "	remains: " << v << '\n';
+			std::cout << "	last ordered: " << last_ordered << '\n';
 #endif
 			int now = head;
+			bool refilled = 0;
 			while (1) {
 				Node& n = nodes[now];
 				if (visited.find(n.id) != visited.end()) break;
@@ -192,7 +220,7 @@ struct PriceInfo {
 				int terms = n.v / n.tv + !!(n.v % n.tv);
 
 #ifdef DEBUG_PRINT
-				std::cout << "		id: " << n.id << ", n.v: " << n.v << ", n.tv: " << n.tv <<  ", terms: " << terms << '\n';
+				std::cout << "		n id: " << n.n_id << ", id: " << n.id << ", n.v : " << n.v << ", n.tv : " << n.tv <<  ", terms : " << terms << '\n';
 #endif
 
 				if (terms <= cycle) {
@@ -200,21 +228,34 @@ struct PriceInfo {
 					std::cout << "			erase: " << n.id << '\n';
 #endif
 					traded[n.id] += n.v;
-					n.v = 0;
+					n.v = n.cv = 0;
 					Node& pre = nodes[n.pre];
 					Node& nxt = nodes[n.nxt];
 					pre.nxt = n.nxt;
 					nxt.pre = n.pre;
+
+					if (!v && n.n_id == last_ordered && !n.cv) refilled = 1;
 				}
 				else {
 #ifdef DEBUG_PRINT
 					std::cout << "			process: " << n.id << '\n';
+					std::cout << "				remains: " << v << '\n';
+					std::cout << "				cycle: " << cycle << '\n';
+					std::cout << "				n.v: " << n.v << '\n';
+					std::cout << "				n.tv: " << n.tv << '\n';
 #endif
+					if (!v && n.n_id == last_ordered && !n.cv) refilled = 1;
 					assert(n.tv * cycle <= n.v);
 					n.v -= n.tv * cycle;
 					traded[n.id] += n.tv * cycle;
 					n.cv = std::min(n.tv, n.v);
 					n.v -= n.cv;
+#ifdef DEBUG_PRINT
+					std::cout << "			after reduced\n";
+					std::cout << "				n.v: " << n.v << '\n';
+					std::cout << "				n.tv: " << n.tv << '\n';
+					std::cout << "				n.cv: " << n.cv << '\n';
+#endif
 
 					if (v) {
 #ifdef DEBUG_PRINT
@@ -222,10 +263,15 @@ struct PriceInfo {
 #endif
 						int delta = std::min(v, n.cv);
 						traded[n.id] += delta;
+#ifdef DEBUG_PRINT
+						std::cout << "				delta: " << delta << '\n';
+#endif
 						v -= delta;
 						n.cv -= delta;
+
 						if (!~last_ordered && v == 0) {
 							last_ordered = n.n_id;
+							if (!n.cv) refilled = 1;
 #ifdef DEBUG_PRINT
 							std::cout << "				last ordered: " << n.id << '\n';
 #endif
@@ -242,7 +288,7 @@ struct PriceInfo {
 						}
 					}
 #ifdef DEBUG_PRINT
-					std::cout << "			node: " << n.id << ' ' << n.v << ' ' << n.tv << ' ' << n.cv << '\n';
+					std::cout << "			node: " << n.n_id << ' ' << n.id << ' ' << n.v << ' ' << n.tv << ' ' << n.cv << '\n';
 #endif
 				}
 
@@ -257,8 +303,13 @@ struct PriceInfo {
 
 				now = n.nxt;
 			}
+			assert(!v);
+			assert(~last_ordered);
 			head = last_ordered;
-			while (nodes[head].cv == 0) head = nodes[head].nxt;
+			if (refilled) {
+				head = nodes[head].nxt;
+				while (nodes[head].v + nodes[head].cv == 0) head = nodes[head].nxt;
+			}
 		}
 
 		for (const auto& iter : traded) {
@@ -368,6 +419,9 @@ void get_buying_order(int bid, int p, int v, int tv) {
 int main() {
 #ifdef DEBUG_PRINT
 	freopen("input.txt", "r", stdin);
+#else
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 #endif
 
 	std::cin.tie(0)->sync_with_stdio(0);
@@ -375,6 +429,9 @@ int main() {
 	for (int i = 0, id, t, p, v, tv; i < N; ++i) {
 		std::cin >> id >> t >> p >> v >> tv;
 		int nt = NT;
+#ifdef DEBUG_PRINT
+		std::cout << "-----------------" << nt << "------------------ - \n";
+#endif
 		if (t == SELL) get_selling_order(id, p, v, tv);
 		if (t == BUY) get_buying_order(id, p, v, tv);
 		std::sort(trades + nt, trades + NT);

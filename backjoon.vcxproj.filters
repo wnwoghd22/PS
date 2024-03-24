@@ -2364,9 +2364,6 @@
     <ClCompile Include="fft.cpp">
       <Filter>소스 파일\reference</Filter>
     </ClCompile>
-    <ClCompile Include="11385.cpp">
-      <Filter>소스 파일\~20000\q11000~</Filter>
-    </ClCompile>
     <ClCompile Include="factors.cpp">
       <Filter>소스 파일\reference\number_theory</Filter>
     </ClCompile>

@@ -37,7 +37,7 @@ void insert_trade(int bid, int sid, int p, int v) {
 }
 
 struct PriceInfo {
-	int head = -1;
+	int head = -1, type = -1;
 	ll SV, STV;
 	std::map<int, ll> diffs;
 	std::map<int, ll> TVs;
@@ -347,7 +347,8 @@ struct PriceInfo {
 		std::cout << '\n';
 #endif
 	}
-	void insert(int id, int v, int tv) {
+	void insert(int id, int t, int v, int tv) {
+		type = t;
 		Node& n = nodes[idx];
 		n.n_id = idx++;
 		SV += v;
@@ -385,27 +386,27 @@ struct PriceInfo {
 			n.nxt = nxt.n_id;
 		}
 	}
-} sells[LEN], buys[LEN];
+} infos[LEN];
 std::set<int> selling, buying;
 
 void get_selling_order(int sid, int p, int v, int tv) {
 #ifdef DEBUG_PRINT
 	std::cout << "got selling order! : " << sid << ' ' << p << "\n";
 #endif
-	
+
 	while (buying.size() && v) {
 		int pb = *(--buying.end());
 #ifdef DEBUG_PRINT
 		std::cout << "largest: " << pb << '\n';
 #endif
 		if (pb < p) break;
-		if (buys[pb].SV <= v) {
-			v -= buys[pb].SV;
-			buys[pb].exhaust(sid, pb, 1);
+		if (infos[pb].SV <= v) {
+			v -= infos[pb].SV;
+			infos[pb].exhaust(sid, pb, 1);
 			buying.erase(pb);
 		}
 		else {
-			buys[pb].make_trade(sid, pb, v, 1);
+			infos[pb].make_trade(sid, pb, v, 1);
 			v = 0;
 		}
 	}
@@ -413,7 +414,7 @@ void get_selling_order(int sid, int p, int v, int tv) {
 #ifdef DEBUG_PRINT
 		std::cout << "insert selling order : " << sid << ' ' << p << ' ' << v << ' ' << tv << '\n';
 #endif
-		selling.insert(p), sells[p].insert(sid, v, tv);
+		selling.insert(p), infos[p].insert(sid, 2, v, tv);
 	}
 }
 
@@ -428,22 +429,17 @@ void get_buying_order(int bid, int p, int v, int tv) {
 		std::cout << "smallest: " << pb << '\n';
 #endif
 		if (pb > p) break;
-		if (sells[pb].SV <= v) {
-			v -= sells[pb].SV;
-			sells[pb].exhaust(bid, pb, 0);
+		if (infos[pb].SV <= v) {
+			v -= infos[pb].SV;
+			infos[pb].exhaust(bid, pb, 0);
 			selling.erase(pb);
 		}
 		else {
-			sells[pb].make_trade(bid, pb, v, 0);
+			infos[pb].make_trade(bid, pb, v, 0);
 			v = 0;
 		}
 	}
-	if (v) {
-#ifdef DEBUG_PRINT
-			std::cout << "insert buying order : " << bid << ' ' << p << ' ' << v << ' ' << tv << '\n';
-#endif
-		buying.insert(p), buys[p].insert(bid, v, tv);
-	}
+	if (v) buying.insert(p), infos[p].insert(bid, 1, v, tv);
 }
 
 int main() {
@@ -459,48 +455,26 @@ int main() {
 	for (int i = 0, id, t, p, v, tv; i < N; ++i) {
 		std::cin >> id >> t >> p >> v >> tv;
 		int nt = NT;
-#ifdef DEBUG_PRINT
-		std::cout << "-----------------" << nt << "------------------ - \n";
-#endif
 		if (t == SELL) get_selling_order(id, p, v, tv);
 		if (t == BUY) get_buying_order(id, p, v, tv);
 		std::sort(trades + nt, trades + NT);
 	}
 
-#ifdef DEBUG_PRINT
-	std::cout << "-----------------trades-------------------\n";
-#endif
-
 	for (int i = 0; i < NT; ++i)
 		std::cout << trades[i].bid << ' ' << trades[i].sid << ' ' << trades[i].p << ' ' << trades[i].v << '\n';
 	std::cout << '\n';
 
-
-#ifdef DEBUG_PRINT
-	std::cout << "----------------remains----------------------\n";
-#endif
 	for (int p = 1; p < LEN; ++p) {
-		if (~buys[p].head) {
-			int cur = buys[p].head;
+		if (~infos[p].head) {
+			int cur = infos[p].head;
 			do {
 				Node& n = nodes[cur];
 
-				std::cout << n.id << ' ' << BUY << ' ' << p << ' ' << 
+				std::cout << n.id << ' ' << infos[p].type << ' ' << p << ' ' <<
 					n.cv + n.v << ' ' << n.tv << ' ' << n.cv << '\n';
 
 				cur = n.nxt;
-			} while (cur != buys[p].head);
-		}
-		if (~sells[p].head) {
-			int cur = sells[p].head;
-			do {
-				Node& n = nodes[cur];
-
-				std::cout << n.id << ' ' << SELL << ' ' << p << ' ' <<
-					n.cv + n.v << ' ' << n.tv << ' ' << n.cv << '\n';
-
-				cur = n.nxt;
-			} while (cur != sells[p].head);
+			} while (cur != infos[p].head);
 		}
 	}
 }

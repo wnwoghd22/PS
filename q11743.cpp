@@ -123,11 +123,20 @@ struct PriceInfo {
 					if (TVs[term] == 0) TVs.erase(term);
 					n.cv = std::min(n.v, n.tv);
 					n.v -= n.cv;
+#ifdef DEBUG_PRINT
+					std::cout << "			pop diffs: " << term << ' ' << n.tv - n.v % n.tv << "\n";
+					std::cout << "			pop TV: " << term << ' ' << n.tv << "\n";
+#endif
 					if (n.v) {
-						if (diffs.find(term - 1) == diffs.end()) diffs[term - 1] = 0;
-						if (TVs.find(term - 1) == TVs.end()) TVs[term - 1] = 0;
-						diffs[term - 1] += n.tv - n.v % n.tv;
-						TVs[term - 1] += n.tv;
+						int term = n.v / n.tv;
+						if (diffs.find(term) == diffs.end()) diffs[term] = 0;
+						if (TVs.find(term) == TVs.end()) TVs[term] = 0;
+						diffs[term] += n.tv - n.v % n.tv;
+						TVs[term] += n.tv;
+#ifdef DEBUG_PRINT
+						std::cout << "			push diffs: " << term << ' ' << n.tv - n.v % n.tv << "\n";
+						std::cout << "			push TV: " << term << ' ' << n.tv << "\n";
+#endif
 					}
 					else STV -= n.tv;
 					if (n.cv == 0 && n.v == 0) { // no volume
@@ -160,8 +169,8 @@ struct PriceInfo {
 				std::cout << "		current STV: " << STV << '\n';
 				std::cout << "		remains: " << v << '\n';
 #endif
-					
-				int terms = iter.first - cycle;
+				int key = iter.first;
+				int terms = key - cycle;
 #ifdef DEBUG_PRINT
 				std::cout << "		terms: " << terms << '\n';
 #endif
@@ -170,24 +179,37 @@ struct PriceInfo {
 #ifdef DEBUG_PRINT
 					std::cout << "		cycles: " << cycles << '\n';
 #endif
-					if (cycles <= terms) {
+					if (cycles < terms) {
 #ifdef DEBUG_PRINT
 						std::cout << "			reduce cycles and break\n";
 						std::cout << "			v: " << v << ", STV: " << STV << ", cycles: " << cycles << '\n';
 #endif
 						cycle += cycles;
 						v -= STV * cycles;
-						if (!v) last_ordered = nodes[nodes[head].pre].n_id;
+						if (!v) {
+							last_ordered = nodes[nodes[head].pre].n_id;
+#ifdef DEBUG_PRINT
+							std::cout << "				last ordered: " << last_ordered << '\n';
+#endif
+						}
 						break;
 					}
 					v -= STV * terms;
 					cycle += terms;
+					if (!v) {
+						last_ordered = nodes[nodes[head].pre].n_id;
+#ifdef DEBUG_PRINT
+						std::cout << "				last ordered: " << last_ordered << '\n';
+#endif
+						break;
+					}
 				}
 
-				ll SCV = STV - diffs[terms];
+				ll SCV = STV - diffs[key];
 
 #ifdef DEBUG_PRINT
 				std::cout << "		check diffs\n";
+				std::cout << "		current diff: " << diffs[key] << '\n';
 				std::cout << "		current cycle: " << cycle << '\n';
 				std::cout << "		current SCV: " << SCV << '\n';
 				std::cout << "		remains: " << v << '\n';
@@ -299,6 +321,10 @@ struct PriceInfo {
 					diffs[term] += n.tv - n.v % n.tv;
 					TVs[term] += n.tv;
 					STV += n.tv;
+#ifdef DEBUG_PRINT
+					std::cout << "			push diffs: " << term << ' ' << n.tv - n.v % n.tv << "\n";
+					std::cout << "			push TV: " << term << ' ' << n.tv << "\n";
+#endif
 				}
 
 				now = n.nxt;
@@ -340,7 +366,11 @@ struct PriceInfo {
 			if (TVs.find(term) == TVs.end()) TVs[term] = 0;
 			diffs[term] += n.tv - n.v % n.tv;
 			TVs[term] += n.tv;
-			STV += n.tv;
+			STV += n.tv; 
+#ifdef DEBUG_PRINT
+			std::cout << "			push diffs: " << term << ' ' << n.tv - n.v % n.tv << "\n";
+			std::cout << "			push TV: " << term << ' ' << n.tv << "\n";
+#endif
 		}
 		
 		if (!~head) {

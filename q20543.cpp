@@ -15,9 +15,19 @@ int main() {
 	}
 	for (int i = 1; i <= N - M + 1; ++i) {
 		for (int j = 1; j <= N - M + 1; ++j) {
-			// ll sum = S[i + M / 2][j + M / 2] - S[i - 1][j + M / 2] - S[i + M / 2][j - 1] + S[i - 1][j - 1];
-			// C[i + M / 2][j + M / 2] = H[i][j]
-
+			int r = j + M / 2;
+			int l = std::max(0, r - M);
+			int d = i + M / 2;
+			int u = std::max(0, d - M);
+			S[d][r] += S[d][r - 1] + S[d - 1][r] - S[d - 1][r - 1];
+			ll sum = S[d][r] - S[d][l] - S[u][r] + S[u][l];
+			C[d][r] = -H[i][j] - sum;
+			S[d][r] += C[d][r];
 		}
+	}
+	for (int i = 1; i <= N; ++i) {
+		for (int j = 1; j <= N; ++j)
+			std::cout << C[i][j] << ' ';
+		std::cout << '\n';
 	}
 }

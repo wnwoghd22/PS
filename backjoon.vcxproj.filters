@@ -343,6 +343,9 @@
     <Filter Include="소스 파일\2023\kakao">
       <UniqueIdentifier>{9cd0f9fa-93fd-4829-b841-0ed7a4de1228}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2024\ABC348">
+      <UniqueIdentifier>{262ea2ec-2a76-4d3b-a65a-779050a73656}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="biggest.cpp">
@@ -3212,6 +3215,21 @@
     </ClCompile>
     <ClCompile Include="q1688.cpp">
       <Filter>소스 파일\~10000\q1400~</Filter>
+    </ClCompile>
+    <ClCompile Include="concave.cpp">
+      <Filter>소스 파일\reference\geo</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC348\A.cpp">
+      <Filter>소스 파일\2024\ABC348</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC348\B.cpp">
+      <Filter>소스 파일\2024\ABC348</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC348\C.cpp">
+      <Filter>소스 파일\2024\ABC348</Filter>
+    </ClCompile>
+    <ClCompile Include="ABC348\D.cpp">
+      <Filter>소스 파일\2024\ABC348</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

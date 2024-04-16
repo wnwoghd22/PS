@@ -12,6 +12,11 @@ impl Pos {
     fn magnitude(&self) -> i64 { self.x * self.x + self.y * self.y }
 }
 
+enum IpAddrKind {
+    v4,
+    v6,
+}
+
 fn take_ownership(some_str: String) {
     println!("{}", some_str);
 }

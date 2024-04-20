@@ -1,21 +1,21 @@
-struct CustomSmartPointer {
-    data: String,
+enum List {
+    Cons(i32, Rc<List>),
+    Nil,
 }
 
-impl Drop for CustomSmartPointer {
-    fn drop(&mut self) {
-        println!("Drop {}", self.data);
-    }
-}
+use crate::List::{Cons, Nil};
+use std::rc::Rc;
 
 fn main() {
-    let c = CustomSmartPointer {
-        data: String::from("fuck")
-    };
+    let a = Rc::new(Cons(5, Rc::new(Cons(10, Rc::new(Nil)))));
+    println!("count: {}", Rc::strong_count(&a));
 
-    let d = CustomSmartPointer {
-        data: String::from("you")
-    };
-    println!("pointers created");
-    drop(c);
+    let b = Cons(3, Rc::clone(&a));
+    println!("count: {}", Rc::strong_count(&a));
+
+    {
+        let c = Cons(4, Rc::clone(&a));
+        println!("count: {}", Rc::strong_count(&a));
+    }
+    println!("count: {}", Rc::strong_count(&a));
 }

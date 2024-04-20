@@ -9,7 +9,7 @@ fn main() {
         process::exit(0);
     });
 
-    if let Err(e) = minigrep::run(config) {
+    if let Err(e) = jay22_minigrep::run(config) {
         eprintln!("Application error: {e}");
         process::exit(1);
     }

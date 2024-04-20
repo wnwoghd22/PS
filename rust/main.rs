@@ -1,20 +1,25 @@
-fn main() {
-    let string1 = String::from("abcd");
-    {
-        let short = "s";
-        let temp = longest(string1.as_str(), short);
-        println!("{}", temp);
-    }
-    let string2 = "xyz";
+use std::ops::Deref;
 
-    let result = longest(string1.as_str(), string2);
-    println!("The longest string is {}", result);
+struct MyBox<T>(T);
+
+impl<T> MyBox<T> {
+    fn new(x: T) -> MyBox<T> {
+        MyBox(x)
+    }
 }
 
-fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
-    if x.len() > y.len() {
-        x
-    } else {
-        y
+impl<T> Deref for MyBox<T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
     }
+}
+
+fn main() {
+    let x = 5;
+    let y = MyBox::new(x);
+
+    assert_eq!(5, x);
+    assert_eq!(5, *y);
 }

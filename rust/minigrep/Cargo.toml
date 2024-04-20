@@ -1,5 +1,5 @@
 [package]
-name = "minigrep"
+name = "jay22_minigrep"
 version = "0.1.0"
 edition = "2021"
 description = "jay's first crate. test minigrep"

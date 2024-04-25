@@ -59,7 +59,8 @@ fn main() {
 
     // 1 * 1
     if cnts[0] > 0 { 
-        cnt += cnts[0] / 36; 
+        cnt += cnts[0] / 36;
+        cnts[0] %= 36;
         if cnts[0] != 0 { cnt += 1; }
     }
 

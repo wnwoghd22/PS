@@ -12,7 +12,7 @@ fn main() {
 
     let mut ret = 0;
     let mut cnt = 0;
-    for p in 1..n {
+    for p in 1..n + 1 {
         if n % p == 0 {
             cnt += 1;
             if cnt == k {

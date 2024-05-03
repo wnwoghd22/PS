@@ -27,7 +27,62 @@ ll distance(const Pos& a, const Pos& b) { return (a.x - b.x) * (a.x - b.x) + (a.
 int target[LEN]; // target[i] = j, the longest distance group
 ll target_dist[LEN]; // i -> j distance
 
-void sweep(const std::vector<Pos>& a, const std::vector<Pos>& b); // N ~ N log N
+ll f(int i, int j) { return distance(pos[i], pos[j]); }
+
+void smawk(const std::vector<int>& a, const std::vector<int>& b) {
+	if (a.empty() || b.empty()) return;
+
+	// std::cout << "		smawk: " << a.size() << ' ' << b.size() << '\n';
+
+	// reduce
+	std::vector<int> cols;
+	for (const int& j : b) {
+		if (cols.empty()) cols.push_back(j);
+		else {
+			int i;
+			while (cols.size()) {
+				i = cols.size() - 1;
+				if (f(a[i], cols.back()) > f(a[i], j)) break;
+				cols.pop_back();
+			}
+			if (cols.size() < a.size()) cols.push_back(j);
+		}
+	}
+
+	// interpolate
+	std::vector<int> rows;
+	for (int i = 1; i < a.size(); i += 2) rows.push_back(a[i]);
+
+	smawk(rows, cols);
+
+	// linear search
+	for (int i = 0, j = 0; i < a.size(); i += 2) {
+		while (j + 1 < cols.size() && f(a[i], cols[j]) <= f(a[i], cols[j + 1])) ++j;
+		target[find(a[i])] = find(cols[j]);
+		target_dist[find(a[i])] = f(a[i], cols[j]);
+	}
+}
+
+void sweep(const std::vector<Pos>& a, const std::vector<Pos>& b) { // N ~ N log N
+	// std::cout << "	sweep\n";
+
+	std::vector<int> row, col;
+
+	for (const Pos& p : a) row.push_back(p.i);
+	for (const Pos& p : b) col.push_back(p.i);
+	for (const Pos& p : b) col.push_back(p.i);
+
+	smawk(row, col);
+
+	row.clear();
+	col.clear();
+
+	for (const Pos& p : b) row.push_back(p.i);
+	for (const Pos& p : a) col.push_back(p.i);
+	for (const Pos& p : a) col.push_back(p.i);
+
+	smawk(row, col);
+}
 void sweep_naive(const std::vector<Pos>& a, const std::vector<Pos>& b) { // N^2
 	for (const Pos& pa : a) {
 		for (const Pos& pb : b) {
@@ -63,6 +118,7 @@ void solve() {
 	while (cnt > 1) {
 		memset(target, -1, sizeof target);
 		memset(target_dist, 0, sizeof target_dist);
+		// std::cout << "cnt: " << cnt << '\n';
 		for (int d = 0; d < 20; ++d) {
 			std::vector<Pos> a, b;
 			for (int j = 0, k; j < N; ++j) {
@@ -70,7 +126,8 @@ void solve() {
 				if (k & 1 << d) a.push_back(pos[j]);
 				else b.push_back(pos[j]);
 			}
-			sweep_naive(a, b);
+			sweep(a, b);
+			// sweep_naive(a, b);
 		}
 		std::priority_queue<E> pq;
 		for (int i = 0; i < N; ++i)

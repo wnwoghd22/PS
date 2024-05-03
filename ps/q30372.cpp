@@ -32,8 +32,8 @@ int target[LEN]; // target[i] = j, the longest distance group
 ll target_dist[LEN]; // i -> j distance
 
 ll f(int i, int j) {
-	if (j < i) return -1;
-	if (j >= N && j - N >= i) return -1;
+	if (j < i) return -i -N +j;
+	if (j >= N && j - N >= i) return -i -j;
 
 	return distance(pos[i], pos[j % N]);
 }
@@ -69,7 +69,7 @@ std::vector<int> smawk(const std::vector<int>& row, const std::vector<int>& col)
 				i = cols.size() - 1;
 				ll top = f(row[i], cols.back());
 				ll next = f(row[i], j);
-				if (!~top && !~next) break;
+				// if (!~top && !~next) break;
 				if (top > next) break;
 #ifdef __PS_DEBUG__
 				std::cout << "pop " << cols.back() << '\n';
@@ -144,7 +144,7 @@ void print_maxima(const std::vector<int>& row, const std::vector<int>& col) {
 	for (const int& r : row) {
 		std::cout << r << ' ' << brute_maxima[r] << ' ' << smawk_maxima[r] << '\n';
 		if (brute_maxima[r] != smawk_maxima[r]) {
-			std::cout << "	problem detected!: " << r << "\n";
+			std::cout << "	problem detected!: " << r << " ----------------------------------------------\n";
 			std::cout << "	(brute, smawk) = " << brute_maxima[r] << ' ' << smawk_maxima[r] << '\n';
 		}
 	}
@@ -257,6 +257,8 @@ void solve() {
 
 int main() {
 	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+	std::cin.tie(0)->sync_with_stdio(0);
 	int T;
 	std::cin >> T;
 	while (T--) solve();

@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
+#include <algorithm>
 #include <cstring>
 #include <vector>
 #include <queue>
@@ -30,48 +31,75 @@ ll distance(const Pos& a, const Pos& b) { return (a.x - b.x) * (a.x - b.x) + (a.
 int target[LEN]; // target[i] = j, the longest distance group
 ll target_dist[LEN]; // i -> j distance
 
-ll f(int u, int v) { return distance(pos[u], pos[v]); }
-ll f(const std::vector<int>& a, const std::vector<int>& b, int i, int j) {
+ll f(
+	const std::vector<Pos>& row, const std::vector<Pos>& col, 
+	int i, int j) {
 	if (j < i) return -1;
-	if (j >= b.size() / 2 && j - b.size() / 2 >= i) return -1;
+	if (j >= col.size() && j - col.size() >= i) return -1;
 
-	return distance(pos[a[i]], pos[b[j]]); 
+	return distance(row[i], col[j % col.size()]);
 }
+ll smawk_maxima[LEN];
 
 #ifdef __PS_DEBUG__
-ll brute_maxima[LEN], smawk_maxima[LEN];
-#endif
-
-
-void smawk(const std::vector<int>& a, const std::vector<int>& b) {
+ll brute_maxima[LEN];
+void print_maxima(
+	const std::vector<Pos>& a, const std::vector<Pos>& b,
+	const std::vector<int>& row, const std::vector<int>& col
+) {
 	if (a.empty() || b.empty()) return;
-
-#ifdef __PS_DEBUG__
-	std::cout << "		smawk: " << a.size() << ' ' << b.size() << '\n';
+	std::cout << "table: \n";
+	for (int i = 0; i < row.size(); ++i) {
+		ll max = 0;
+		for (int j = 0; j < col.size(); ++j) {
+			ll cur = f(a, b, i, j);
+			std::cout << cur << ' ';
+			if (max < cur) max = cur;
+		}
+		std::cout << "max: " << (brute_maxima[i] = max) << '\n';
+		std::cout << '\n';
+	}
+	std::cout << "	check...\n";
+	for (const int& r : row) {
+		std::cout << "	minima[" << r << "] = " << smawk_maxima[r] << '\n';
+		if (brute_maxima[r] != smawk_maxima[r]) {
+			std::cout << "		problem detected!: " << r << "\n";
+			std::cout << "			brute, smawk: " << brute_maxima[r] << ' ' << smawk_maxima[r] << '\n';
+		}
+	}
+	memset(brute_maxima, 0, sizeof brute_maxima);
+}
 #endif
+
+std::vector<int> smawk(
+	const std::vector<Pos>& row, const std::vector<Pos>& col,
+	const std::vector<int>& a, const std::vector<int>& b) {
+	if (a.empty() || b.empty()) return {};
 
 	// reduce
 	std::vector<int> cols;
-	for (int j = 0; j < b.size(); ++j) {
-		if (cols.empty()) cols.push_back(b[j]);
+	for (const int& j : b) {
+		if (cols.empty()) cols.push_back(j);
 		else {
 			int i;
 			while (cols.size()) {
 				i = cols.size() - 1;
-				ll top = f(a[i], cols.back());
-				ll next = f(a, b, i, j);
+				ll top = f(row, col, a[i], cols.back());
+				ll next = f(row, col, a[i], j);
 				if (top > next) break;
 				cols.pop_back();
 			}
-			if (cols.size() < a.size()) cols.push_back(b[j]);
+			if (cols.size() < a.size()) cols.push_back(j);
 		}
 	}
 
 	// interpolate
 	std::vector<int> rows;
-	for (int i = 1; i < a.size(); i += 2) rows.push_back(a[i]);
+	for (int i = 0; i < a.size(); i += 2) rows.push_back(a[i]);
 
-	smawk(rows, cols);
+	std::vector<int> ret = smawk(row, col, rows, cols);
+	std::vector<int> ans(a);
+	for (int i = 0; i < ret.size(); ++i) ans[i * 2] = ret[i];
 
 #ifdef __PS_DEBUG__
 	std::cout << "total cols:";
@@ -87,104 +115,58 @@ void smawk(const std::vector<int>& a, const std::vector<int>& b) {
 	}
 	std::cout << '\n';
 #endif
-
 	// linear search
-	for (int i = 0, j = 0; i < a.size(); i += 2) {
-		while (j + 1 < cols.size() && f(a[i], cols[j]) <= f(a[i], cols[j + 1])) ++j;
-		int ga = find(a[i]), gb = find(cols[j]);
-		ll dist = f(a[i], cols[j]);
-		if (dist > target_dist[ga]) {
-			target[ga] = gb;
-			target_dist[ga] = dist;
+	for (int i = 1, j = 0; i < a.size(); i += 2) {
+		int s = ans[i - 1];
+		int e = i + 1 < ans.size() ? ans[i + 1] : b.size() - 1;
+		ans[i] = s;
+		for (int j = s + 1; j <= e; ++j) {
+			int r = a[i];
+			int c = col[cols[j] % col.size()].i;
+			int ga = find(row[a[i]].i), gb = find(col[cols[j] % col.size()].i);
+			ll dist = f(row, col, a[i], cols[j]);
+			if (dist > smawk_maxima[r]) {
+				ans[i] = j;
+				smawk_maxima[r] = dist;
+			}
+			if (dist > target_dist[ga]) {
+				target[ga] = gb;
+				target_dist[ga] = dist;
+			}
 		}
-#ifdef __PS_DEBUG__
-		std::cout << "			linear: " << a[i] << ' ' << target_dist[ga] << "\n";
-		smawk_maxima[a[i]] = dist;
-#endif
 	}
+	return ans;
 }
 
 void sweep(const std::vector<Pos>& a, const std::vector<Pos>& b) { // N ~ N log N
+	std::vector<int> row, col;
+
 #ifdef __PS_DEBUG__
 	std::cout << "	sweep\n";
 #endif
-	std::vector<int> row, col;
 
-	for (const Pos& p : a) row.push_back(p.i);
-	for (const Pos& p : b) col.push_back(p.i);
-	for (const Pos& p : b) col.push_back(p.i);
+	for (int i = 0; i < a.size(); ++i) row.push_back(i);
+	for (int i = 0; i < b.size() * 2; ++i) col.push_back(i);
 
-	smawk(row, col);
+	smawk(a, b, row, col);
 
 #ifdef __PS_DEBUG__
-	std::cout << "	table: \n";
-	for (const int& r : row) {
-		std::cout << r << ' ';
-		ll max = 0;
-		for (const int& c : col) {
-			std::cout << f(r, c) << ' ';
-			if (max < f(r, c)) max = f(r, c);
-		}
-		std::cout << "max: " << (brute_maxima[r] = max) << '\n';
-	}
-	std::cout << "table: \n";
-	for (int i = 0; i < row.size(); ++i) {
-		for (int j = 0; j < col.size(); ++j) {
-			std::cout << f(row, col, i, j) << ' ';
-		}
-		std::cout << '\n';
-	}
-	std::cout << "	check...\n";
-	for (const int& r : row) {
-		std::cout << "	minima[" << r << "] = " << smawk_maxima[r] << '\n';
-		if (brute_maxima[r] != smawk_maxima[r]) {
-			std::cout << "		problem detected!: " << r << "\n";
-			std::cout << "			brute, smawk: " << brute_maxima[r] << ' ' << smawk_maxima[r] << '\n';
-		}
-	}
-
-	memset(brute_maxima, 0, sizeof brute_maxima);
-	memset(smawk_maxima, 0, sizeof smawk_maxima);
+	print_maxima(a, b, row, col);
 #endif
+	memset(smawk_maxima, 0, sizeof smawk_maxima);
 
 	row.clear();
 	col.clear();
 
-	for (const Pos& p : b) row.push_back(p.i);
-	for (const Pos& p : a) col.push_back(p.i);
-	for (const Pos& p : a) col.push_back(p.i);
+	for (int i = 0; i < b.size(); ++i) row.push_back(i);
+	for (int i = 0; i < a.size() * 2; ++i) col.push_back(i);
 
-	smawk(row, col);
+	smawk(b, a, row, col);
 
 #ifdef __PS_DEBUG__
-	std::cout << "	table: \n";
-	for (const int& r : row) {
-		std::cout << r << ' ';
-		ll max = 0;
-		for (const int& c : col) {
-			std::cout << f(r, c) << ' ';
-			if (max < f(r, c)) max = f(r, c);
-		}
-		std::cout << "max: " << (brute_maxima[r] = max) << '\n';
-	}
-	std::cout << "table: \n";
-	for (int i = 0; i < row.size(); ++i) {
-		for (int j = 0; j < col.size(); ++j) {
-			std::cout << f(row, col, i, j) << ' ';
-		}
-		std::cout << '\n';
-	}
-	std::cout << "	check...\n";
-	for (const int& r : row) {
-		std::cout << "	minima[" << r << "] = " << smawk_maxima[r] << '\n';
-		if (brute_maxima[r] != smawk_maxima[r]) {
-			std::cout << "		problem detected!: " << r << "\n";
-			std::cout << "			brute, smawk: " << brute_maxima[r] << ' ' << smawk_maxima[r] << '\n';
-		}
-	}
-	memset(brute_maxima, 0, sizeof brute_maxima);
-	memset(smawk_maxima, 0, sizeof smawk_maxima);
+	print_maxima(b, a, row, col);
 #endif
+	memset(smawk_maxima, 0, sizeof smawk_maxima);
 }
 void sweep_naive(const std::vector<Pos>& a, const std::vector<Pos>& b) { // N^2
 	for (const Pos& pa : a) {
@@ -219,11 +201,12 @@ void solve() {
 	for (int i = 0; i < N; ++i) std::cin >> pos[i].x >> pos[i].y, pos[i].i = i;
 	int cnt = N;
 	while (cnt > 1) {
+#ifdef __PS_DEBUG__
+		std::cout << "cnt: " << cnt << "\n";
+#endif
 		memset(target, -1, sizeof target);
 		memset(target_dist, 0, sizeof target_dist);
-#ifdef __PS_DEBUG__
-		std::cout << "cnt: " << cnt << '\n';
-#endif
+
 		for (int d = 0; d < 20; ++d) {
 			std::vector<Pos> a, b;
 			for (int j = 0, k; j < N; ++j) {

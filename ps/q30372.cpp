@@ -4,9 +4,13 @@
 #include <vector>
 #include <queue>
 
+#define __PS_DEBUG__
+// #undef __PS_DEBUG__
+
 typedef long long ll;
 const int LEN = 120'001;
 const ll MOD = 1e17;
+const ll INF = 1e17;
 
 int p[LEN];
 int find(int i) { return p[i] < 0 ? i : p[i] = find(p[i]); }
@@ -29,10 +33,17 @@ ll target_dist[LEN]; // i -> j distance
 
 ll f(int i, int j) { return distance(pos[i], pos[j]); }
 
+#ifdef __PS_DEBUG__
+ll brute_maxima[LEN], smawk_maxima[LEN];
+#endif
+
+
 void smawk(const std::vector<int>& a, const std::vector<int>& b) {
 	if (a.empty() || b.empty()) return;
 
-	// std::cout << "		smawk: " << a.size() << ' ' << b.size() << '\n';
+#ifdef __PS_DEBUG__
+	std::cout << "		smawk: " << a.size() << ' ' << b.size() << '\n';
+#endif
 
 	// reduce
 	std::vector<int> cols;
@@ -58,14 +69,22 @@ void smawk(const std::vector<int>& a, const std::vector<int>& b) {
 	// linear search
 	for (int i = 0, j = 0; i < a.size(); i += 2) {
 		while (j + 1 < cols.size() && f(a[i], cols[j]) <= f(a[i], cols[j + 1])) ++j;
-		target[find(a[i])] = find(cols[j]);
-		target_dist[find(a[i])] = f(a[i], cols[j]);
+		int ga = find(a[i]), gb = find(cols[j]);
+		ll dist = f(a[i], cols[j]);
+		if (dist > target_dist[ga]) {
+			target[ga] = gb;
+			target_dist[ga] = dist;
+		}
+#ifdef __PS_DEBUG__
+		smawk_maxima[a[i]] = dist;
+#endif
 	}
 }
 
 void sweep(const std::vector<Pos>& a, const std::vector<Pos>& b) { // N ~ N log N
-	// std::cout << "	sweep\n";
-
+#ifdef __PS_DEBUG__
+	std::cout << "	sweep\n";
+#endif
 	std::vector<int> row, col;
 
 	for (const Pos& p : a) row.push_back(p.i);
@@ -73,6 +92,26 @@ void sweep(const std::vector<Pos>& a, const std::vector<Pos>& b) { // N ~ N log 
 	for (const Pos& p : b) col.push_back(p.i);
 
 	smawk(row, col);
+
+#ifdef __PS_DEBUG__
+	std::cout << "	table: \n";
+	for (const int& r : row) {
+		std::cout << r << ' ';
+		ll max = 0;
+		for (const int& c : col) {
+			std::cout << f(r, c) << ' ';
+			if (max < f(r, c)) max = f(r, c);
+		}
+		std::cout << "max: " << (brute_maxima[r] = max) << '\n';
+	}
+	std::cout << "	check...\n";
+	for (const int& r : row) {
+		if (brute_maxima[r] != smawk_maxima[r]) {
+			std::cout << "		problem detected!\n";
+			std::cout << "			brute, smawk: " << brute_maxima[r] << ' ' << smawk_maxima[r] << '\n';
+		}
+	}
+#endif
 
 	row.clear();
 	col.clear();
@@ -82,6 +121,27 @@ void sweep(const std::vector<Pos>& a, const std::vector<Pos>& b) { // N ~ N log 
 	for (const Pos& p : a) col.push_back(p.i);
 
 	smawk(row, col);
+
+#ifdef __PS_DEBUG__
+	std::cout << "	table: \n";
+	for (const int& r : row) {
+		std::cout << r << ' ';
+		ll max = 0;
+		for (const int& c : col) {
+			std::cout << f(r, c) << ' ';
+			if (max < f(r, c)) max = f(r, c);
+		}
+		std::cout << "max: " << (brute_maxima[r] = max) << '\n';
+	}
+	std::cout << "	check...\n";
+	for (const int& r : row) {
+		std::cout << "	minima[" << r << "] = " << smawk_maxima[r] << '\n';
+		if (brute_maxima[r] != smawk_maxima[r]) {
+			std::cout << "		problem detected!: " << r << "\n";
+			std::cout << "			brute, smawk: " << brute_maxima[r] << ' ' << smawk_maxima[r] << '\n';
+		}
+	}
+#endif
 }
 void sweep_naive(const std::vector<Pos>& a, const std::vector<Pos>& b) { // N^2
 	for (const Pos& pa : a) {
@@ -118,7 +178,9 @@ void solve() {
 	while (cnt > 1) {
 		memset(target, -1, sizeof target);
 		memset(target_dist, 0, sizeof target_dist);
-		// std::cout << "cnt: " << cnt << '\n';
+#ifdef __PS_DEBUG__
+		std::cout << "cnt: " << cnt << '\n';
+#endif
 		for (int d = 0; d < 20; ++d) {
 			std::vector<Pos> a, b;
 			for (int j = 0, k; j < N; ++j) {

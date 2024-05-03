@@ -75,6 +75,30 @@ std::vector<int> smawk(
 	const std::vector<Pos>& row, const std::vector<Pos>& col,
 	const std::vector<int>& a, const std::vector<int>& b) {
 	if (a.empty() || b.empty()) return {};
+#ifdef __PS_DEBUG__
+	std::cout << "smawk: " << a.size() << ' ' << b.size() << '\n';
+#endif
+	if (a.size() == 1) {
+		std::vector<int> ans = { 0 };
+		int r = a[0];
+		for (int i = 0; i < b.size(); ++i) {
+			int c = b[i] % col.size();
+			int ga = find(row[r].i), gb = find(col[c].i);
+			ll dist = f(row, col, r, b[i]);
+			if (dist > smawk_maxima[r]) {
+				ans[0] = b[i];
+				smawk_maxima[r] = dist;
+			}
+			if (dist > target_dist[ga]) {
+				target[ga] = gb;
+				target_dist[ga] = dist;
+			}
+		}
+#ifdef __PS_DEBUG__
+			std::cout << "maxima[" << r << "] = " << smawk_maxima[r] << "\n\n";
+#endif
+		return ans;
+	}
 
 	// reduce
 	std::vector<int> cols;
@@ -93,48 +117,59 @@ std::vector<int> smawk(
 		}
 	}
 
-	// interpolate
 	std::vector<int> rows;
 	for (int i = 0; i < a.size(); i += 2) rows.push_back(a[i]);
 
+	std::cout << "recursive\n";
 	std::vector<int> ret = smawk(row, col, rows, cols);
-	std::vector<int> ans(a);
+	std::vector<int> ans(a.size());
 	for (int i = 0; i < ret.size(); ++i) ans[i * 2] = ret[i];
 
+	// linear search
 #ifdef __PS_DEBUG__
-	std::cout << "total cols:";
-	for (const int& c : b) {
-		std::cout << c << ' ';
-	}
+	std::cout << "linear search: " << a.size() << ' ' << b.size() << '\n';
+	std::cout << "ret:\n";
+	for (const int& idx : ret) std::cout << idx << ' ';
 	std::cout << '\n';
-
-	std::cout << "	after reduce\n";
-	std::cout << "		cols: ";
-	for (const int& c : cols) {
-		std::cout << c << ' ';
-	}
+	std::cout << "cols:\n";
+	for (const int& idx : cols) std::cout << idx << ' ';
 	std::cout << '\n';
 #endif
-	// linear search
 	for (int i = 1, j = 0; i < a.size(); i += 2) {
 		int s = ans[i - 1];
-		int e = i + 1 < ans.size() ? ans[i + 1] : b.size() - 1;
+		int e = i + 1 < ans.size() ? ans[i + 1] : cols.back();
+		int r = a[i];
+#ifdef __PS_DEBUG__
+		std::cout << "row: " << r << '\n';
+		std::cout << "range: " << s << ' ' << e << '\n';
+#endif
+		while (b[j] < s) ++j;
 		ans[i] = s;
-		for (int j = s + 1; j <= e; ++j) {
-			int r = a[i];
-			int c = col[cols[j] % col.size()].i;
-			int ga = find(row[a[i]].i), gb = find(col[cols[j] % col.size()].i);
-			ll dist = f(row, col, a[i], cols[j]);
+		
+		while (1) {
+			std::cout << j << ' ';
+			int c = col[b[j] % col.size()].i;
+			int ga = find(row[r].i), gb = find(col[b[j] % col.size()].i);
+			ll dist = f(row, col, r, b[j]);
 			if (dist > smawk_maxima[r]) {
-				ans[i] = j;
+				ans[i] = b[j];
 				smawk_maxima[r] = dist;
 			}
 			if (dist > target_dist[ga]) {
 				target[ga] = gb;
 				target_dist[ga] = dist;
 			}
+			if (b[j] >= e) break;
+			++j;
 		}
+		std::cout << '\n';
+#ifdef __PS_DEBUG__
+			std::cout << "maxima[" << r << "] = " << smawk_maxima[r] << '\n';
+#endif
 	}
+#ifdef __PS_DEBUG__
+	std::cout << '\n';
+#endif
 	return ans;
 }
 

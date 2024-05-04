@@ -219,15 +219,18 @@ void solve() {
 		memset(target, -1, sizeof target);
 		memset(target_dist, 0, sizeof target_dist);
 
-		for (int d = 0; d < 20; ++d) {
+		int bits = 0;
+		while ((1 << bits) < N) bits++;
+
+		for (int d = 0; d < bits; ++d) {
 			std::vector<Pos> a, b;
 			for (int j = 0, k; j < N; ++j) {
 				k = find(j);
 				if (k & 1 << d) a.push_back(pos[j]);
 				else b.push_back(pos[j]);
 			}
-			sweep(a, b);
-			// sweep_naive(a, b);
+			if (N > 300) sweep(a, b);
+			else sweep_naive(a, b);
 		}
 		std::priority_queue<E> pq;
 		for (int i = 0; i < N; ++i)
@@ -256,8 +259,8 @@ void solve() {
 }
 
 int main() {
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+	// freopen("input.txt", "r", stdin);
+	// freopen("output.txt", "w", stdout);
 	std::cin.tie(0)->sync_with_stdio(0);
 	int T;
 	std::cin >> T;

@@ -1,34 +1,50 @@
 use std::io;
 
+static INF: f64 = 1e9;
+
 #[derive(PartialEq, Eq, PartialOrd, Ord, Clone)]
 struct Pos {
     x: i64,
     y: i64,
 }
 
+fn distance(p1: &Pos, p2: &Pos) -> i64 {
+    (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)
+}
+
 fn ccw(p1: &Pos, p2: &Pos, p3: &Pos) -> i64 {
    (p2.x - p1.x) * (p3.y - p2.y) - (p2.y - p1.y) * (p3.x - p2.x)
 }
 
-fn monotone_chain(pos: &Vec<Pos>) -> (Vec<Pos>, Vec<Pos>) {
-    let mut lower: Vec<Pos> = Vec::new();
-    let mut upper: Vec<Pos> = Vec::new();
-
-    for p in pos {
-        while lower.len() > 1 && ccw(&lower[lower.len() - 2], &lower[lower.len() - 1], p) <= 0 {
-            lower.pop();
+fn is_valid_edge(p1: &Pos, p2: &Pos, arr: &Vec<Pos>) -> bool {
+    for p in arr {
+        if ccw(p1, p2, p) >= 0 {
+            return false;
         }
-        lower.push(p.clone());
     }
 
-    for p in pos.iter().rev() {
-        while upper.len() > 1 && ccw(&upper[upper.len() - 2], &upper[upper.len() - 1], p) <= 0 {
-            upper.pop();
+    return true;
+}
+
+fn floyd_warshall(n: usize, edges: &Vec<Vec<f64>>) -> Vec<Vec<f64>> {
+    let mut dist = vec![vec![INF; n]; n];
+    for i in 0..n {
+        for j in 0..n {
+            if i == j { dist[i][j] = 0.0; }
+            else { dist[i][j] = edges[i][j]; }
         }
-        upper.push(p.clone());
     }
 
-    (lower, upper)
+    for k in 0..n {
+        for i in 0..n {
+            for j in 0..n {
+                let d = dist[i][k] + dist[k][j];
+                if d < dist[i][j] { dist[i][j] = d; }
+            }
+        }
+    }
+
+    return dist;
 }
 
 fn main() {
@@ -65,6 +81,36 @@ fn main() {
         let [x, y] = values[..] else { panic!(); };
         monuments.push(Pos { x, y });
     }
-    monuments.sort();
-    let (upper, lower) = monotone_chain(&monuments);
+
+    let mut edges = vec![vec![INF; n]; n]; 
+
+    for i in 0..n {
+        let mut j = (i + 1) % n;
+        while j != i {
+            if is_valid_edge(&towers[i], &towers[j], &monuments) {
+                edges[i][j] = (distance(&towers[i], &towers[j]) as f64).sqrt();
+            }
+            else { break; }
+
+            j = (j + 1) % n;
+        }
+    }
+    for i in 0..n {
+        for j in 0..n {
+            print!("{} ", edges[i][j]);
+        }
+        println!("");
+    }
+    
+    let dist = floyd_warshall(n, &edges);
+    
+    let mut ret = INF;
+    for i in 0..n {
+        for j in 0..n {
+            if i == j { continue; }
+            let d = dist[i][j] + dist[j][i];
+            if d < ret { ret = d; }
+        }
+    }
+    println!("{:.2}", ret);
 }

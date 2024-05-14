@@ -69,47 +69,60 @@ fn main() {
         let [x, y] = values[..] else { panic!(); };
         towers.push(Pos { x, y });
     }
-    let mut monuments: Vec<Pos> = Vec::new();
-    for _ in 0..m {
-        let mut s = String::new();
-        io::stdin().read_line(&mut s).unwrap();
-        let values: Vec<i64> = s
-            .as_mut_str()
-            .split_whitespace()
-            .map(|x| x.parse().unwrap())
-            .collect();
-        let [x, y] = values[..] else { panic!(); };
-        monuments.push(Pos { x, y });
-    }
-
-    let mut edges = vec![vec![INF; n]; n]; 
-
-    for i in 0..n {
-        let mut j = (i + 1) % n;
-        while j != i {
-            if is_valid_edge(&towers[i], &towers[j], &monuments) {
-                edges[i][j] = (distance(&towers[i], &towers[j]) as f64).sqrt();
-            }
-            else { break; }
-
-            j = (j + 1) % n;
-        }
-    }
-    for i in 0..n {
-        for j in 0..n {
-            print!("{} ", edges[i][j]);
-        }
-        println!("");
-    }
-    
-    let dist = floyd_warshall(n, &edges);
     
     let mut ret = INF;
-    for i in 0..n {
-        for j in 0..n {
-            if i == j { continue; }
-            let d = dist[i][j] + dist[j][i];
-            if d < ret { ret = d; }
+    if m == 0 {
+        for i in 0..n {
+            for j in 0..n {
+                for k in 0..n {
+                    if ccw(&towers[i], &towers[j], &towers[k]) != 0 {
+                        let d1 = (distance(&towers[i], &towers[j]) as f64).sqrt();
+                        let d2 = (distance(&towers[j], &towers[k]) as f64).sqrt();
+                        let d3 = (distance(&towers[k], &towers[i]) as f64).sqrt();
+                        if d1 + d2 + d3 < ret {
+                            ret = d1 + d2 + d3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    else {
+        let mut monuments: Vec<Pos> = Vec::new();
+        for _ in 0..m {
+            let mut s = String::new();
+            io::stdin().read_line(&mut s).unwrap();
+            let values: Vec<i64> = s
+                .as_mut_str()
+                .split_whitespace()
+                .map(|x| x.parse().unwrap())
+                .collect();
+            let [x, y] = values[..] else { panic!(); };
+            monuments.push(Pos { x, y });
+        }
+    
+        let mut edges = vec![vec![INF; n]; n];
+    
+        for i in 0..n {
+            let mut j = (i + 1) % n;
+            while j != i {
+                if is_valid_edge(&towers[i], &towers[j], &monuments) {
+                    edges[i][j] = (distance(&towers[i], &towers[j]) as f64).sqrt();
+                }
+                else { break; }
+    
+                j = (j + 1) % n;
+            }
+        }
+        
+        let dist = floyd_warshall(n, &edges);
+        
+        for i in 0..n {
+            for j in 0..n {
+                if i == j { continue; }
+                let d = dist[i][j] + dist[j][i];
+                if d < ret { ret = d; }
+            }
         }
     }
     println!("{:.2}", ret);

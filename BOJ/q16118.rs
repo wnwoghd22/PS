@@ -41,7 +41,6 @@ fn main() {
     let mut pq2: BinaryHeap<(i32, usize, usize)> = BinaryHeap::new();
     let mut dp2: Vec<Vec<i32>> = vec![vec![1_000_000_000; 2]; n + 1];
     dp2[1][0] = 0;
-    dp2[1][1] = 0;
     pq2.push((0, 1, 0));
     while let Some((d, u, x)) = pq2.pop() {
         let d = -d;

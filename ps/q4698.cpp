@@ -30,11 +30,12 @@ int solve() {
 		en[i + 1] = en[i] + e[i].n;
 		es[i + 1] = es[i] + (ll)e[i].n * e[i].c;
 	}
-	ll min_cut = cs[N];
+	ll min_cut = std::min(es[M], cs[N]);
 	ll S = es[M];
 	ll E = 0;
+	ll X = std::min((ll)c[N - 1].c, en[M]);
 	ll y = cn[N];
-	for (int x = 1, i = M - 1, j = 0; x <= en[M]; ++x) {
+	for (int x = 1, i = M - 1, j = 0; x <= X; ++x) {
 		if (e[i].n == 0) --i;
 		S -= e[i].c; e[i].n--;
 
@@ -44,7 +45,7 @@ int solve() {
 			++j;
 		}
 
-		ll cur = S + x * y + E;
+		ll cur = S + E + x * y;
 		if (cur < min_cut)
 			min_cut = cur;
 	}

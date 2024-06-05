@@ -11,30 +11,30 @@ struct E {
 	bool operator<(const E& o) const { return c < o.c; }
 } c[LEN], e[LEN];
 
-ll cn[LEN], cs[LEN], en[LEN], es[LEN];
-
 int N, M;
 
 int solve() {
-	for (int i = 0; i < N; ++i) std::cin >> c[i].n >> c[i].c;
-	for (int i = 0; i < M; ++i) std::cin >> e[i].n >> e[i].c;
+	ll cn = 0, cs = 0, en = 0, es = 0;
+	for (int i = 0; i < N; ++i) {
+		std::cin >> c[i].n >> c[i].c;
+		cn += c[i].n;
+		cs += (ll)c[i].n * c[i].c;
+
+	}
+	for (int i = 0; i < M; ++i) {
+		std::cin >> e[i].n >> e[i].c;
+		en += e[i].n;
+		es += (ll)e[i].n * e[i].c;
+	}
 	
 	std::sort(c, c + N);
 	std::sort(e, e + M);
 
-	for (int i = 0; i < N; ++i) {
-		cn[i + 1] = cn[i] + c[i].n;
-		cs[i + 1] = cs[i] + (ll)c[i].n * c[i].c;
-	}
-	for (int i = 0; i < M; ++i) {
-		en[i + 1] = en[i] + e[i].n;
-		es[i + 1] = es[i] + (ll)e[i].n * e[i].c;
-	}
-	ll min_cut = std::min(es[M], cs[N]);
-	ll S = es[M];
+	ll min_cut = es;
+	ll S = es;
 	ll E = 0;
-	ll X = std::min((ll)c[N - 1].c, en[M]);
-	ll y = cn[N];
+	ll X = std::min((ll)c[N - 1].c, en);
+	ll y = cn;
 	for (int x = 1, i = M - 1, j = 0; x <= X; ++x) {
 		if (e[i].n == 0) --i;
 		S -= e[i].c; e[i].n--;
@@ -49,7 +49,7 @@ int solve() {
 		if (cur < min_cut)
 			min_cut = cur;
 	}
-	return min_cut >= cs[N];
+	return min_cut >= cs;
 }
 
 int main() {

@@ -14,11 +14,13 @@ impl Mu {
         let mut s: Vec<i64> = vec![0; len + 1];
         mu[1] = 1;
         for i in 1..len+1 {
+            s[i] = (s[i] + (i as i64) * (MOD + mu[i])) % MOD;
+            s[i] = ((i as i64) * s[i] + s[i - 1]) % MOD;
             if mu[i] == 0 { continue; }
             for j in (i*2..len+1).step_by(i) {
                 mu[j] -= mu[i];
+                s[j] = (s[j] + (i as i64) * (MOD + mu[i])) % MOD;
             }
-            s[i] = ((i as i64) * (MOD + mu[i]) + s[i - 1]) % MOD;
         }
 
         Mu {

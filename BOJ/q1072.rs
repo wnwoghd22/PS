@@ -10,7 +10,7 @@ fn main() {
         .map(|x| x.parse().unwrap())
         .collect();
     let [x, y] = v[..] else { panic!(); };
-    if x == y { println!("-1"); return; }
+    if y * 100 / x >= 99 { println!("-1"); return; }
 
     let z = y * 100 / x;
     let mut l = 0;

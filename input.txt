@@ -1,3 +1,5 @@
-Hello
-Baekjoon
-Online Judge
+235 4
+bein 20
+123456 700
+mnpqr 130
+tuvwxyz 4000

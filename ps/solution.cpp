@@ -3,7 +3,7 @@
 #include <vector>
 
 typedef long long ll;
-const int LEN = 200'001;
+const int LEN = 200'002;
 
 std::vector<ll> p;
 
@@ -39,13 +39,14 @@ int main() {
 	}
 	std::sort(p.begin(), p.end());
 	p.erase(std::unique(p.begin(), p.end()), p.end());
-	for (int i = 4; i <= N; ++i) {
+	A[N + 1] = 1e15;
+	for (int i = 3; i <= N + 1; ++i) {
 		ll a = A[i - 2] - A[i - 3] - 1;
 		ll b = A[i - 1] - A[i - 2] + 1;
 		ll c = A[i] - A[i - 1] - 1;
 		if (a < c) std::swap(a, c);
-		update(b, b + c - 1, 1, 1); 
-		update(b + c, b + a, c, 0);
+		update(b, b + c, 1, 1); 
+		update(b + c + 1, b + a, c, 0);
 		update(a + b + 1, a + b + c, c - 1, -1);
 	}
 	for (int i = 0; i < Q; ++i)

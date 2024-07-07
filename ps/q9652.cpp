@@ -5,6 +5,7 @@
 
 #include <cassert>
 
+const int INF = 1e9;
 const int LEN = 1001;
 char S[LEN * 30];
 
@@ -22,8 +23,17 @@ void dfs(int u) {
 int dfs(int u, int k) {
 	int& ref = dp[u][k];
 	if (~ref) return ref;
-	ref = 0;
-
+	ref = INF;
+	if (!~L[u] && !~R[u]) {
+		if (k > 1) return INF;
+		return ref = B[u] ^ k;
+	}
+	if (k & 1) {
+		ref = std::min(ref, dfs(L[u], (k + 1) / 2) + dfs(R[u], k / 2));
+		ref = std::min(ref, dfs(L[u], k / 2) + dfs(R[u], (k + 1) / 2));
+	}
+	else ref = std::min(ref, dfs(L[u], k / 2) + dfs(R[u], k / 2));
+	return ref;
 }
 
 int main() {
@@ -62,6 +72,8 @@ int main() {
 		// dfs(0); std::cout << '\n';
 		memset(dp, -1, sizeof dp);
 
-
+		int ret = dfs(0, C[0]);
+		if (ret == INF) std::cout << "impossible\n";
+		else std::cout << ret / 2 << '\n';
 	}
 }

@@ -47,5 +47,5 @@ int main() {
 	std::cin >> N;
 	hanoi(N, 1, 2, 3, 1);
 	std::cout << len << '\n';
-	// for (int i = 0; i < len; ++i) std::cout << u[i] << ' ' << v[i] << '\n';
+	for (int i = 0; i < len; ++i) std::cout << u[i] << ' ' << v[i] << '\n';
 }

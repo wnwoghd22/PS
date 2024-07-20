@@ -20,13 +20,14 @@ fn main() {
         for _ in 0..n {
             let w: Vec<usize> = iter.next().unwrap().unwrap()
                 .split_whitespace().map(|x| x.parse().unwrap()).collect();
-            let mut cur = vec![0; h+1];
+            let mut cur = dp.clone();
             for i in 0..10 {
                 for j in w[i]..h+1 {
                     cur[j] = max(cur[j], dp[j - w[i]] + SCORE[i]);
                 }
             }        
             dp = cur;
+            println!("{:?}", dp);
         }
     
         _ = writeln!(writer, "{:.2}", (dp[h] as f64) / n as f64 / 10.);

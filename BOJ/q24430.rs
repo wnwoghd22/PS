@@ -21,8 +21,8 @@ fn main() {
         p[v[0]][v[1]] = 1;
     }
 
-    for i in 1..n+1 {
-        for j in 1..n+1 {
+    for i in 1..=n {
+        for j in 1..=n {
             let (a1, a2) = if dp[i-1][j].0 > dp[i][j-1].0 {
                 dp[i-1][j]
             } else if dp[i-1][j].0 < dp[i][j-1].0 {

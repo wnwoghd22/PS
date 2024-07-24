@@ -8,7 +8,7 @@ fn main() {
     let mut writer = std::io::BufWriter::new(std::io::stdout());
     let tc: usize = iter.next().unwrap().unwrap().trim().parse().unwrap();
 
-    for t in 1..tc+1 {
+    for t in 1..=tc {
         _ = writeln!(writer, "Data Set {}:", t);
         
         let v: Vec<usize> = iter.next().unwrap().unwrap()

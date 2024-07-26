@@ -3,10 +3,12 @@ use std::collections::{BinaryHeap};
 
 fn main() {
     let mut iter = io::stdin().lock().lines();
+    let mut writer = io::BufWriter::new(io::stdout());
     while let Some(line) = iter.next() {
         let line = line.unwrap();
         let mut stack: Vec<usize> = vec![];
-        let mut g: Vec<Vec<usize>> = vec![vec![]; 51];
+        let mut sum: Vec<usize> = vec![0; 51];
+        let mut cnt: Vec<usize> = vec![0; 51];
         let mut pq: BinaryHeap<usize> = BinaryHeap::new();
         let mut cur = 0;
         for c in line.as_bytes() {
@@ -17,23 +19,42 @@ fn main() {
                 cur = 0;
             } else if *c == b')' {
                 if stack[stack.len() - 1] != 0 {
-                    g[cur].push(stack[stack.len() - 1]);
-                    g[stack[stack.len() - 1]].push(cur);
-                    cur = stack[stack.len() - 1];
+                    sum[cur] += stack[stack.len() - 1];
+                    cnt[cur] += 1;
+                    sum[stack[stack.len() - 1]] += cur;
+                    cnt[stack[stack.len() - 1]] += 1;
                 }
+                cur = stack[stack.len() - 1];
                 stack.pop();
             }
         }
+        // println!("{:?}", cnt);
+        // println!("{:?}", sum);
+
         for  i in 1..=50 {
-            if g[i].len() == 1 {
+            if cnt[i] == 1 {
                 pq.push(50 - i);
             }
         }
+        let mut f = false;
         while let Some(x) = pq.pop() {
             let x = 50 - x; // minimal leaf
-            // print!("{} ", x);
-            
+            if cnt[x] != 1 { continue; }
+            let adj = sum[x];
+            // print!("node {} ", x);
+            if f {
+                _ = write!(writer, " "); 
+            } else {
+                f = true;
+            }
+            _ = write!(writer, "{}", adj);
+            sum[adj] -= x;
+            cnt[adj] -= 1;
+            if cnt[adj] == 1 {
+                pq.push(50 - adj);
+            }
         }
-        println!("");
+        _ = write!(writer, "\n");
     }
+    writer.flush().unwrap();
 }

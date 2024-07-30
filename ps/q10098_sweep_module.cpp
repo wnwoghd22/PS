@@ -12,6 +12,14 @@ int N;
 std::vector<int> g[LEN]; // above lines
 struct Pos { int x, y; } pos[LEN];
 
+void match(int u, int v, int l, int r) {
+#ifdef JAY_MODULE_DEBUG
+    std::cout << "facing pair: " << u << ' ' << v << '\n';
+    std::cout << "    facing range: " << l << ' ' << r << '\n';
+#endif
+    g[u].push_back(v);
+}
+
 ll dist(const Pos& p1, const Pos& p2) { return (ll)(p1.x - p2.x) * (p1.x - p2.x) + (ll)(p1.y - p2.y) * (p1.y - p2.y); }
 
 struct Line {
@@ -187,13 +195,15 @@ public:
         assert(root);
 
         Node* x = find(l); // first segment
+        assert(x->val.l <= l);
+
         if (x->val.r < l) { // if segment is out of range: find very right one
             x = x->r;
             while (x->l) x = x->l;
         }
 
         if (x->val.r > r) { // if splitted
-            g[i].push_back(x->val.i);
+            match(i, x->val.i, l, r);
             int nl = r, nr = x->val.r, ni = x->val.i;
             x->val.r = l; // split
             if (x->val.l == l) pop(x); // and pop if left is covered.
@@ -201,9 +211,9 @@ public:
             return;
         }
 
+        match(i, x->val.i, l, x->val.r); // match two of them
         x->val.r = l; // left side of segment is covered by query segment
-        g[i].push_back(x->val.i); // match two of them
-        if (x->val.r == x->val.l) pop(x); // and pop if all range covered
+        if (x->val.r == x->val.l) pop(x); // pop if all range covered
 
         while (x = find(l)) { // find leftmost
             if (x->val.r == l) {
@@ -211,7 +221,7 @@ public:
                 x = x->r;
                 while (x->l) x = x->l; // find very right segment
             }
-            g[i].push_back(x->val.i); // match two of them
+            match(i, x->val.i, x->val.l, std::min(r, x->val.r)); // match two of them
             if (x->val.r > r) { // if right segment is not covered totally
                 x->val.l = r;
                 break; // then, query range is sweeped. return

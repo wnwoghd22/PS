@@ -216,11 +216,12 @@ public:
         if (x->val.r == x->val.l) pop(x); // pop if all range covered
 
         while (x = find(l)) { // find leftmost
-            if (x->val.r == l) {
+            if (x->val.r <= l) {
                 if (!x->r) return; // no more right segment
                 x = x->r;
                 while (x->l) x = x->l; // find very right segment
             }
+            if (x->val.l > r) return;
             match(i, x->val.i, x->val.l, std::min(r, x->val.r)); // match two of them
             if (x->val.r > r) { // if right segment is not covered totally
                 x->val.l = r;

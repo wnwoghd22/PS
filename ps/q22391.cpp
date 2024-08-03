@@ -32,7 +32,7 @@ int f(ll x) {
 					continue;
 				}
 
-				int c = b + !!(bit & 1);
+				int c = b + !(bit & 1);
 				ret += (1 << k) - 2 + c;
 
 				if (d[k] < j) break;
@@ -44,7 +44,7 @@ int f(ll x) {
 				}
 
 				if (d[k] > j) {
-					int c = b + !!(bit & 2);
+					int c = b + !(bit & 2);
 					ret += (1 << k) - 2 + c;
 					break;
 				}
@@ -70,7 +70,7 @@ int f(ll x) {
 					continue;
 				}
 
-				int c = b + !!(bit & 1);
+				int c = b + !(bit & 1);
 				ret += (1 << k) - 2 + c;
 				
 				if (d[k] < i) break;
@@ -78,7 +78,7 @@ int f(ll x) {
 				if (d[k] == i) continue;
 				
 				if (d[k] > i) {
-					int c = b + !!(bit & 2);
+					int c = b + !(bit & 2);
 					ret += (1 << k) - 2 + c;
 					break;
 				}
@@ -103,7 +103,7 @@ ll solve(ll n) {
 }
 
 int main() {
-	std::cout << f(22) << '\n';
+	// std::cout << f(22) << '\n';
 
 	ll N;
 	while (1) {

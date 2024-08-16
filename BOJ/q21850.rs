@@ -7,7 +7,7 @@ const INF: i64 = 1_000_000_000;
 /// dp[u][0]: min cost making all nodes of subtree 0
 /// dp[u][1]: min cost making nodes of subtree 0 except self
 /// dp[u][2]: min cost making all nodes of subtree 0 with toggling self
-/// dp[u][3]: min cost making nodes of subtree 0 excpet self, with toggling self
+/// dp[u][3]: min cost making nodes of subtree 0 except self, with toggling self
 fn dfs(u: usize, p: usize, g: &Vec<Vec<usize>>, dp: &mut Vec<Vec<i64>>, b: &Vec<i32>) {
     let on = b[u - 1] as usize;
     dp[u][on] = 0; // self. no toggle is enough
@@ -19,10 +19,6 @@ fn dfs(u: usize, p: usize, g: &Vec<Vec<usize>>, dp: &mut Vec<Vec<i64>>, b: &Vec<
         dfs(v, u, g, dp, b);
 
         let (x0, x1, x2, x3) = (dp[u][0], dp[u][1], dp[u][2], dp[u][3]);
-        // let x0 = dp[u][0];
-        // let x1 = dp[u][1];
-        // let x2 = dp[u][2];
-        // let x3 = dp[u][3];
         dp[u][0] = min(x0 + dp[v][0], x1 + dp[v][2]);
         dp[u][1] = min(x0 + dp[v][2], x1 + dp[v][0]);
         dp[u][2] = min(x2 + dp[v][1], x3 + dp[v][3]);
@@ -31,17 +27,17 @@ fn dfs(u: usize, p: usize, g: &Vec<Vec<usize>>, dp: &mut Vec<Vec<i64>>, b: &Vec<
 }
 
 fn main() {
-    let mut iter = io::stdin().lock().lines().map(|x| x.unwrap());
-    let n: usize = iter.next().unwrap().trim().parse().unwrap();
+    let mut iter = io::stdin().lock().lines();
+    let n: usize = iter.next().unwrap().unwrap().trim().parse().unwrap();
     let mut g: Vec<Vec<usize>> = vec![vec![]; n + 1];
     let mut dp: Vec<Vec<i64>> = vec![vec![0, 0, 0, 0]; n + 1];
     for _ in 0..n-1 {
-        let e: Vec<usize> = iter.next().unwrap()
+        let e: Vec<usize> = iter.next().unwrap().unwrap()
             .split_whitespace().map(|x| x.parse().unwrap()).collect();
         g[e[0]].push(e[1]);
         g[e[1]].push(e[0]);
     }
-    let mut v: Vec<i32> = iter.next().unwrap()
+    let mut v: Vec<i32> = iter.next().unwrap().unwrap()
         .split_whitespace().map(|x| x.parse().unwrap()).collect();
 
     dfs(1, 0, &g, &mut dp, &mut v);

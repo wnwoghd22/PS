@@ -17,14 +17,14 @@ int main() {
 		return 0;
 	}
 
-	for (int i = 1; S[i]; ++i) s[i - 1] = S[i] - S[i - 1];
+	for (int i = 1; S[i]; ++i) s[i - 1] = (S[i] - S[i - 1] + 26) % 26;
 	for (int i = 1, j = 0; i < N - 1; ++i) {
 		while (j && s[i] != s[j]) j = fail[j - 1];
 		if (s[i] == s[j]) fail[i] = ++j;
 	}
-	t[N - 1] = T[0] - T[N - 1];
+	t[N - 1] = (T[0] - T[N - 1] + 26) % 26;
 	for (int i = 1; T[i]; ++i) 
-		t[N + i - 1] = t[i - 1] = T[i] - T[i - 1];
+		t[N + i - 1] = t[i - 1] = (T[i] - T[i - 1] + 26) % 26;
 
 	// for (int i = 0; i < N - 1; ++i) std::cout << s[i] << ' '; std::cout << '\n';
 	// for (int i = 0; i < N * 2 - 1; ++i) std::cout << t[i] << ' '; std::cout << '\n';

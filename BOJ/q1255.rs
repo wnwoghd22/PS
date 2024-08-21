@@ -94,7 +94,7 @@ fn main() {
         // println!("{:?}", s);
 
         let p1: Vec<i64> = s[0][1..s[0].len()-1].split(',').map(|x| x.parse().unwrap()).collect();
-        let p2: Vec<i64> = s[2][1..s[0].len()-1].split(',').map(|x| x.parse().unwrap()).collect();
+        let p2: Vec<i64> = s[2][1..s[2].len()-1].split(',').map(|x| x.parse().unwrap()).collect();
         
         walls.push(Seg {
             p1: Pos {
@@ -161,6 +161,36 @@ fn main() {
             if !blocked(&walls, &walls[j].p2, &people[i]) {
                 dist[i + 1].push((euc(&walls[j].p2, &people[i]), j2));
                 dist[j2].push((euc(&walls[j].p2, &people[i]), i + 1));
+            }
+        }
+    }
+
+    for j in 0..m {
+        let j1 = n + 1 + j * 2;
+        let j2 = j1 + 1;
+        for k in 0..m {
+            if j == k { continue; }
+            let k1 = n + 1 + k * 2;
+            let k2 = k1 + 1;
+
+            if !blocked(&walls, &walls[j].p1, &walls[k].p1) {
+                dist[j1].push((euc(&walls[j].p1, &walls[k].p1), k1));
+                dist[k1].push((euc(&walls[j].p1, &walls[k].p1), j1));
+            }
+            
+            if !blocked(&walls, &walls[j].p2, &walls[k].p1) {
+                dist[j2].push((euc(&walls[j].p2, &walls[k].p1), k1));
+                dist[k1].push((euc(&walls[j].p2, &walls[k].p1), j2));
+            }
+
+            if !blocked(&walls, &walls[j].p1, &walls[k].p2) {
+                dist[j1].push((euc(&walls[j].p1, &walls[k].p2), k2));
+                dist[k2].push((euc(&walls[j].p1, &walls[k].p2), j1));
+            }
+
+            if !blocked(&walls, &walls[j].p2, &walls[k].p2) {
+                dist[j2].push((euc(&walls[j].p2, &walls[k].p2), k2));
+                dist[k2].push((euc(&walls[j].p2, &walls[k].p2), j2));
             }
         }
     }

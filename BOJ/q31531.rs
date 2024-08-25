@@ -11,7 +11,7 @@ fn main() {
         arr.push((v[0], v[1]));
     }
     arr.sort();
-    let mut ret = 0;
+    let mut ret: i64 = 0;
     let mut _l = 0;
     let mut r = 0;
     let mut m = 0;

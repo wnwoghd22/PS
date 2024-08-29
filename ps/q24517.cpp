@@ -18,9 +18,9 @@ int f(int n, int b) {
 
 int qry(int a, int b, int k) {
 	int n = b - a;
-	int games = n / k;
 	int s = k * (k + 1) / 2;
-	int ret = f(n % s, 1024 - (1 << k - 1));
+	int games = n / s;
+	int ret = f(n % s, 1024 - (1 << k));
 	return ret ^ (games & k & 1);
 }
 

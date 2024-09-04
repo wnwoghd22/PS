@@ -1,7 +1,6 @@
 use std::io::{self, BufRead, Write};
-use std::cmp::Ordering;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 struct Pos {
     x: i64,
     y: i64,
@@ -18,23 +17,75 @@ fn ccw(p1: &Pos, p2: &Pos, p3: &Pos) -> i32 {
     else { -1 }
 }
 
-fn intersect(p1: &Pos, p2: &Pos, q1: &Pos, q2: &Pos) -> bool {
-    ccw(p1, p2, q1) * ccw(p1, p2, q2) < 0 && ccw(q1, q2, p1) * ccw(q1, q2, p2) < 0
+fn conquer(l: usize, m: usize, r: usize, arr: &mut Vec<Pos>, tmp: &mut Vec<Pos>, pvt: &Pos) -> i64 {
+    let mut i = l;
+    let mut j = m + 1;
+    let mut t = l;
+    let mut count = 0;
+    while i <= m && j <= r {
+        if cross(pvt, &arr[i], &arr[j]) > 0 {
+            tmp[t] = arr[i]; 
+            t += 1; i += 1;
+        }
+        else {
+            tmp[t] = arr[j];
+            t += 1; j += 1;
+            count += m - i + 1;
+        }
+    }
+    while i <= m { tmp[t] = arr[i]; t += 1; i += 1; }
+    while j <= r { tmp[t] = arr[j]; t += 1; j += 1; }
+    while i <= r { arr[i] = tmp[i]; i += 1; }
+    count as i64
+}
+
+fn divide(l: usize, r: usize, arr: &mut Vec<Pos>, tmp: &mut Vec<Pos>, pvt: &Pos) -> i64 {
+    let mut ret = 0;
+    if l < r {
+        let m = l + r >> 1;
+        ret += divide(l, m, arr, tmp, pvt);
+        ret += divide(m + 1, r, arr, tmp, pvt);
+        ret += conquer(l, m, r, arr, tmp, pvt);
+    }
+    ret
 }
 
 fn merge_sort(arr: &mut Vec<Pos>, tmp: &mut Vec<Pos>, pvt: &Pos) -> i64 {
-
-    0
+    divide(0, arr.len() - 1, arr, tmp, pvt)
 }
 
 fn query(p1: &Pos, p2: &Pos, p3: &Pos, p4: &Pos, ant: &mut Vec<Pos>) -> i64 {
     let mut tmp: Vec<Pos> = vec![Pos { x: 0, y: 0 }; ant.len()];
-    merge_sort(ant, &mut tmp, p1);
+    merge_sort(ant, &mut tmp, p2);
     let x = merge_sort(ant, &mut tmp, p3);
 
-    // merge_sort(ant, &mut tmp, )
+    let mut fuck: Vec<Pos> = vec![];
+    for &mut p in &mut *ant {
+        if ccw(p2, p4, &p) < 0 {
+            fuck.push(p);
+        }
+    }
+    let y = if fuck.len() > 0 {
+        merge_sort(&mut fuck, &mut tmp, p2);
+        merge_sort(&mut fuck, &mut tmp, p4)
+    } else { 0 };
 
-    0
+    let mut suck: Vec<Pos> = vec![];
+    for &mut p in &mut *ant {
+        if ccw(p1, p3, &p) < 0 {
+            suck.push(p);
+        }
+    }
+    let z = if suck.len() > 0 {
+        merge_sort(&mut suck, &mut tmp, p1);
+        merge_sort(&mut suck, &mut tmp, p3)
+    } else { 0 };
+
+    let cmb1 = ant.len() as i64 * (ant.len() as i64 - 1) / 2;
+    let cmb2 = fuck.len() as i64 * (fuck.len() as i64 - 1) / 2;
+    let cmb3 = suck.len() as i64 * (suck.len() as i64 - 1) / 2;
+
+    cmb1- x + y - cmb2 + z - cmb3
 }
 
 fn main() {
@@ -64,13 +115,20 @@ fn main() {
         for _ in 0..q {
             let v: Vec<usize> = iter.next().unwrap().unwrap()
                 .split_whitespace().map(|x| x.parse().unwrap()).collect();
-            _ = write!(writer, "{} ", 
-                query(
-                    &hull[v[0]], &hull[(v[0] + 1) % n],
-                    &hull[v[1]], &hull[(v[1] + 1) % n],
-                    &mut ant,
-                )
-            );
+
+            let mut x: Vec<Pos> = vec![];
+            let p1 = &hull[v[0]];
+            let p2 = &hull[(v[0] + 1) % n];
+            let p3 = &hull[v[1]];
+            let p4 = &hull[(v[1] + 1) % n];
+            for p in &ant {
+                if ccw(p1, p4, p) > 0 && ccw(p2, p3, p) < 0 {
+                    x.push(*p);
+                }
+            }
+            _ = write!(writer, "{} ", if x.len() > 0 {
+                query(p1, p2, p3, p4, &mut x)
+            } else { 0 });
         }
         _ = writeln!(writer); 
     }

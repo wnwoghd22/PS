@@ -6,11 +6,7 @@ fn main() {
     let mut s = String::new();
     io::stdin().read_line(&mut s).unwrap();
     let d: Vec<u8> = s.trim().bytes().collect();
-    let mut eff = 1u64;
     let mut ret = 0u64;
-    for &c in d.iter().rev() {
-        ret += ctoi(c) as u64 * eff;
-        eff *= 16;
-    }
+    for c in d { ret = ret * 16 + ctoi(c) as u64; }
     println!("{}", ret);
 }

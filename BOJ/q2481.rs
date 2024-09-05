@@ -34,8 +34,13 @@ fn main() {
     }
 
     let m: usize = iter.next().unwrap().unwrap().trim().parse().unwrap();
+    'query:
     for _ in 0..m {
         let mut u: usize = iter.next().unwrap().unwrap().trim().parse().unwrap();
+        if d[u] == -1 {
+            _ = writeln!(writer, "-1");
+            continue 'query;
+        }
         let mut path: Vec<usize> = vec![];
         'tracing:
         while u != 1 {

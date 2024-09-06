@@ -123,7 +123,7 @@ fn main() {
             let p3 = &hull[v[1]];
             let p4 = &hull[(v[1] + 1) % n];
             for p in &ant {
-                if ccw(p1, p4, p) > 0 && ccw(p2, p3, p) < 0 {
+                if ccw(p1, p4, p) >= 0 && ccw(p2, p3, p) <= 0 {
                     x.push(*p);
                 }
             }

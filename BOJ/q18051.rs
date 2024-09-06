@@ -35,6 +35,7 @@ fn conquer(l: usize, m: usize, r: usize, arr: &mut Vec<Pos>, tmp: &mut Vec<Pos>,
     }
     while i <= m { tmp[t] = arr[i]; t += 1; i += 1; }
     while j <= r { tmp[t] = arr[j]; t += 1; j += 1; }
+    i = l;
     while i <= r { arr[i] = tmp[i]; i += 1; }
     count as i64
 }

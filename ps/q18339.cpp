@@ -15,7 +15,7 @@ struct SegMax {
 		int m = s + e >> 1, _l = i << 1, _r = i << 1 | 1;
 		update(x, d, s, m, _l);
 		update(x, d, m + 1, e, _r);
-		t[i] = A[_r] > A[_l] ? _r : _l;
+		t[i] = A[t[_r]] > A[t[_l]] ? t[_r] : t[_l];
 	}
 	int get(int l, int r, int s = 1, int e = N, int i = 1) {
 		if (r < s || e < l) return N + 1;
@@ -35,22 +35,23 @@ int main() {
 		L.update(N + 1 - i, H[i] + X[i] + INF);
 		R.update(i, H[i] - X[i] + INF);
 	}
-	L.A[N + 1] = R.A[N + 1] = INF;
-	L.update(N + 1 - S, 0);
-	R.update(S, 0);
+	L.update(N + 1 - S, -INF);
+	R.update(S, -INF);
 	ll ret = 0;
 	for (int q = 1, l, r, x = S; q < N; ++q) {
 		l = L.get(N + 1 - x, N);
 		r = R.get(x, N);
-		std::cout << l << ' ' << r << '\n';
 		if (l > N) l = N + 1 - r;
 		else if (r > N) r = N + 1 - l;
 		else if (R.A[r] + X[x] > L.A[l] - X[x]) l = N + 1 - r;
-		else r = N + 1 - l;
+		else if (R.A[r] + X[x] < L.A[l] - X[x]) r = N + 1 - l;
+		else { // check disance
+			if (X[r] - X[x] < X[x] - X[N + 1 - l]) l = N + 1 - r;
+			else r = N + 1 - l;
+		}
 		
-		std::cout << r << '\n';
-		L.update(l, 0);
-		R.update(r, 0);
+		L.update(l, -INF);
+		R.update(r, -INF);
 		ret += std::abs(X[x] - X[r]);
 		x = r;
 	}

@@ -13,14 +13,16 @@ fn main() {
     let mut ret = 0;
     let mut a: Vec<i32> = vec![];
     let mut cur = -1;
+    let mut cnt = 0;
     for x in arr {
         if x != cur {
             a.push(x);
-            cur = 1;
+            cur = x;
+            cnt = 1;
         } else {
-            cur += 1;
+            cnt += 1;
         }
-        ret = max(ret, cur);
+        ret = max(ret, cnt);
     }
     let mut dp: Vec<Vec<i32>> = vec![vec![0; n]; n];
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <map>
 
 typedef long long ll;
 const int LEN = 200'001;
@@ -83,7 +84,8 @@ class SplayTree {
 	}
 public:
 	SplayTree() : root(0) {}
-	~SplayTree() { if (root) delete root; }
+	~SplayTree() { if (root) delete root; root = 0; }
+	void clear() { if (root) delete root; root = 0; }
 	bool insert(int i) {
 		if (!root) {
 			root = new Node(i);
@@ -172,33 +174,67 @@ public:
 	}
 } s;
 
-int N;
+int N[3];
+bool poly[3];
+
+Pos A[3][LEN];
 
 int main() {
 	std::cin.tie(0)->sync_with_stdio(0);
-	std::cin >> N;
-	for (int i = 0; i < N; ++i) {
-		std::cin >> segments[i].l.x >> segments[i].l.y >> segments[i].r.x >> segments[i].r.y;
-		if (segments[i].r < segments[i].l) std::swap(segments[i].l, segments[i].r);
-		segments[i].l.i = i; segments[i].l.d = 1;
-		segments[i].r.i = i; segments[i].r.d = -1;
-		pos[i << 1] = segments[i].l;
-		pos[i << 1 | 1] = segments[i].r;
-	}
-	std::sort(pos, pos + N * 2);
-	for (int i = 0; i < N * 2; ++i) {
-		if (~pos[i].d) {
-			if (s.insert(pos[i].i)) {
-				std::cout << 1;
-				return 0;
+	for (int k = 0; k < 3; ++k) {
+		// std::cout << "test " << k << '\n';
+		s.clear();
+		std::cin >> N[k];
+		poly[k] = 1;
+		std::map<ll, int> cnt;
+		for (int i = 0; i < N[k]; ++i) {
+			std::cin >> A[k][i].x >> A[k][i].y;
+			ll key = A[k][i].x * 1'000'000ll + A[k][i].y;
+			if (cnt.find(key) != cnt.end()) {
+				poly[k] = 0;
+				break;
+			}
+			cnt[key] = 1;
+		}
+		if (!poly[k]) break;
+
+		for (int i = 0, j; i < N[k]; ++i) {
+			j = (i + 1) % N[k];
+			segments[i] = { A[k][i], A[k][j] };
+			if (segments[i].r < segments[i].l) std::swap(segments[i].l, segments[i].r);
+			segments[i].l.i = i; segments[i].l.d = 1;
+			segments[i].r.i = i; segments[i].r.d = -1;
+			pos[i << 1] = segments[i].l;
+			pos[i << 1 | 1] = segments[i].r;
+		}
+		std::sort(pos, pos + N[k] * 2);
+		for (int i = 0; i < N[k] * 2; ++i) {
+			if (~pos[i].d) {
+				if (s.insert(pos[i].i)) {
+					poly[k] = 0;
+					break;
+				}
+			}
+			else {
+				if (s.pop(pos[i].i)) {
+					poly[k] = 0;
+					break;
+				}
 			}
 		}
-		else {
-			if (s.pop(pos[i].i)) {
-				std::cout << 1;
-				return 0;
-			}
-		}
 	}
-	std::cout << 0;
+	if (!poly[0]) {
+		std::cout << "Aastria is not a polygon";
+		return 0;
+	}
+	if (!poly[1]) {
+		std::cout << "Abstria is not a polygon";
+		return 0;
+	}
+	if (!poly[2]) {
+		std::cout << "Aabstria is not a polygon";
+		return 0;
+	}
+
+	std::cout << "Not implemented";
 }

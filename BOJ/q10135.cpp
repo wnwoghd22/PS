@@ -9,22 +9,14 @@ const int LEN = 2e5 + 5;
 
 int N, I[LEN], K[LEN];
 struct Pos {
-	int x, y;
-	int idx;
-	Pos(int X = 0, int Y = 0, int IDX = 0) : x(X), y(Y), idx(IDX) {}
-	bool operator == (const Pos& p) const { return x == p.x && y == p.y; }
-	bool operator != (const Pos& p) const { return x != p.x || y != p.y; }
-	bool operator < (const Pos& p) const { return x == p.x ? y < p.y : x < p.x; }
-	Pos operator + (const Pos& p) const { return { x + p.x, y + p.y }; }
-	Pos operator - (const Pos& p) const { return { x - p.x, y - p.y }; }
-	Pos operator * (const int& n) const { return { x * n, y * n }; }
-	Pos operator / (const int& n) const { return { x / n, y / n }; }
-	ll operator * (const Pos& p) const { return (ll)x * p.x + (ll)y * p.y; }
-	ll operator / (const Pos& p) const { return (ll)x * p.y - (ll)y * p.x; }
+	int x, y, idx;
+	Pos operator+(const Pos& p) const { return { x + p.x, y + p.y }; }
+	Pos operator-(const Pos& p) const { return { x - p.x, y - p.y }; }
+	ll operator*(const Pos& p) const { return (ll)x * p.x + (ll)y * p.y; }
+	ll operator/(const Pos& p) const { return (ll)x * p.y - (ll)y * p.x; }
 	friend std::istream& operator >> (std::istream& is, Pos& p) { is >> p.x >> p.y; return is; }
-	friend std::ostream& operator << (std::ostream& os, const Pos& p) { os << p.x << " " << p.y; return os; }
 } X, Y, pos[LEN];
-const Pos O = Pos(0, 0);
+const Pos O = { 0, 0 };
 ll cross(const Pos& d1, const Pos& d2, const Pos& d3) { return (d2 - d1) / (d3 - d2); }
 ll dot(const Pos& d1, const Pos& d2, const Pos& d3) { return (d2 - d1) * (d3 - d2); }
 bool cmp_X(const Pos& p, const Pos& q) {

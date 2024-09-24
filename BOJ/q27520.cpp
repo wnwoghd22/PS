@@ -4,7 +4,7 @@
 #include <cmath>
 
 typedef long long ll;
-typedef double ld;
+typedef long double ld;
 const ld TOL = 1e-7;
 const ll LEN = 2e4;
 
@@ -18,7 +18,7 @@ struct V {
 	V operator-() const { return { -x, -y }; }
 	ld operator*(const V& o) const { return y * o.x - x * o.y; }
 	bool operator<(const V& o) const { return z(y - o.y) ? x < o.x : y < o.y; }
-} pos[2], hull[LEN];
+} hull[LEN * 2];
 const V Zero = { 0, 0 };
 ld dist(const V& p1, const V& p2) {
 	return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
@@ -87,7 +87,7 @@ int half_plane_intersection(ld m) {
 }
 
 ld binary_search() {
-	ld l = 0, r = 1e12, m, ret = r;
+	ld l = 0, r = 1e17, m, ret = r;
 	while (l < r) {
 		m = (l + r) / 2;
 		if (half_plane_intersection(m)) {
@@ -107,11 +107,11 @@ int main() {
 		d = gcd(std::abs(a), std::abs(b));
 		ld dx = b / d;
 		ld dy = a / d;
-		if (dy > 0 || dy == 0 && dx > 0) { dx *= -1; dy *= -1; c *= -1; }
+		if (dy > 0 || a == 0 && dx > 0) { dx *= -1; dy *= -1; c *= -1; }
 		planes[i] = { { dx, dy }, (ld)c / d };
 	}
 	std::sort(planes, planes + N);
-	ld ret = binary_search();
+	ld ret = N <= 2 ? 0 : binary_search();
 	std::cout << std::fixed;
 	std::cout.precision(7);
 	std::cout << ret;

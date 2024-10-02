@@ -15,7 +15,7 @@ int main() {
 		C[i] = 1;
 		while (sp && h[S[sp - 1]] <= h[i]) {
 			j = S[--sp];
-			k = sp && h[S[sp - 1]] < h[i] ? sp - 1 : i;
+			k = sp && h[S[sp - 1]] < h[i] ? S[sp - 1] : i;
 			ret = (ret + ((ll)N - C[j]) * C[j] % MOD * (h[k] - h[j]) % MOD * (h[k] - h[j])) % MOD;
 			C[k] += C[j];
 		}
@@ -25,7 +25,7 @@ int main() {
 		int i = S[sp - 1];
 		int j = S[sp - 2];
 		ret = (ret + ((ll)N - C[i]) * C[i] % MOD * (h[j] - h[i]) % MOD * (h[j] - h[i])) % MOD;
-		C[i] += C[j];
+		C[j] += C[i];
 		sp--;
 	}
 	std::cout << ret;

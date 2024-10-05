@@ -1,25 +1,22 @@
 #include <vector>
-#include <iostream>
-
 #include "coreputer.h"
 
 std::vector<int> malfunctioning_cores(int N) {
 	std::vector<int> ret(N, 0);
+	std::vector<int> p(N);
 	std::vector<int> q;
 	int l = 0, r = N - 1, m;
 	while (l < r) {
 		m = l + r >> 1;
-		std::cout << "l: " << l << " r: " << r << " m: " << m << '\n';
 		q.clear();
 		for (int i = 0; i <= m; ++i) q.push_back(i);
-		if (run_diagnostic(q) >= 0) r = m;
+		if ((p[m] = run_diagnostic(q)) >= 0) r = m;
 		else l = m + 1;
 	}
 	ret[l] = 1;
-	
-	std::cout << "mid: " << l << '\n';
+	if (l == N - 1) return ret;
 
-	int cl = 0, cr = 0;
+	int cl = 1 - p[l], cr = 0;
 	for (int i = 0; i < l; ++i) {
 		q.clear();
 		for (int j = 0; j <= l; ++j) {
@@ -36,6 +33,7 @@ std::vector<int> malfunctioning_cores(int N) {
 		}
 		if (run_diagnostic(q) <= 0) cr += ret[i] = 1;
 	}
+	ret[N - 1] = cl > cr;
 
 	return ret;
 }

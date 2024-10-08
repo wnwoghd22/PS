@@ -11,4 +11,4 @@ int main() {
 	else ret = a1 * n0 + a0 <= c * n0;
 	std::cout << ret;
 }
-// main(a,b,c,d){scanf("%d%d%d%d",&a,&b,&c,&d);prinf("%d",c<a?0:b<(c-a)*d);}
+// main(a,b,c,d){scanf("%d%d%d%d",&a,&b,&c,&d);printf("%d",c>=a&&b<=(c-a)*d);}

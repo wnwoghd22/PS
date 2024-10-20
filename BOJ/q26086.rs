@@ -13,7 +13,7 @@ fn main() {
             .split_whitespace().map(|x| x.parse().unwrap()).collect();
         cmd.push(if v[0] == 0 { v[1] } else { -v[0] });
     }
-    println!("{:?}", cmd);
+    // println!("{:?}", cmd);
 
     let mut idx = 0;
     for i in (0..q).rev() {
@@ -29,12 +29,12 @@ fn main() {
         }
     }
     arr.sort();
-    println!("{:?}", arr);
+    // println!("{:?}", arr);
 
     let mut ret = VecDeque::from(arr);
     let mut is_front = true;
-    for i in idx+1..q {
-        if cmd[i] == -1 { panic!(); }
+    for i in idx..q {
+        if cmd[i] == -1 { continue; }
         if cmd[i] == -2 {
             is_front = !is_front;
         } else {

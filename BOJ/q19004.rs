@@ -35,10 +35,8 @@ impl Neg for Rational {
 }
 
 impl PartialEq for Rational {
-    fn eq(&self, other: &Self) -> bool {
-        let normalized_self = self.normalize();
-        let normalized_other = other.normalize();
-        normalized_self.0 == normalized_other.0 && normalized_self.1 == normalized_other.1
+    fn eq(&self, o: &Self) -> bool {
+        self.0 * o.1 == self.1 * o.0
     }
 }
 
@@ -106,7 +104,7 @@ fn main() {
             let v: Vec<i128> = iter.next().unwrap().unwrap()
                 .split_whitespace().map(|x| x.parse().unwrap()).collect();
             let (a, b) = (v[0], v[1]);
-            let p1 = Rational(y2 - b, a);
+            let p1 = Rational(y2 - b, a).normalize();
             let mut dir = 0;
             if Rational(x1, 1) < p1 && p1 <= Rational(x2, 1) {
                 pos.push((1, -p1, i, dir));
@@ -117,7 +115,7 @@ fn main() {
                 pos.push((2, -p2, i, dir));
                 dir += 1;
             }
-            let p3 = Rational(y1 - b, a);
+            let p3 = Rational(y1 - b, a).normalize();
             if Rational(x1, 1) <= p3 && p3 < Rational(x2, 1) {
                 pos.push((3, p3, i, dir));
                 dir += 1;
@@ -130,8 +128,6 @@ fn main() {
         }
         pos.sort();
 
-        println!("{:?}", pos);
-
         let mut idx = 1;
         seg[pos[0].2].0 = idx;
         seg[pos[0].2].1 = idx;
@@ -143,8 +139,6 @@ fn main() {
             }
         }
         seg.sort();
-
-        println!("{:?}", seg);
 
         let mut f = FenwickTree::new(idx);
         let mut ret: i64 = 0;

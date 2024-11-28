@@ -5,7 +5,8 @@
 typedef long long ll;
 const ll INF = 1e17;
 const int LEN = 100'001;
-int T, N, K, X[LEN], S[LEN];
+int T, N, K, X[LEN];
+ll S[LEN];
 std::vector<int> g[LEN];
 
 int f(int u, ll k, int p = -1) {

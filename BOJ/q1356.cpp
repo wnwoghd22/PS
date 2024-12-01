@@ -11,9 +11,6 @@ int main() {
 	r[len - 1] = d[len - 1];
 	for (int i = len - 1; i > 0; --i) r[i - 1] = r[i] * d[i - 1];
 
-	for (int i = 0; i < len; ++i) {
-		std::cout << "i:" << d[i] << ' ' << l[i] << ' ' << r[i] << '\n';
-	}
 	for (int i = 0; i < len - 1; ++i) {
 		if (l[i] == r[i + 1]) {
 			std::cout << "YES";

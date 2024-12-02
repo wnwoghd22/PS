@@ -12,7 +12,7 @@ std::vector<int> g[LEN];
 int f(int u, ll k, int p = -1) {
 	if ((S[u] = X[u]) > k) return K + 1;
 	int ret = 0;
-	std::priority_queue<int> pq;
+	std::priority_queue<ll> pq;
 	for (const int& v : g[u]) {
 		if (v == p) continue;
 		ret += f(v, k, u);

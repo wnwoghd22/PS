@@ -16,6 +16,10 @@ int main() {
 	std::cin.tie(0)->sync_with_stdio(0);
 	std::cin >> N >> M;
 	for (int i = 0; i < M; ++i) std::cin >> x[i];
+	int fast = std::max(x[0], N - x[M - 1]);
+	for (int i = 1; i < M; ++i)
+		fast = std::max(fast, (x[i] - x[i - 1]) / 2);
+
 	int l = 1, r = N, m, ret = N;
 	while (l <= r) {
 		m = l + r >> 1;
@@ -25,5 +29,5 @@ int main() {
 		}
 		else l = m + 1;
 	}
-	std::cout << ret;
+	std::cout << ret << ' ' << fast;
 }

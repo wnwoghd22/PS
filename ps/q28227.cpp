@@ -7,6 +7,7 @@ const int LEN = 200'001;
 const ld PI = 3.1415926535;
 
 ld intersect(const ll& x1, const ll& r1, const ll& x2, const ll& r2) {
+	if (x2 - r2 < x1 - r1) return x2 - r2;
 	return (r2 * r2 - x2 * x2 - r1 * r1 + x1 * x1) / (ld)(-2 * x2 + 2 * x1);
 }
 
@@ -30,7 +31,7 @@ int main() {
 		while (sp) {
 			j = st[sp - 1];
 			if (X[j] <= X[i] - R[i]) break;
-			if (R[i] * R[i] - (X[i] - X[j]) * (X[i] - X[j]) <= R[j] * R[j]) {
+			if ((ll)R[i] * R[i] - (ll)(X[i] - X[j]) * (X[i] - X[j]) <= (ll)R[j] * R[j]) {
 				S[i] += S[j];
 				l[i] = X[j];
 				break;

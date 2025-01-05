@@ -2,7 +2,6 @@
 
 typedef long long ll;
 
-// need to fix
 ll f(ll x) {
 	if (!x) return 0;
 	ll ret = 0, sum = 0, l = 0, d[20];
@@ -10,15 +9,23 @@ ll f(ll x) {
 		d[l++] = x % 10;
 		x /= 10;
 	}
-	int b = 0;
-	ret = (d[l - 1] - 1) / 2;
-	b = ~d[l - 1] & 1;
+	ret = d[l - 1] / 2;
+	int b = ~d[l - 1] & 1;
 	for (int i = 1, a; i < l; ++i) {
-		a = b ? 4 : d[l - i - 1] / 2;
-		ret = ret * 5 + 5 + a;
-		// b = 
+		a = d[l - i - 1];
+		ret = ret * 5 + 5;
+		if (!b) {
+			if (i & 1) { // even
+				b = a & 1;
+				ret += a / 2 + b;
+			}
+			else { // odd
+				ret += a / 2;
+				b = ~a & 1;
+			}
+		}	
 	}
-	return ret + 1;
+	return ret + !b;
 }
 
 int main() {

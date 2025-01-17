@@ -11,28 +11,47 @@ int A[LEN], S[LEN], nxt[32][LEN];
 std::map<int, int> map;
 std::vector<int> arr[LEN];
 
-int binary_search(int i, int x) {
-	int l = 0, r = arr[i].size() - 1, m, ret = 0;
+int lower_bound(int i, int x) {
+	int l = 0, r = arr[i].size() - 1, m, ret = -1;
 	while (l <= r) {
-		m = l + r >> 1;
-		if (arr[i][m] <= x) {
-			ret = std::max(ret, m);
+		m = (l + r) / 2;
+		if (arr[i][m] >= x) {
+			ret = m;
+			r = m - 1;
+		}
+		else {
 			l = m + 1;
 		}
-		else r = m - 1;
 	}
 	return ret;
 }
 
-// need to fix
+int upper_bound(int i, int x) {
+	int l = 0, r = arr[i].size() - 1, m, ret = -1;
+	while (l <= r) {
+		m = (l + r) / 2;
+		if (arr[i][m] <= x) {
+			ret = m;
+			l = m + 1;
+		}
+		else {
+			r = m - 1;
+		}
+	}
+	return ret;
+}
+
+
 ll query(int i, int x, int l, int r) {
+	if (map.find(x ^ S[i - 1]) == map.end()) return 0;
 	int k = map[x ^ S[i - 1]];
 
-	// int s = binary_search(k, l - 1);
-	// int e = binary_search(k, r);
-	// std::cout << "query[" << (x ^ S[i - 1]) << "]: " << s << ' ' << e << '\n';
+	int s = lower_bound(k, l);
+	int e = upper_bound(k, r);
 
-	return binary_search(k, r) - binary_search(k, l) + 1;
+	if (s == -1 || e == -1 || s > e) return 0;
+
+	return e - s + 1;
 }
 
 int main() {
@@ -57,11 +76,6 @@ int main() {
 				nxt[j][i - 1] = nxt[j][i];
 	}
 
-	// for (int j = 0; j < 2; ++j) {
-	//	for (int i = 1; i <= N; ++i) std::cout << nxt[j][i] << ' ';
-	//	std::cout << '\n';
-	// }
-
 	ll ret = 0;
 	for (int i = 1; i <= N; ++i) {
 		int k = A[i], l = i, r, b;
@@ -75,12 +89,13 @@ int main() {
 			}
 			
 			ll cur = query(i, k, l, r);
-			// std::cout << i << ':' << l << '~' << r << ": " << cur << '\n';
 			ret += cur;
 
 			if (!k || r == N) break;
 			else {
-				k ^= 1 << b;
+				for (int j = 0; j < 32; ++j)
+					if (k & (1 << j) && nxt[j][i] - 1 == r)
+						k ^= 1 << j;
 				l = r + 1;
 			}
 		}

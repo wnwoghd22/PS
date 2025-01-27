@@ -155,6 +155,7 @@ int main() {
             }
             else l = m + 1;
         }
+        O[i + Y] = t - (X[i] ? M[P[X][0] - 1] : 0); // set order of root node
         ql[i + Y] = 1, qr[i + Y] = N;
     }
     while (1) { // PBS

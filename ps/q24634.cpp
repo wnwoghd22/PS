@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -84,7 +85,7 @@ void DFS(int u) {
         P[u][i] = P[P[u][i - 1]][i - 1];
     for (const int& v : G[u]) {
         level[v] = level[u] + 1;
-        D[v] = D[u] + (depth[qr[u]] - depth[R[v]]) + 1;
+        D[v] = D[u] + (depth[qr[v]] - depth[R[u]]) + 1;
         DFS(v);
     }
 }
@@ -116,6 +117,8 @@ int LCA(const int a, const int b) {
 }
 
 int main() {
+    freopen("input.txt", "r", stdin);
+
     std::cin.tie(0)->sync_with_stdio(0);
     std::cin >> N >> Y >> Q;
     for (int u, v, i = 1; i < N; ++i) {
@@ -123,7 +126,6 @@ int main() {
         g[u].push_back(v);
         g[v].push_back(u);
     }
-    memset(depth, -1, sizeof depth);
     dfs(1);
 
     M[0] = N; R[0] = 1;
@@ -139,10 +141,10 @@ int main() {
             else l = m + 1;
         }
         G[P[i][0]].push_back(i);
-        O[i] = t - (P[i] ? M[P[i][0] - 1] : 0); // set order of root node
+        O[i] = t - (P[i][0] ? M[P[i][0] - 1] : 0); // set order of root node
         M[i] = M[i - 1] + S[R[i]];
         ql[i] = 1, qr[i] = N;
-        std::cout << O[i] << ' ' << P[i][0] << ' ' << R[i] << ' ' << M[i] << '\n';
+        // std::cout << O[i] << ' ' << P[i][0] << ' ' << R[i] << ' ' << M[i] << '\n';
     }
     for (ll i = 1, t; i <= Q * 2; ++i) { // get queries
         std::cin >> t;
@@ -156,7 +158,7 @@ int main() {
             else l = m + 1;
         }
         O[i + Y] = t - (X[i] ? M[X[i] - 1] : 0); // set order of root node
-        std::cout << "binary: " << X[i] << ' ' << O[i + Y] << ' ' << R[X[i]] << '\n';
+        // std::cout << "binary: " << X[i] << ' ' << O[i + Y] << ' ' << R[X[i]] << '\n';
         ql[i + Y] = 1, qr[i + Y] = N;
     }
     while (1) { // PBS
@@ -181,58 +183,68 @@ int main() {
             }
         }
     }
-    std::cout << "PBS ret:\n";
-    for (int i = 1; i <= Y; ++i) std::cout << qr[i] << ' ';
-    std::cout << '\n';
-    for (int i = 1; i <= Q * 2; ++i) std::cout << qr[i + Y] << ' ';
-    std::cout << '\n';
+    // std::cout << "PBS ret:\n";
+    // for (int i = 1; i <= Y; ++i) std::cout << qr[i] << ' ';
+    // std::cout << '\n';
+    // for (int i = 1; i <= Q * 2; ++i) std::cout << qr[i + Y] << ' ';
+    // std::cout << '\n';
 
     DFS(0);
+    // std::cout << "Tree depth: ";
+    // for (int i = 1; i <= Y; ++i) std::cout << D[i] << ' ';
+    // std::cout << '\n';
 
     for (int k = 0, l, r, x, y; k < Q; ++k) {
         ll ret = 0;
-        l = qr[Y + k * 2 + 1];
-        r = qr[Y + k * 2 + 2];
+        l = qr[k * 2 + 1 + Y];
+        r = qr[k * 2 + 2 + Y];
         x = X[k * 2 + 1];
         y = X[k * 2 + 2];
-        std::cout << "query " << k << ": [" << x << ", " << l << "] -> [" << y << ", " << r << "]\n";
+        // std::cout << "query " << k << ": [" << x << ", " << l << "] -> [" << y << ", " << r << "]\n";
         if (x == y) {
             int c = lca(l, r);
-            std::cout << "  lca0: [" << x << ", " << c << "]\n";
+            // std::cout << "  lca0: [" << x << ", " << c << "]\n";
             std::cout << ret + (depth[l] + depth[r]) - depth[c] * 2 << '\n';
             continue;
         }
         if (level[x] > level[y]) std::swap(x, y), std::swap(l, r);
         if (level[y] > level[x]) {
-            std::cout << "  idx: " << r << ", " << R[y] << '\n';
-            ret += depth[r] - depth[R[y]];
+            // std::cout << "  idx: " << r << ", " << R[y] << '\n';
+            ret += depth[r] - depth[R[y]]; // set pos to root of tree
             ret += D[y];
             for (int i = 20; i >= 0; --i) {
                 if (level[P[y][i]] > level[x])
                     y = P[y][i];
             }
-            std::cout << "  cur: " << ret << ", " << y <<  ", " << P[y][0] << ", " << qr[y] << '\n';
+            // std::cout << "  cur: " << ret << ", " << y <<  ", " << P[y][0] << ", " << qr[y] << '\n';
             ret -= D[y];
             if (P[y][0] == x) {
-                r = qr[y];
+                r = qr[y]; ret++;
                 int c = lca(l, r);
-                std::cout << "  lca1: [" << x << ", " << c << "]\n";
+                // std::cout << "  lca1: [" << x << ", " << c << "]\n";
                 std::cout << ret + (depth[l] + depth[r]) - depth[c] * 2 << '\n';
                 continue;
             }
+            r = qr[y]; y = P[y][0]; ret++;
         }
         ret += depth[l] - depth[R[x]];
         ret += depth[r] - depth[R[y]];
+        // std::cout << ret << '\n';
         int c = LCA(x, y);
+        // std::cout << "LCA: " << c << '\n';
         ret += D[x]; ret += D[y];
         for (int i = 20; i >= 0; --i) {
-            if (level[P[x][i]] > level[x]) y = P[x][c];
-            if (level[P[y][i]] > level[c]) y = P[y][c];
+            if (level[P[x][i]] > level[c]) x = P[x][i];
+            if (level[P[y][i]] > level[c]) y = P[y][i];
         }
+        // std::cout << " sub: " << x << ' ' << y << '\n';
         ret -= D[x]; ret -= D[y];
-        l = R[x]; r = R[y];
+
+        // std::cout << ret << '\n';
+        l = qr[x]; r = qr[y]; ret += 2;
+        // std::cout << l << ' ' << r << '\n';
         c = lca(l, r);
-        std::cout << "  lca2: [" << x << ", " << c << "]\n";
+        // std::cout << "  lca2: [" << x << ", " << c << "]\n";
         std::cout << ret + (depth[l] + depth[r]) - depth[c] * 2 << '\n';
     }
 

@@ -142,7 +142,7 @@ int main() {
         O[i] = t - (P[i] ? M[P[i][0] - 1] : 0); // set order of root node
         M[i] = M[i - 1] + S[R[i]];
         ql[i] = 1, qr[i] = N;
-        // std::cout << O[i] << ' ' << P[i] << ' ' << R[i] << ' ' << M[i] << '\n';
+        std::cout << O[i] << ' ' << P[i][0] << ' ' << R[i] << ' ' << M[i] << '\n';
     }
     for (ll i = 1, t; i <= Q * 2; ++i) { // get queries
         std::cin >> t;
@@ -156,7 +156,7 @@ int main() {
             else l = m + 1;
         }
         O[i + Y] = t - (X[i] ? M[X[i] - 1] : 0); // set order of root node
-        std::cout << "binary: " << X[i] << ' ' << O[i + Y] << '\n';
+        std::cout << "binary: " << X[i] << ' ' << O[i + Y] << ' ' << R[X[i]] << '\n';
         ql[i + Y] = 1, qr[i + Y] = N;
     }
     while (1) { // PBS
@@ -174,13 +174,19 @@ int main() {
         for (int m = 1; m <= N; ++m) {
             update(s[m], 1);
             for (const int& qi : queries[m]) {
-                int root = qi > Y ? X[qi] : R[P[qi][0]];
+                int root = R[qi > Y ? X[qi - Y] : P[qi][0]];
                 int cnt = sum(e[root]) - sum(s[root] - 1);
                 if (cnt >= O[qi]) qr[qi] = m;
                 else ql[qi] = m + 1;
             }
         }
     }
+    std::cout << "PBS ret:\n";
+    for (int i = 1; i <= Y; ++i) std::cout << qr[i] << ' ';
+    std::cout << '\n';
+    for (int i = 1; i <= Q * 2; ++i) std::cout << qr[i + Y] << ' ';
+    std::cout << '\n';
+
     DFS(0);
 
     for (int k = 0, l, r, x, y; k < Q; ++k) {

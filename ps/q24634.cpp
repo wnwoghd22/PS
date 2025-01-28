@@ -90,34 +90,18 @@ void DFS(int u) {
     }
 }
 
-int LCA(const int a, const int b) {
-    int min = level[a] < level[b] ? a : b;
-    int max = level[a] >= level[b] ? a : b;
-
-    if (level[min] != level[max]) {
-        for (int i = 20; i >= 0; --i) {
-            if (level[P[max][i]] >= level[min])
-                max = P[max][i];
-        }
+int bs(ll x, int r) {
+    int l = 0, m;
+    while (l < r) { // binary search
+        m = l + r >> 1;
+        if (x <= M[m]) r = m;
+        else l = m + 1;
     }
-
-    int result = max;
-
-    if (min != max) {
-        for (int i = 20; i >= 0; --i) {
-            if (P[max][i] != P[min][i]) {
-                max = P[max][i];
-                min = P[min][i];
-            }
-            result = P[max][i];
-        }
-    }
-
-    return result;
+    return r;
 }
 
 int main() {
-    freopen("input.txt", "r", stdin);
+    // freopen("input.txt", "r", stdin);
 
     std::cin.tie(0)->sync_with_stdio(0);
     std::cin >> N >> Y >> Q;
@@ -131,34 +115,16 @@ int main() {
     M[0] = N; R[0] = 1;
     for (ll i = 1, t; i <= Y; ++i) { // get trees
         std::cin >> R[i] >> t;
-        int l = 0, r = i - 1, m;
-        while (l <= r) { // binary search
-            m = l + r >> 1;
-            if (t <= M[m]) {
-                P[i][0] = m;
-                r = m - 1;
-            }
-            else l = m + 1;
-        }
+        P[i][0] = bs(t, i - 1);
         G[P[i][0]].push_back(i);
         O[i] = t - (P[i][0] ? M[P[i][0] - 1] : 0); // set order of root node
         M[i] = M[i - 1] + S[R[i]];
         ql[i] = 1, qr[i] = N;
-        // std::cout << O[i] << ' ' << P[i][0] << ' ' << R[i] << ' ' << M[i] << '\n';
     }
     for (ll i = 1, t; i <= Q * 2; ++i) { // get queries
         std::cin >> t;
-        int l = 0, r = Y, m;
-        while (l <= r) { // binary search
-            m = l + r >> 1;
-            if (t <= M[m]) {
-                X[i] = m;
-                r = m - 1;
-            }
-            else l = m + 1;
-        }
+        X[i] = bs(t, Y);
         O[i + Y] = t - (X[i] ? M[X[i] - 1] : 0); // set order of root node
-        // std::cout << "binary: " << X[i] << ' ' << O[i + Y] << ' ' << R[X[i]] << '\n';
         ql[i + Y] = 1, qr[i + Y] = N;
     }
     while (1) { // PBS
@@ -183,16 +149,7 @@ int main() {
             }
         }
     }
-    // std::cout << "PBS ret:\n";
-    // for (int i = 1; i <= Y; ++i) std::cout << qr[i] << ' ';
-    // std::cout << '\n';
-    // for (int i = 1; i <= Q * 2; ++i) std::cout << qr[i + Y] << ' ';
-    // std::cout << '\n';
-
     DFS(0);
-    // std::cout << "Tree depth: ";
-    // for (int i = 1; i <= Y; ++i) std::cout << D[i] << ' ';
-    // std::cout << '\n';
 
     for (int k = 0, l, r, x, y; k < Q; ++k) {
         ll ret = 0;
@@ -200,53 +157,35 @@ int main() {
         r = qr[k * 2 + 2 + Y];
         x = X[k * 2 + 1];
         y = X[k * 2 + 2];
-        // std::cout << "query " << k << ": [" << x << ", " << l << "] -> [" << y << ", " << r << "]\n";
-        if (x == y) {
-            int c = lca(l, r);
-            // std::cout << "  lca0: [" << x << ", " << c << "]\n";
-            std::cout << ret + (depth[l] + depth[r]) - depth[c] * 2 << '\n';
-            continue;
-        }
-        if (level[x] > level[y]) std::swap(x, y), std::swap(l, r);
-        if (level[y] > level[x]) {
-            // std::cout << "  idx: " << r << ", " << R[y] << '\n';
-            ret += depth[r] - depth[R[y]]; // set pos to root of tree
-            ret += D[y];
-            for (int i = 20; i >= 0; --i) {
-                if (level[P[y][i]] > level[x])
-                    y = P[y][i];
-            }
-            // std::cout << "  cur: " << ret << ", " << y <<  ", " << P[y][0] << ", " << qr[y] << '\n';
-            ret -= D[y];
-            if (P[y][0] == x) {
+        if (x != y) {
+            if (level[x] > level[y]) std::swap(x, y), std::swap(l, r);
+            if (level[y] > level[x]) {
+                ret += depth[r] - depth[R[y]]; // set pos to root of tree
+                ret += D[y];
+                for (int i = 20; i >= 0; --i) {
+                    if (level[P[y][i]] > level[x])
+                        y = P[y][i];
+                }
+                ret -= D[y];
                 r = qr[y]; ret++;
-                int c = lca(l, r);
-                // std::cout << "  lca1: [" << x << ", " << c << "]\n";
-                std::cout << ret + (depth[l] + depth[r]) - depth[c] * 2 << '\n';
-                continue;
+                y = P[y][0];
             }
-            r = qr[y]; y = P[y][0]; ret++;
+            if (y != x) {
+                ret += depth[l] - depth[R[x]];
+                ret += depth[r] - depth[R[y]];
+                ret += D[x]; ret += D[y];
+                for (int i = 20; i >= 0; --i) {
+                    if (P[x][i] != P[y][i]) {
+                        x = P[x][i];
+                        y = P[y][i];
+                    }
+                }
+                ret -= D[x]; ret -= D[y];
+                l = qr[x]; r = qr[y]; ret += 2;
+            }
         }
-        ret += depth[l] - depth[R[x]];
-        ret += depth[r] - depth[R[y]];
-        // std::cout << ret << '\n';
-        int c = LCA(x, y);
-        // std::cout << "LCA: " << c << '\n';
-        ret += D[x]; ret += D[y];
-        for (int i = 20; i >= 0; --i) {
-            if (level[P[x][i]] > level[c]) x = P[x][i];
-            if (level[P[y][i]] > level[c]) y = P[y][i];
-        }
-        // std::cout << " sub: " << x << ' ' << y << '\n';
-        ret -= D[x]; ret -= D[y];
-
-        // std::cout << ret << '\n';
-        l = qr[x]; r = qr[y]; ret += 2;
-        // std::cout << l << ' ' << r << '\n';
-        c = lca(l, r);
-        // std::cout << "  lca2: [" << x << ", " << c << "]\n";
+        int c = lca(l, r);
         std::cout << ret + (depth[l] + depth[r]) - depth[c] * 2 << '\n';
     }
-
     return 0;
 }

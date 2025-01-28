@@ -84,7 +84,7 @@ void DFS(int u) {
         P[u][i] = P[P[u][i - 1]][i - 1];
     for (const int& v : G[u]) {
         level[v] = level[u] + 1;
-        D[v] = D[u] + (depth[qr[u]] - depth[R[v]]);
+        D[v] = D[u] + (depth[qr[u]] - depth[R[v]]) + 1;
         DFS(v);
     }
 }
@@ -155,6 +155,8 @@ int main() {
             }
             else l = m + 1;
         }
+        O[i + Y] = t - (X[i] ? M[X[i] - 1] : 0); // set order of root node
+        std::cout << "binary: " << X[i] << ' ' << O[i + Y] << '\n';
         ql[i + Y] = 1, qr[i + Y] = N;
     }
     while (1) { // PBS
@@ -172,7 +174,7 @@ int main() {
         for (int m = 1; m <= N; ++m) {
             update(s[m], 1);
             for (const int& qi : queries[m]) {
-                int root = R[P[qi][0]];
+                int root = qi > Y ? X[qi] : R[P[qi][0]];
                 int cnt = sum(e[root]) - sum(s[root] - 1);
                 if (cnt >= O[qi]) qr[qi] = m;
                 else ql[qi] = m + 1;
@@ -190,21 +192,25 @@ int main() {
         std::cout << "query " << k << ": [" << x << ", " << l << "] -> [" << y << ", " << r << "]\n";
         if (x == y) {
             int c = lca(l, r);
+            std::cout << "  lca0: [" << x << ", " << c << "]\n";
             std::cout << ret + (depth[l] + depth[r]) - depth[c] * 2 << '\n';
             continue;
         }
         if (level[x] > level[y]) std::swap(x, y), std::swap(l, r);
         if (level[y] > level[x]) {
+            std::cout << "  idx: " << r << ", " << R[y] << '\n';
             ret += depth[r] - depth[R[y]];
             ret += D[y];
             for (int i = 20; i >= 0; --i) {
                 if (level[P[y][i]] > level[x])
                     y = P[y][i];
             }
+            std::cout << "  cur: " << ret << ", " << y <<  ", " << P[y][0] << ", " << qr[y] << '\n';
             ret -= D[y];
             if (P[y][0] == x) {
-                r = R[y];
+                r = qr[y];
                 int c = lca(l, r);
+                std::cout << "  lca1: [" << x << ", " << c << "]\n";
                 std::cout << ret + (depth[l] + depth[r]) - depth[c] * 2 << '\n';
                 continue;
             }
@@ -220,6 +226,7 @@ int main() {
         ret -= D[x]; ret -= D[y];
         l = R[x]; r = R[y];
         c = lca(l, r);
+        std::cout << "  lca2: [" << x << ", " << c << "]\n";
         std::cout << ret + (depth[l] + depth[r]) - depth[c] * 2 << '\n';
     }
 

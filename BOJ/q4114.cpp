@@ -9,20 +9,8 @@ int N, K;
 int X[LEN], T[LEN], S[LEN], C[LEN];
 std::vector<int> g[LEN];
 
-int dfs(int u) {
-	int ret = 1;
-	C[u] = T[u];
-	X[u] = 2;
-	for (const int& v : g[u]) {
-		if (X[v]) continue;
-		ret += dfs(v);
-		C[u] += C[v];
-	}
-	return ret;
-}
-
-// need to fix
 void solve() {
+	int ret = N, t = 0;
 	memset(X, 0, sizeof X);
 	memset(S, 0, sizeof S);
 	for (int i = 0; i < N; ++i) g[i].clear();
@@ -30,6 +18,7 @@ void solve() {
 	for (int u = 0, k; u < N; ++u) {
 		std::cin >> T[u] >> C[u];
 		S[u] += T[u];
+		t += T[u];
 		for (int j = 0, v; j < C[u]; ++j) {
 			std::cin >> v;
 			g[u].push_back(v);
@@ -44,6 +33,8 @@ void solve() {
 	}
 	while (q.size()) {
 		int u = q.front(); q.pop();
+		ret--;
+		t -= T[u];
 		for (const int& v : g[u]) {
 			C[v] -= 1;
 			if (X[v]) continue;
@@ -51,16 +42,6 @@ void solve() {
 			if (S[v] < K) {
 				X[v] = 1;
 				q.push(v);
-			}
-		}
-	}
-	
-	int ret = 0, t = 0;
-	for (int u = 0, c; u < N; ++u) {
-		if (!X[u]) {
-			c = dfs(u);
-			if (c > ret || c == ret && C[u] > t) {
-				ret = c; t = C[u];
 			}
 		}
 	}

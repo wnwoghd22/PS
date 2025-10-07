@@ -15,6 +15,7 @@
 
 #include "lcp_module.h"
 #include "lct_module.h"
+#include "kdt_module.h"
 
 #define __DEBUG_MODE__
 

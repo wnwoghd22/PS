@@ -42,63 +42,74 @@ namespace GEO {
 	ll cross(const Pii& d1, const Pii& d2, const Pii& d3) { return (d2 - d1) / (d3 - d2); }
 	int ccw(const Pii& d1, const Pii& d2, const Pii& d3) { return sign(cross(d1, d2, d3)); }
 	Pii pos[LEN];
+
 	struct KDNode {
-		Pii p;//mid point
-		bool spl;//dx < dy ?
+		Pii p;
 		int sx, ex, sy, ey;
-		KDNode(Pii p_ = Pii(0, 0), bool spl_ = 0, int sx_ = 0, int ex_ = 0, int sy_ = 0, int ey_ = 0) :
-			p(p_), spl(spl_), sx(sx_), ex(ex_), sy(sy_), ey(ey_) {
-		}
-	} kdtree[LEN << 2];//segment tree
-	bool V[LEN << 2];//visited
-	bool cmpx(const Pii& p, const Pii& q) { return p.x == q.x ? p.y < q.y : p.x < q.x; }
-	bool cmpy(const Pii& p, const Pii& q) { return p.y == q.y ? p.x < q.x : p.y < q.y; }
+		KDNode* l;
+		KDNode* r;
+		bool spl() const;
+		ll dist(const Pii& q) const;
+		void dfs(const Pii& q, int& best_i, ll& best_d);
+	};
 	bool cmpi(const Pii& p, const Pii& q) { return p.i < q.i; }
-	void init(int s = 0, int e = N - 1, int n = 1) {//divide & conquer
-		int MAXX = -1e9, MAXY = -1e9, MINX = 1e9, MINY = 1e9;
-		int m = s + e >> 1;
-		for (int i = s; i <= e; i++) {
-			MAXX = std::max(MAXX, pos[i].x);
-			MAXY = std::max(MAXY, pos[i].y);
-			MINX = std::min(MINX, pos[i].x);
-			MINY = std::min(MINY, pos[i].y);
-		}
-		kdtree[n].spl = (MAXX - MINX) < (MAXY - MINY);//slope cmp :: dx < dy
-		if (kdtree[n].spl) std::sort(pos + s, pos + e + 1, cmpy);//if dy is dominant, sort by y
-		else std::sort(pos + s, pos + e + 1, cmpx);//if dx is dominant, sort by x
-		V[n] = 1;
-		kdtree[n] = KDNode(pos[m], kdtree[n].spl, MINX, MAXX, MINY, MAXY);
-		if (s <= m - 1) init(s, m - 1, n << 1);
-		if (m + 1 <= e) init(m + 1, e, n << 1 | 1);
-		return;
-	}
-	void kd_init() { memset(V, 0, sizeof V); init(); return; }
-	inline ll dist(const KDNode& nd, const Pii& q) {
+
+	struct KDTree {
+		Pii pos[LEN];
+		KDNode tree[LEN << 2];
+		KDNode* init(int s, int e, int i);
+		int query(const Pii& q);
+	} kdt;
+
+	ll KDNode::dist(const Pii& q) const {
 		ll dx = 0, dy = 0;
-		if (q.x < nd.sx) dx = nd.sx - q.x;
-		else if (q.x > nd.ex) dx = q.x - nd.ex;
-		if (q.y < nd.sy) dy = nd.sy - q.y;
-		else if (q.y > nd.ey) dy = q.y - nd.ey;
+		if (q.x < sx) dx = sx - q.x;
+		else if (q.x > ex) dx = q.x - ex;
+		if (q.y < sy) dy = sy - q.y;
+		else if (q.y > ey) dy = q.y - ey;
 		return dx * dx + dy * dy;
 	}
-	void kd_search_dfs(int n, const Pii& q, int& best_i, ll& best_d) {
-		if (!V[n]) return;
-		if (dist(kdtree[n], q) >= best_d) return;
-		const Pii& mp = kdtree[n].p;
-		ll d = (q - mp).Euc();
-		if (d < best_d) { best_d = d; best_i = mp.i; }
-		int L = n << 1, R = L | 1;
-		int near_child = L, far_child = R;
-		if (kdtree[n].spl && q.y >= mp.y) std::swap(near_child, far_child);
-		else if (!kdtree[n].spl && q.x >= mp.x) std::swap(near_child, far_child);
-		if (V[near_child]) kd_search_dfs(near_child, q, best_i, best_d);
-		if (V[far_child]) kd_search_dfs(far_child, q, best_i, best_d);
-		return;
+
+	bool KDNode::spl() const { return ex - sx < ey - sy; }
+	void KDNode::dfs(const Pii& q, int& best_i, ll& best_d) {
+		if (dist(q) >= best_d) return;
+		ll d = (ll)(p.x - q.x) * (p.x - q.x) + (ll)(p.y - q.y) * (p.y - q.y);
+		if (d < best_d) { best_i = p.i; best_d = d; }
+		KDNode* l = this->l;
+		KDNode* r = this->r;
+		if (spl() && q.y >= p.y) std::swap(l, r);
+		if (!spl() && q.x >= p.x) std::swap(l, r);
+		if (l) l->dfs(q, best_i, best_d);
+		if (r) r->dfs(q, best_i, best_d);
 	}
-	Pii search(const Pii& q, ll X = LINF, int n = 1) {
-		int i = -1; ll d = X;
-		kd_search_dfs(1, q, i, d);
-		return Pii(i, d);
+
+	KDNode* KDTree::init(int s, int e, int i) {
+		if (s > e) return 0;
+		tree[i].sx = 1e9; tree[i].ex = -1e9;
+		tree[i].sy = 1e9; tree[i].ey = -1e9;
+		int m = s + e >> 1;
+		for (int k = s; k <= e; ++k) {
+			tree[i].ex = std::max(tree[i].ex, pos[k].x);
+			tree[i].ey = std::max(tree[i].ey, pos[k].y);
+			tree[i].sx = std::min(tree[i].sx, pos[k].x);
+			tree[i].sy = std::min(tree[i].sy, pos[k].y);
+		}
+
+		std::sort(pos + s, pos + e + 1, tree[i].spl() ?
+			[](const Pii& p, const Pii& q) { return p.y == q.y ? p.x < q.x : p.y < q.y; } :
+			[](const Pii& p, const Pii& q) { return p.x == q.x ? p.y < q.y : p.x < q.x; });
+		tree[i].p = pos[m];
+
+		tree[i].l = init(s, m - 1, i << 1);
+		tree[i].r = init(m + 1, e, i << 1 | 1);
+
+		return &tree[i];
+	}
+
+	int KDTree::query(const Pii& q) {
+		int i = -1; ll d = 1e17;
+		tree[1].dfs(q, i, d);
+		return i;
 	}
 
 	/*
@@ -897,7 +908,7 @@ void solve() {
 	std::cin >> N >> Q1 >> Q2; Q = Q1 + Q2;
 	spot.resize(N); name.resize(N);
 	for (int i = 0; i < N; i++)
-		std::cin >> spot[i] >> name[i], spot[i].i = i, pos[i] = spot[i];
+		std::cin >> spot[i] >> name[i], spot[i].i = i, pos[i] = kdt.pos[i] = spot[i];
 	preprocess(name);
 	if (N < 3) assert(0);
 	else {
@@ -949,13 +960,13 @@ void solve() {
 		}
 	}
 	prim();
-	kd_init();
+	kdt.init(0, N - 1, 1);
 	for (int q = 0; q < Q; ++q) {
 		std::cin >> T;
 		if (T == 1) {
 			Pii s, e; std::cin >> s >> e;
-			int si = search(s).IDX;
-			int ei = search(e).IDX;
+			int si = kdt.query(s);
+			int ei = kdt.query(e);
 			std::cout << lct.query(si, ei) << '\n';
 		}
 		else {

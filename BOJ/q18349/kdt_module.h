@@ -21,8 +21,9 @@ struct KDNode {
 };
 
 struct KDTree {
+	Pii pos[LEN];
 	KDNode tree[LEN << 1];
-	void init(int s, int e, int i);
+	KDNode* init(int s, int e, int i);
 	int query(const Pii& q);
 };
 

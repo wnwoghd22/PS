@@ -24,8 +24,27 @@ void KDNode::dfs(const Pii& q, int& best_i, ll& best_d) {
 	if (r) r->dfs(q, best_i, best_d);
 }
 
-void KDTree::init(int s, int e, int i) {
-	
+KDNode* KDTree::init(int s, int e, int i) {
+	if (s > e) return 0;
+	tree[i].sx = 1e9; tree[i].ex = -1e9; 
+	tree[i].sy = 1e9; tree[i].ey = -1e9;
+	int m = s + e >> 1;
+	for (int k = s; k <= e; ++k) {
+		tree[i].ex = std::max(tree[k].ex, pos[k].x);
+		tree[i].ey = std::max(tree[k].ey, pos[k].y);
+		tree[i].sx = std::min(tree[k].sx, pos[k].x);
+		tree[i].sy = std::min(tree[k].sy, pos[k].y);
+	}
+
+	std::sort(pos + s, pos + e + 1, tree[i].spl() ? 
+		[](const Pii& p, const Pii& q) { return p.y == q.y ? p.x < q.x : p.y < q.y; } : 
+		[](const Pii& p, const Pii& q) { return p.x == q.x ? p.y < q.y : p.x < q.x; });
+	tree[i].p = pos[m];
+
+	tree[i].l = init(s, m - 1, i << 1);
+	tree[i].r = init(m + 1, e, i << 1 | 1);
+
+	return &tree[i];
 }
 
 int KDTree::query(const Pii& q) {

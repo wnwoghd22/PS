@@ -27,6 +27,9 @@ inline bool zero(const ld& x) { return !sign(x); }
 int N, M, T, Q;
 std::vector<std::string> name;
 
+/*
+ * GEO Module by RedCude231
+ */
 namespace GEO {
 	struct Pii {
 		int x, y; int i;

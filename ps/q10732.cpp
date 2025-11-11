@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <queue>
 #include <cmath>
+#include <cstring>
 
 const double TOL = 1e-6;
 
@@ -138,6 +139,7 @@ void solve() {
 	memset(q_id, -1, sizeof q_id);
 	std::vector<std::vector<Edge>> graph;
 	std::vector<int> start_group;
+	cnt = 0;
 	
 	for (int i = 0; i < N; ++i) {
 		int m;
@@ -168,6 +170,18 @@ void solve() {
 	for (int i = 0; i < Q; ++i) {
 		std::cin >> circles[i].c.x >> circles[i].c.y;
 		circles[i].r = R;
+		for (const int start : start_group) {
+			double dist = std::hypot(circles[i].c.x - pos[start].x,
+			                         circles[i].c.y - pos[start].y);
+			if (dist <= R + TOL) {
+				// answer is zero
+				circles[i].r = -1e9;
+			}
+		}
+		if (circles[i].r < -1) {
+			// no need to process intersections
+			continue;
+		}
 		for (int j = 0; j < N; ++j) {
 			const auto& seg = segments[j];
 			auto inters = circles[i].intersect_at(seg);
@@ -180,6 +194,7 @@ void solve() {
 				pos.push_back(new_p);
 			}
 		}
+		
 	}
 	graph.resize(cnt);
 	for (int i = 0; i < N; ++i) {
@@ -192,6 +207,11 @@ void solve() {
 		}
 	}
 	auto answers = dijkstra(Q, start_group, graph);
+	for (int i = 0; i < Q; ++i) {
+		if (circles[i].r < -1) {
+			answers[i] = 0.0;
+		}
+	}
 	for (const auto& ans : answers) {
 		if (ans < 1e9) {
 			std::cout << ans << "\n";

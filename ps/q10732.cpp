@@ -92,17 +92,17 @@ struct Circle {
 };
 
 std::vector<std::vector<Pos>> points;
-int q_id[1000 * 1000 * 4];
+int q_id[1000 * 1000 * 8];
 
 struct Edge {
-	int u, v;
+	int v;
 	double weight;
 };
 
-std::vector<Edge> edges;
-std::vector<int> start_group;
-
-std::vector<double> dijkstra(int q) {
+std::vector<double> dijkstra(
+	int q,
+	const std::vector<int>& start_group, 
+	const std::vector<std::vector<Edge>>& graph) {
 	std::vector<double> dist(cnt, 1e9);
 	std::vector<double> answers(q, 1e9);
 	std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int>>, std::greater<>> pq;
@@ -116,16 +116,11 @@ std::vector<double> dijkstra(int q) {
 		int u = e.second;
 		pq.pop();
 		if (d > dist[u]) continue;
-		if (q_id[u] != -1 && dist[u] < answers[q_id[u]]) {
-			std::cout << "renew mindist: " << u << ' ' << dist[u] << '\n';
-			answers[q_id[u]] = dist[u];
-		}
-		for (const auto& e : edges) {
-			if (e.u == u) {
-				if (dist[e.v] > dist[u] + e.weight) {
-					dist[e.v] = dist[u] + e.weight;
-					pq.push({dist[e.v], e.v});
-				}
+		if (q_id[u] != -1 && dist[u] < answers[q_id[u]]) answers[q_id[u]] = dist[u];
+		for (const auto& e: graph[u]) {
+			if (dist[e.v] > dist[u] + e.weight) {
+				dist[e.v] = dist[u] + e.weight;
+				pq.push({dist[e.v], e.v});
 			}
 		}
 	}
@@ -139,9 +134,10 @@ void solve() {
 	std::vector<Segment> segments(N);
 	std::vector<Pos> pos;
 	points.resize(N);
-	memset(q_id, -1, sizeof q_id);
-	edges.clear(); start_group.clear();
 	for (int i = 0; i < N; ++i) points[i].clear();
+	memset(q_id, -1, sizeof q_id);
+	std::vector<std::vector<Edge>> graph;
+	std::vector<int> start_group;
 	
 	for (int i = 0; i < N; ++i) {
 		int m;
@@ -185,35 +181,31 @@ void solve() {
 			}
 		}
 	}
-	for (const auto& p : pos) {
-		std::cout << "Point ID: " << p.id << " (" << p.x << ", " << p.y << ") q_id: " << p.q_id << "\n";
-	}
+	graph.resize(cnt);
 	for (int i = 0; i < N; ++i) {
 		std::sort(points[i].begin(), points[i].end());
 		for (size_t j = 1; j < points[i].size(); ++j) {
 			double dist = std::hypot(points[i][j].x - points[i][j - 1].x,
 			                         points[i][j].y - points[i][j - 1].y);
-			edges.push_back({points[i][j - 1].id, points[i][j].id, dist});
-			edges.push_back({points[i][j].id, points[i][j - 1].id, dist});
-			std::cout << "Edge from " << points[i][j - 1].id << " to " << points[i][j].id << " weight " << dist << "\n";
+			graph[points[i][j - 1].id].push_back({points[i][j].id, dist});
+			graph[points[i][j].id].push_back({points[i][j - 1].id, dist});
 		}
 	}
-	auto answers = dijkstra(Q);
+	auto answers = dijkstra(Q, start_group, graph);
 	for (const auto& ans : answers) {
 		if (ans < 1e9) {
 			std::cout << ans << "\n";
 		} else {
-			std::cout << "Impossible\n";
+			std::cout << "-1\n";
 		}
 	}
 }
 
 int main() {
 	std::cin.tie(0)->sync_with_stdio(0);
+	(std::cout << std::fixed).precision(9);
 	int t;
 	std::cin >> t;
-	while (t--) {
-		solve();
-	}
+	while (t--) solve();
 	return 0;
 }
